@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8456f010458e474885159e14449876e, type: 3}
+  m_Name: WoodenTile
+  m_EditorClassIdentifier: 
+  name: Wooden Tile
+  description: 
+  type: 0
+  tile: {fileID: 11400000, guid: aafb6d5a6ce16c4419b62f04b4b20314, type: 2}
+  BuildPoint: {x: 0, y: 0}
+  rotation: 0
+  buildOnAirAvailable: 0
+  building: []
+  ports: []

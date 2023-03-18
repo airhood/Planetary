@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8456f010458e474885159e14449876e, type: 3}
+  m_Name: Medium Size Battery
+  m_EditorClassIdentifier: 
+  name: Medium Size Battery
+  description: 
+  type: 1
+  BuildPoint: {x: 0, y: 0}
+  rotation: 0
+  building:
+  - stateName: Default
+    buildingParts:
+    - pos: {x: 0, y: 0}
+      tile: {fileID: 11400000, guid: f9ed54b8d48443d4881fec5462a330f5, type: 2}
+      isCollidable: 0
+    - pos: {x: 0, y: 1}
+      tile: {fileID: 11400000, guid: fecf014a7ca4b674cbf47bec0f39ce7e, type: 2}
+      isCollidable: 0
+    - pos: {x: 1, y: 0}
+      tile: {fileID: 11400000, guid: 4c0960a3e4babfc4587f267dcda67917, type: 2}
+      isCollidable: 0
+    - pos: {x: 1, y: 1}
+      tile: {fileID: 11400000, guid: 295a332de0eb5224b9a1e900ba8479eb, type: 2}
+      isCollidable: 0
+  ports:
+  - portName: Default_E
+    type: 0
+    relativePos: {x: 0, y: 0}
+    flow: 0

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a42572f0f8f33b54189d85195ff4b5cf, type: 3}
+  m_Name: Vacuum
+  m_EditorClassIdentifier: 
+  matterCode: 0
+  ItemName: Vacuum
+  ItemDescription: 
+  matterType: 0
+  hardness: 5
+  gameObject: {fileID: 8867984706655440132, guid: d5976322919c44a469977837846cbee3, type: 3}
+  canBePlacedAsBlock: 1
+  canBeConvertedToItem: 0
+  item: {fileID: 0}
