@@ -19,6 +19,7 @@ public class TerrainGeneration : MonoBehaviour
     public int heightAddition = 25;
     public float seed;
     public Texture2D noiseTexture;
+    public bool isLoaded;
 
     [Header("Player")]
     public GameObject player;
@@ -29,6 +30,7 @@ public class TerrainGeneration : MonoBehaviour
         GenerateNoiseTexture();
         GenerateTerrain(noiseTexture);
         SetPlayer();
+        isLoaded = true;
     }
 
     public void GenerateNoiseTexture()

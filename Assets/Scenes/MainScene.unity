@@ -2082,7 +2082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 900, y: 483}
+  m_AnchoredPosition: {x: 0, y: 17.359741}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &454325708
@@ -6247,6 +6247,7 @@ MonoBehaviour:
   _itemList:
   - {fileID: 0}
   - {fileID: 11400000, guid: 457c0bd8aca49b248b9925ddc850c4ec, type: 2}
+  player: {fileID: 1998346817}
 --- !u!114 &725686024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6270,6 +6271,7 @@ MonoBehaviour:
   heightAddition: 100
   seed: 0
   noiseTexture: {fileID: 0}
+  isLoaded: 0
   player: {fileID: 1998346811}
 --- !u!114 &725686025
 MonoBehaviour:
@@ -14556,8 +14558,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 900, y: 465.64026}
+  m_SizeDelta: {x: 100, y: 108.7195}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1911264083
 GameObject:
@@ -15493,7 +15495,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 900, y: 430}
+  m_AnchoredPosition: {x: 0, y: -35.64026}
   m_SizeDelta: {x: 85.9869, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047178132
@@ -16551,13 +16553,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 725686023}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: health
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: oxygen
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: maxOxygen
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: sidePopUp
+      value: 
+      objectReference: {fileID: 1576564361}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: healthGage
+      value: 
+      objectReference: {fileID: 3468241435502268107}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: oxygenGage
+      value: 
+      objectReference: {fileID: 3468241435502268108}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: itemManager
       value: 
       objectReference: {fileID: 725686025}
-    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: tempCollider
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: matterDigging
       value: 
@@ -16567,8 +16593,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 845189074}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: terrainGeneration
+      value: 
+      objectReference: {fileID: 725686024}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: matterDiggingAnimation
       value: 
       objectReference: {fileID: 1246810016}
+    - target: {fileID: 4486422635326348499, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: m_Name
+      value: Health Level
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669576689889218345, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+--- !u!1 &3468241435502268107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4486422635326348499, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+  m_PrefabInstance: {fileID: 3468241435502268106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3468241435502268108 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 903043563, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+  m_PrefabInstance: {fileID: 3468241435502268106}
+  m_PrefabAsset: {fileID: 0}

@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     [Header("World")]
     public Main main;
     public Tilemap collidableBlock;
-
+    public TerrainGeneration terrainGeneration;
 
     [Header("Movement")]
     public Rigidbody2D rb;
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     public bool jumpEnabled;
     public bool isGround;
     public bool isJumping;
+    public Vector2 lastGroundTouchPos;
 
     [Header("Animation")]
     public Animator animator;
@@ -78,6 +79,18 @@ public class Player : MonoBehaviour
     Vector3 worldPosition;
     Vector2Int pos;
 
+    [Header("Player Property")]
+    public int maxHealth;
+    public int health;
+    public int maxOxygen;
+    public int oxygen;
+    int oxygenTick;
+    public GameObject healthGage;
+    public GameObject oxygenGage;
+
+    [Header("UI")]
+    public GameObject sidePopUp;
+
     void Awake()
     {
         jumpEnabled = true;
@@ -101,6 +114,10 @@ public class Player : MonoBehaviour
         CheckInput();
         calculateAnimation();
         itemCollecting();
+        if (terrainGeneration.isLoaded)
+        {
+            calculateFallDamage();
+        }
     }
 
     private void MovePlayer()
@@ -124,10 +141,14 @@ public class Player : MonoBehaviour
         }
         else animator.SetBool("Walk", false);
 
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -0.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -0.5f), 0.03f, 1 << LayerMask.NameToLayer("Ground"));
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround) Jump();
-        else if (!Input.GetKeyDown(KeyCode.Space) && isGround) isJumping = false;
+        else if (!Input.GetKeyDown(KeyCode.Space) && isGround)
+        {
+            isJumping = false;
+            lastGroundTouchPos = transform.position;
+        }
 
         animator.SetBool("Jump", isJumping);
     }
@@ -199,8 +220,8 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (isBackpackOpen) CloseBackpack();
-            else if (!isBackpackOpen) OpenBackpack();
+            if (isBackpackOpen) closeBackpack();
+            else if (!isBackpackOpen) openBackpack();
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -305,6 +326,16 @@ public class Player : MonoBehaviour
         {
 
         }
+    }
+
+    private void openBackpack()
+    {
+        sidePopUp.SetActive(true);
+    }
+
+    private void closeBackpack()
+    {
+        sidePopUp.SetActive(false);
     }
 
     private void calculateAnimation()
@@ -412,82 +443,58 @@ public class Player : MonoBehaviour
         Destroy(itemObject);
     }
 
-    private void OpenBackpack()
+    public void doOxygenTick()
     {
-
-    }
-    
-    private void CloseBackpack()
-    {
-
-    }
-
-    /**
-    private void MovePlayer()
-    {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        Vector2 dir = Target.transform.right * x + Target.transform.up * y;
-        //transform.Translate((Vector3)(dir * moveSpeed * Time.deltaTime));
-
-        rb.MovePosition(Target.transform.position + (Vector3)(dir * moveSpeed * Time.smoothDeltaTime));
-    }
-    
-
-    private void MovePlayer()
-    {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        if (x != 0 || y != 0)
+        if (oxygen > 0)
         {
-            movingToTarget = false;
+            oxygenTick++;
         }
-
-        //print("x: " + x + " | y: " + y);
-
-        transform.position += new Vector3((float)x * moveSpeed * Time.deltaTime, (float)y * moveSpeed * Time.smoothDeltaTime, 0);
-        Camera.main.transform.position = transform.position;
-    }
-
-    private void MoveToTarget(Vector2 TargetPoint)
-    {
-        movingToTarget = true;
-        virtualCamera.enabled = true;
-        Target.transform.position = TargetPoint;
-        WaitMovingToTarget(TargetPoint);
-
-        virtualCamera.enabled = false;
-        movingToTarget = false;
-    }
-
-    IEnumerable WaitMovingToTarget(Vector2 TargetPoint)
-    {
-        while (movingToTarget && transform.position != (Vector3)TargetPoint)
+        if (oxygenTick == 60)
         {
-
+            oxygen--;
+            oxygenTick = 0;
         }
-
-        yield return null;
+        updateGage();
     }
 
-    private void Zoom()
+    public void damage(int amount)
     {
-        float zoom = Input.GetAxis("Mouse ScrollWheel") * wheelSpeed;
-        if (virtualCamera.m_Lens.OrthographicSize + ((-1) * zoom) < 1)
+        if (health - amount > 0)
         {
-            virtualCamera.m_Lens.OrthographicSize = 1;
+            health -= amount;
         }
-
-        float increasement = virtualCamera.m_Lens.OrthographicSize * a;
-
-        virtualCamera.m_Lens.OrthographicSize += (-1) * zoom * increasement;
-
-        if (!virtualCamera.enabled)
+        else
         {
-            Camera.main.orthographicSize = virtualCamera.m_Lens.OrthographicSize;
+            health = 0;
+            print("Player Died");
+        }
+        updateGage();
+    }
+
+    public void cure(int amount)
+    {
+        if (health + amount > maxHealth)
+        {
+            health = maxHealth;
+        }
+        else
+        {
+            health += amount;
+        }
+        updateGage();
+    }
+
+    private void updateGage()
+    {
+        healthGage.transform.GetChild(0).localScale = new Vector3(1.9f * (health / (float)maxHealth), healthGage.transform.GetChild(0).localScale.y, healthGage.transform.GetChild(0).localScale.z);
+        oxygenGage.transform.GetChild(0).localScale = new Vector3(1.9f * (oxygen / (float)maxOxygen), oxygenGage.transform.GetChild(0).localScale.y, oxygenGage.transform.GetChild(0).localScale.z);
+    }
+
+    private void calculateFallDamage()
+    {
+        if (lastGroundTouchPos.y - transform.position.y > 2)
+        {
+            damage(Mathf.FloorToInt((lastGroundTouchPos.y - transform.position.y - 2) * 10));
         }
     }
-    */
 }

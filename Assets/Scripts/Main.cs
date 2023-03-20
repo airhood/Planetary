@@ -112,6 +112,7 @@ public class Main : MonoBehaviour
     public List<Matter> _matterList = new List<Matter>();
     public List<Item> _itemList = new List<Item>();
 
+    public Player player;
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -146,13 +147,6 @@ public class Main : MonoBehaviour
         // liquidPipe calculate
         // gasPipe calculate
         // machine calculate
-    }
-
-    private void Test(int amont)
-    {
-        for (int i = 0; i < amont; i++)
-        {
-            Instantiate(gameObject, new Vector2(0, 0), Quaternion.identity);
-        }
+        player.doOxygenTick();
     }
 }

@@ -436,8 +436,8 @@ MonoBehaviour:
   backpack: {fileID: 1998346820}
   isBackpackOpen: 0
   ResearchPoint: 0
-  itemCollectDistance: 1
-  itemCollectTick: 45
+  itemCollectDistance: 1.5
+  itemCollectTick: 30
   toolMode: 0
   isModifyingTerrain: 0
   currentModifyTerrainTileOriginalTick: 0
