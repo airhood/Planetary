@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
     public bool isGround;
     public bool isJumping;
     public Vector2 lastGroundTouchPos;
+    public Vector2 lastGroundTouchPosFallDamageCalculation;
+    public bool fallDamageCalculated;
 
     [Header("Animation")]
     public Animator animator;
@@ -142,12 +144,17 @@ public class Player : MonoBehaviour
         else animator.SetBool("Walk", false);
 
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -0.5f), 0.03f, 1 << LayerMask.NameToLayer("Ground"));
+        //isGround = checkGround();
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround) Jump();
         else if (!Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             isJumping = false;
             lastGroundTouchPos = transform.position;
+            if (fallDamageCalculated)
+            {
+                lastGroundTouchPosFallDamageCalculation = lastGroundTouchPos;
+            }
         }
 
         animator.SetBool("Jump", isJumping);
@@ -445,6 +452,8 @@ public class Player : MonoBehaviour
 
     public void doOxygenTick()
     {
+        if (!terrainGeneration.isLoaded) return;
+
         if (oxygen > 0)
         {
             oxygenTick++;
@@ -492,9 +501,29 @@ public class Player : MonoBehaviour
 
     private void calculateFallDamage()
     {
-        if (lastGroundTouchPos.y - transform.position.y > 2)
+        if (lastGroundTouchPosFallDamageCalculation.y - transform.position.y > 2)
         {
-            damage(Mathf.FloorToInt((lastGroundTouchPos.y - transform.position.y - 2) * 10));
+            fallDamageCalculated = false;
+            if (isGround)
+            {
+                damage(Mathf.FloorToInt((lastGroundTouchPos.y - transform.position.y - 2) * 10));
+                fallDamageCalculated = true;
+            }
         }
+    }
+
+    private bool checkGround()
+    {
+        LayerMask layerMask = 1 << 6;
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, 10f, layerMask);
+
+        if (hitInfo.collider == null) return false;
+
+        if (hitInfo.distance > 0.1f)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
