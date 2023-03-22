@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
     public int currentModifyTerrainTileOriginalTick;
     public int modifyTerrainTileTickRemain;
     public Vector2Int diggingPos;
-    public BlockModify blockMidify;
+    public BlockModify blockModify;
     public int digAmount = 1;
     public int digTickMultiply;
     public Sprite[] matterDiggingAnimationImage = new Sprite[9];
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
                 gizmosList.Add(0);
                 if (pos.x >= 0 && pos.y >= 0)
                 {
-                    if (main.world.planet[0].map.map[pos.x, pos.y] != 0)
+                    if (main.world.planet[0].map.map[pos.x, pos.y] < 0)
                     {
                         gizmosList.Add(1);
 
@@ -215,6 +215,22 @@ public class Player : MonoBehaviour
                         isModifyingTerrain = false;
                         modifyTerrainTileTickRemain = 0;
                         currentModifyTerrainTileOriginalTick = 0;
+                    }
+                }
+            }
+            else
+            {
+                if (pos.x >= 0 && pos.y >= 0)
+                {
+                    if (checkSetBlockAvailable(pos))
+                    {
+                        if (backpack.slots[backpack.index].itemID != 0)
+                        {
+                            if (Main.itemList[backpack.slots[backpack.index].itemID].type == ItemType.Block)
+                            {
+                                setBlock(pos);
+                            }
+                        }
                     }
                 }
             }
@@ -375,7 +391,7 @@ public class Player : MonoBehaviour
                 {
                     //backpack.addItemToBackpack(Main.matterList[main.world.planet[0].map.map[position.x, position.y]].itemID, 1);
                     itemManager.spawnItem(Main.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), 32);
-                    blockMidify.ModifyTerrain(position, 0);
+                    blockModify.ModifyTerrain(position, 0);
                     isModifyingTerrain = false;
                     modifyTerrainTileTickRemain = 0;
                     currentModifyTerrainTileOriginalTick = 0;
@@ -386,7 +402,7 @@ public class Player : MonoBehaviour
             else
             {
                 diggingPos = position;
-                modifyTerrainTileTickRemain = blockMidify.GetTerrainTileHardness(position) * digTickMultiply;
+                modifyTerrainTileTickRemain = blockModify.GetTerrainTileHardness(position) * digTickMultiply;
                 modifyTerrainTileTickRemain -= digAmount;
             }
         }
@@ -394,8 +410,8 @@ public class Player : MonoBehaviour
         {
             isModifyingTerrain = true;
             diggingPos = position;
-            currentModifyTerrainTileOriginalTick = blockMidify.GetTerrainTileHardness(position) * digTickMultiply;
-            modifyTerrainTileTickRemain = blockMidify.GetTerrainTileHardness(position) * digTickMultiply;
+            currentModifyTerrainTileOriginalTick = blockModify.GetTerrainTileHardness(position) * digTickMultiply;
+            modifyTerrainTileTickRemain = blockModify.GetTerrainTileHardness(position) * digTickMultiply;
             modifyTerrainTileTickRemain -= digAmount;
         }
     }
@@ -412,7 +428,7 @@ public class Player : MonoBehaviour
 
     private GameObject[] detectNearItems()
     {
-        Collider2D[] results = Physics2D.OverlapCircleAll(this.transform.position, itemCollectDistance);
+        Collider2D[] results = Physics2D.OverlapCircleAll(transform.position, itemCollectDistance);
         List<GameObject> items = new List<GameObject>();
 
         for(int i = 0; i < results.Length; i++)
@@ -510,6 +526,25 @@ public class Player : MonoBehaviour
                 fallDamageCalculated = true;
             }
         }
+    }
+
+    private void setBlock(Vector2Int position)
+    {
+        blockModify.SetBlock(position, Main.itemList[backpack.slots[backpack.index].itemID].placeableID);
+    }
+
+    private bool checkSetBlockAvailable(Vector2Int position)
+    {
+        if (main.world.planet[0].map.map[position.x, position.y] == 0)
+        {
+            Vector2Int playerTilePos = (Vector2Int)collidableBlock.WorldToCell(this.transform.position);
+            if (position != playerTilePos && position != playerTilePos + new Vector2Int(0, 1))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private bool checkGround()

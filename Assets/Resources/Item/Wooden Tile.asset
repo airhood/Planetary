@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 944ff5902644c5640a10110cb9798225, type: 3}
-  m_Name: Stone Item
+  m_Name: Wooden Tile
   m_EditorClassIdentifier: 
-  id: 1
-  name: Stone
+  id: 2
+  name: Wooden Tile
   description: 
-  image: {fileID: 21300000, guid: ee680911fa090f94987e07a068927ffe, type: 3}
-  type: 1
-  placeableID: -1
+  image: {fileID: 2537882373423050008, guid: 5f1d191885bf0ce4c84183d3c4f91e57, type: 3}
+  type: 2
+  placeableID: 1

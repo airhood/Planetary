@@ -425,12 +425,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   main: {fileID: 0}
   collidableBlock: {fileID: 0}
+  terrainGeneration: {fileID: 0}
   rb: {fileID: 3468241435639570274}
   moveSpeed: 5
   jumpSpeed: 600
   jumpEnabled: 0
   isGround: 0
   isJumping: 0
+  lastGroundTouchPos: {x: 0, y: 0}
+  lastGroundTouchPosFallDamageCalculation: {x: 0, y: 0}
+  fallDamageCalculated: 0
   animator: {fileID: 3468241435639570279}
   spriteRenderer: {fileID: 3468241435639570276}
   backpack: {fileID: 1998346820}
@@ -462,6 +466,13 @@ MonoBehaviour:
   jetEnabled: 0
   jetFuelLeft: 0
   gizmosList: 
+  maxHealth: 100
+  health: 100
+  maxOxygen: 100
+  oxygen: 100
+  healthGage: {fileID: 4486422635326348499}
+  oxygenGage: {fileID: 903043563}
+  sidePopUp: {fileID: 0}
 --- !u!95 &3468241435639570279
 Animator:
   serializedVersion: 3
@@ -662,6 +673,7 @@ MonoBehaviour:
     amount: 0
   hotBar: {fileID: 0}
   hotBarFrame: {fileID: 8119064645845067680, guid: a18e42719c2716a4087876981f2c3bee, type: 3}
+  player: {fileID: 3468241435639570285}
 --- !u!1 &4486422635326348499
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +685,7 @@ GameObject:
   - component: {fileID: 495286847205916173}
   - component: {fileID: 4901653853114769634}
   m_Layer: 0
-  m_Name: Health
+  m_Name: Health Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

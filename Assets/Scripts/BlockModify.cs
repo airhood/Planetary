@@ -5,13 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class BlockModify : MonoBehaviour
 {
-    [Header("World")]
     public Main main;
     public Tilemap collidableBlock;
     public Tilemap nonCollidableBlock;
-
-    [Header("BlockList")]
-    public List<Block> blocks = new List<Block>();
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +23,7 @@ public class BlockModify : MonoBehaviour
 
     public bool CheckSetBlockAvailable(Vector2Int position, short blockCode)
     {
-        Block block = blocks[blockCode];
+        Block block = Main.blockList[blockCode];
 
         BuildingState buildingState = block.building[block.defaultStateCode];
 
@@ -45,7 +41,14 @@ public class BlockModify : MonoBehaviour
 
     public void SetBlock(Vector2Int position, short blockCode)
     {
-        Block block = blocks[blockCode];
+        Block block = Main.blockList[blockCode];
+
+        if (block.type == BlockType.Tile)
+        {
+            collidableBlock.SetTile((Vector3Int)position, block.tile);
+            main.world.planet[0].map.map[position.x, position.y] = blockCode;
+            return;
+        }
 
         BuildingState buildingState = block.building[block.defaultStateCode];
 

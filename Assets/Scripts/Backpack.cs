@@ -36,11 +36,14 @@ public class Backpack : MonoBehaviour
 
     public GameObject hotBarFrame;
 
+    public Player player;
+
     void Start()
     {
+        index = 0;
         for(int i = 0; i < 40; i++)
         {
-            slots.Add(new Slot(-1, 0));
+            slots.Add(new Slot(0, 0));
         }
         updateHotBarUI();
     }
@@ -68,7 +71,15 @@ public class Backpack : MonoBehaviour
             }
         }
 
-        hotBarFrame.transform.position = hotBar.transform.GetChild(index).position;
+        if (player.toolMode == ToolMode.None)
+        {
+            hotBarFrame.transform.position = hotBar.transform.GetChild(index).position;
+            hotBarFrame.SetActive(true);
+        }
+        else
+        {
+            hotBarFrame.SetActive(false);
+        }
     }
 
     public void addItemToBackpack(short itemID, ushort amount)
