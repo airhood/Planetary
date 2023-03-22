@@ -143,7 +143,7 @@ public class Player : MonoBehaviour
         }
         else animator.SetBool("Walk", false);
 
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -0.5f), 0.03f, 1 << LayerMask.NameToLayer("Ground"));
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position, 0.03f, 1 << LayerMask.NameToLayer("Ground"));
         //isGround = checkGround();
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround) Jump();
@@ -195,12 +195,12 @@ public class Player : MonoBehaviour
             worldPosition = Camera.main.ScreenToWorldPoint((Vector3)mousePosition);
             pos = (Vector2Int)collidableBlock.WorldToCell(worldPosition);
 
-
-            if (toolMode == ToolMode.Drill)
+            if (pos.x >= 0 && pos.y >= 0)
             {
-                gizmosList.Add(0);
-                if (pos.x >= 0 && pos.y >= 0)
+                if (toolMode == ToolMode.Drill)
                 {
+                    gizmosList.Add(0);
+
                     if (main.world.planet[0].map.map[pos.x, pos.y] < 0)
                     {
                         gizmosList.Add(1);
@@ -217,10 +217,17 @@ public class Player : MonoBehaviour
                         currentModifyTerrainTileOriginalTick = 0;
                     }
                 }
-            }
-            else
-            {
-                if (pos.x >= 0 && pos.y >= 0)
+                else if (toolMode == ToolMode.Destruction)
+                {
+                    if (main.world.planet[0].map.map[pos.x, pos.y] > 0)
+                    {
+                        if (Main.blockList[main.world.planet[0].map.map[pos.x, pos.y]].type == BlockType.Tile)
+                        {
+                            destructBlock(pos);
+                        }
+                    }
+                }
+                else
                 {
                     if (checkSetBlockAvailable(pos))
                     {
@@ -255,6 +262,17 @@ public class Player : MonoBehaviour
             else
             {
                 toolMode = ToolMode.Drill;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (toolMode == ToolMode.Destruction)
+            {
+                toolMode = ToolMode.None;
+            }
+            else
+            {
+                toolMode = ToolMode.Destruction;
             }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -519,11 +537,14 @@ public class Player : MonoBehaviour
     {
         if (lastGroundTouchPosFallDamageCalculation.y - transform.position.y > 2)
         {
-            fallDamageCalculated = false;
             if (isGround)
             {
-                damage(Mathf.FloorToInt((lastGroundTouchPos.y - transform.position.y - 2) * 10));
+                damage(Mathf.FloorToInt((lastGroundTouchPosFallDamageCalculation.y - transform.position.y - 2) * 10));
                 fallDamageCalculated = true;
+            }
+            else
+            {
+                fallDamageCalculated = false;
             }
         }
     }
@@ -531,6 +552,7 @@ public class Player : MonoBehaviour
     private void setBlock(Vector2Int position)
     {
         blockModify.SetBlock(position, Main.itemList[backpack.slots[backpack.index].itemID].placeableID);
+        backpack.removeItem(backpack.index, 1);
     }
 
     private bool checkSetBlockAvailable(Vector2Int position)
@@ -545,6 +567,12 @@ public class Player : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void destructBlock(Vector2Int position)
+    {
+        itemManager.spawnItem(Main.blockList[main.world.planet[0].map.map[position.x, position.y]].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), 1);
+        blockModify.DeleteBlock(position);
     }
 
     private bool checkGround()

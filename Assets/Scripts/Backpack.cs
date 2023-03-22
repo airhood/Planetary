@@ -121,6 +121,18 @@ public class Backpack : MonoBehaviour
         updateHotBarUI();
     }
 
+    public void removeItem(byte index, byte amount)
+    {
+        if (slots[index].amount - amount < 0)
+        {
+            slots[index].amount = 0;
+            updateHotBarUI();
+            return;
+        }
+        slots[index].amount -= amount;
+        updateHotBarUI();
+    }
+
     public void autoBackpackSerialization()
     {
         for(int i = 0; i < slots.Count; i++)

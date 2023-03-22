@@ -16757,6 +16757,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 725686024}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: fallDamageCalculated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: matterDiggingAnimation
       value: 
       objectReference: {fileID: 1246810016}

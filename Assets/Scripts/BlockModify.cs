@@ -72,6 +72,18 @@ public class BlockModify : MonoBehaviour
         }
     }
 
+    public void DeleteBlock(Vector2Int position)
+    {
+        Block block = Main.blockList[main.world.planet[0].map.map[position.x, position.y]];
+        
+        if (block.type == BlockType.Tile)
+        {
+            collidableBlock.SetTile((Vector3Int)position, null);
+            main.world.planet[0].map.map[position.x, position.y] = 0;
+            return;
+        }
+    }
+
     public void ModifyTerrain(Vector2Int position, short matterCode)
     {
         if (matterCode == 0)
