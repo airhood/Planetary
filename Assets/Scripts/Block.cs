@@ -62,6 +62,8 @@ public class Block : ScriptableObject
     public string description;
     public BlockType type;
 
+    public short destructionTime;
+
     public short itemID;
 
     [Header("Tile")]

@@ -60,23 +60,31 @@ public class Player : MonoBehaviour
 
     [Header("Dig")]
     public bool isModifyingTerrain;
-    public int currentModifyTerrainTileOriginalTick;
-    public int modifyTerrainTileTickRemain;
+    public short currentModifyTerrainTileOriginalTick;
+    public short modifyTerrainTileTickRemain;
     public Vector2Int diggingPos;
     public BlockModify blockModify;
-    public int digAmount = 1;
-    public int digTickMultiply;
+    public short digAmount = 1;
+    public short digTickMultiply;
     public Sprite[] matterDiggingAnimationImage = new Sprite[9];
     public GameObject matterDigging;
     public SpriteRenderer matterDiggingAnimation;
     public ItemManager itemManager;
+
+    [Header("Destruction")]
+    public bool isDestructingBlock;
+    public short currentDestructingBlockOriginalTick;
+    public short destructBlockTickRemain;
+    public Vector2Int destructingPos;
+    public short destructAmount;
+    public short destructMultiply;
 
     [Header("Jet")]
     public bool jetEnabled;
     public float jetFuelLeft;
 
     [Header("Gizmos")]
-    public List<int> gizmosList = new List<int>();
+    public List<short> gizmosList = new List<short>();
 
     Vector3 worldPosition;
     Vector2Int pos;
@@ -420,7 +428,7 @@ public class Player : MonoBehaviour
             else
             {
                 diggingPos = position;
-                modifyTerrainTileTickRemain = blockModify.GetTerrainTileHardness(position) * digTickMultiply;
+                modifyTerrainTileTickRemain = (short)(blockModify.GetTerrainTileHardness(position) * digTickMultiply);
                 modifyTerrainTileTickRemain -= digAmount;
             }
         }
@@ -428,8 +436,8 @@ public class Player : MonoBehaviour
         {
             isModifyingTerrain = true;
             diggingPos = position;
-            currentModifyTerrainTileOriginalTick = blockModify.GetTerrainTileHardness(position) * digTickMultiply;
-            modifyTerrainTileTickRemain = blockModify.GetTerrainTileHardness(position) * digTickMultiply;
+            currentModifyTerrainTileOriginalTick = (short)(blockModify.GetTerrainTileHardness(position) * digTickMultiply);
+            modifyTerrainTileTickRemain = currentModifyTerrainTileOriginalTick;
             modifyTerrainTileTickRemain -= digAmount;
         }
     }
@@ -571,8 +579,36 @@ public class Player : MonoBehaviour
 
     private void destructBlock(Vector2Int position)
     {
-        itemManager.spawnItem(Main.blockList[main.world.planet[0].map.map[position.x, position.y]].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), 1);
-        blockModify.DeleteBlock(position);
+        if (isDestructingBlock)
+        {
+            if (position == destructingPos)
+            {
+                if (destructBlockTickRemain <= 0)
+                {
+                    itemManager.spawnItem(Main.blockList[main.world.planet[0].map.map[position.x, position.y]].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), 1);
+                    blockModify.DeleteBlock(position);
+                    isDestructingBlock = false;
+                    destructBlockTickRemain = 0; ;
+                    currentDestructingBlockOriginalTick = 0;
+                    return;
+                }
+                destructBlockTickRemain -= destructAmount;
+            }
+            else
+            {
+                destructingPos = position;
+                destructBlockTickRemain = (short)(blockModify.GetBlockHardness(position) * destructMultiply);
+                destructBlockTickRemain -= destructAmount;
+            }
+        }
+        else
+        {
+            isDestructingBlock = true;
+            destructingPos = position;
+            currentDestructingBlockOriginalTick = (short)(blockModify.GetBlockHardness(position) * destructMultiply);
+            destructBlockTickRemain = currentDestructingBlockOriginalTick;
+            destructBlockTickRemain -= destructAmount;
+        }
     }
 
     private bool checkGround()

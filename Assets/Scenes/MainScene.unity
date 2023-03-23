@@ -16749,9 +16749,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1246810015}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: destructAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: collidableBlock
       value: 
       objectReference: {fileID: 845189074}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: destructMultiply
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: terrainGeneration
       value: 

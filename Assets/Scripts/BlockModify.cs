@@ -100,6 +100,23 @@ public class BlockModify : MonoBehaviour
 
     public short GetTerrainTileHardness(Vector2Int position)
     {
+        if (main.world.planet[0].map.map[position.x, position.x] >= 0)
+        {
+            Debug.LogError("BlockModify.GetTerrainTileHardness: this position is not a matter");
+            return -1;
+        }
         return Main.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].hardness;
     }
+
+    public short GetBlockHardness(Vector2Int position)
+    {
+        if (main.world.planet[0].map.map[position.x, position.y] <= 0)
+        {
+            Debug.LogError("BlockModify.GetBlockHardness: this position is not a block");
+            return -1;
+        }
+        return Main.blockList[main.world.planet[0].map.map[position.x, position.y]].destructionTime;
+    }
+
+
 }
