@@ -404,7 +404,8 @@ public class Player : MonoBehaviour
 
     private bool checkDigAvailable(Vector2Int position)
     {
-        return true;
+        if (main.world.planet[0].map.map[position.x, position.y] < 0) return true;
+        return false;
     }
 
     public void Dig(Vector2Int position)
@@ -428,7 +429,8 @@ public class Player : MonoBehaviour
             else
             {
                 diggingPos = position;
-                modifyTerrainTileTickRemain = (short)(blockModify.GetTerrainTileHardness(position) * digTickMultiply);
+                currentModifyTerrainTileOriginalTick = (short)(blockModify.GetTerrainTileHardness(position) * digTickMultiply);
+                modifyTerrainTileTickRemain = currentModifyTerrainTileOriginalTick;
                 modifyTerrainTileTickRemain -= digAmount;
             }
         }

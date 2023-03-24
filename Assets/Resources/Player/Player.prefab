@@ -434,7 +434,7 @@ MonoBehaviour:
   isJumping: 0
   lastGroundTouchPos: {x: 0, y: 0}
   lastGroundTouchPosFallDamageCalculation: {x: 0, y: 0}
-  fallDamageCalculated: 0
+  fallDamageCalculated: 1
   animator: {fileID: 3468241435639570279}
   spriteRenderer: {fileID: 3468241435639570276}
   backpack: {fileID: 1998346820}
@@ -447,7 +447,7 @@ MonoBehaviour:
   currentModifyTerrainTileOriginalTick: 0
   modifyTerrainTileTickRemain: 0
   diggingPos: {x: 0, y: 0}
-  blockMidify: {fileID: 1998346812}
+  blockModify: {fileID: 1998346812}
   digAmount: 1
   digTickMultiply: 20
   matterDiggingAnimationImage:
@@ -463,6 +463,12 @@ MonoBehaviour:
   matterDigging: {fileID: 0}
   matterDiggingAnimation: {fileID: 0}
   itemManager: {fileID: 0}
+  isDestructingBlock: 0
+  currentDestructingBlockOriginalTick: 0
+  destructBlockTickRemain: 0
+  destructingPos: {x: 0, y: 0}
+  destructAmount: 1
+  destructMultiply: 20
   jetEnabled: 0
   jetFuelLeft: 0
   gizmosList: 
@@ -576,7 +582,6 @@ MonoBehaviour:
   main: {fileID: 0}
   collidableBlock: {fileID: 0}
   nonCollidableBlock: {fileID: 0}
-  blocks: []
 --- !u!114 &1998346820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,85 +596,85 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BackPackLevel: 1
   slots:
-  - itemID: -1
+  - itemID: 2
+    amount: 255
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
-  - itemID: -1
-    amount: 0
-  - itemID: -1
+  - itemID: 0
     amount: 0
   hotBar: {fileID: 0}
   hotBarFrame: {fileID: 8119064645845067680, guid: a18e42719c2716a4087876981f2c3bee, type: 3}

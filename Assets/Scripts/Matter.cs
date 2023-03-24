@@ -9,7 +9,7 @@ public enum MatterType
 
 public enum Matters
 {
-    vacuum, stone
+    vacuum, stone, Dirt
 }
 
 [CreateAssetMenu(menuName = "Matter", fileName = "new Matter", order = 30)]
@@ -24,6 +24,8 @@ public class Matter : ScriptableObject
     public short hardness;
 
     public RuleTile tile;
+
+    public Color color;
 
     public bool canBePlacedAsBlock;
 
