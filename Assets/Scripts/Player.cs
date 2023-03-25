@@ -243,7 +243,10 @@ public class Player : MonoBehaviour
                         {
                             if (Main.itemList[backpack.slots[backpack.index].itemID].type == ItemType.Block)
                             {
-                                setBlock(pos);
+                                if (backpack.slots[backpack.index].amount > 0)
+                                {
+                                    setBlock(pos);
+                                }
                             }
                         }
                     }
