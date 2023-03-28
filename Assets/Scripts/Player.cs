@@ -90,16 +90,14 @@ public class Player : MonoBehaviour
     Vector2Int pos;
 
     [Header("Player Property")]
-    public int maxHealth;
-    public int health;
-    public int maxOxygen;
-    public int oxygen;
+    public PlayerInfo playerInfo = new PlayerInfo();
     int oxygenTick;
     public GameObject healthGage;
     public GameObject oxygenGage;
+    int cureTickAmount;
 
     [Header("UI")]
-    public GameObject sidePopUp;
+    public TextMesh nameDisplay;
 
     void Awake()
     {
@@ -115,11 +113,13 @@ public class Player : MonoBehaviour
     void Start()
     {
         toolMode = ToolMode.None;
+        nameDisplay.text = playerInfo.playerName;
     }
 
     // Update is called once per frame
     void Update()
     {
+        playerInfo.playerPosition = new Vector4(transform.position.x, transform.position.y, 0, 0);
         MovePlayer();
         CheckInput();
         calculateAnimation();
@@ -380,14 +380,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void playerTick()
+    {
+        doOxygenTick();
+        cureTick();
+    }
+
     private void openBackpack()
     {
-        sidePopUp.SetActive(true);
+
     }
 
     private void closeBackpack()
     {
-        sidePopUp.SetActive(false);
+
     }
 
     private void calculateAnimation()
@@ -501,49 +507,59 @@ public class Player : MonoBehaviour
     {
         if (!terrainGeneration.isLoaded) return;
 
-        if (oxygen > 0)
+        if (playerInfo.oxygen > 0)
         {
             oxygenTick++;
         }
         if (oxygenTick == 60)
         {
-            oxygen--;
+            playerInfo.oxygen--;
             oxygenTick = 0;
         }
         updateGage();
     }
 
-    public void damage(int amount)
+    public void damage(short amount)
     {
-        if (health - amount > 0)
+        if (playerInfo.health - amount > 0)
         {
-            health -= amount;
+            playerInfo.health -= amount;
         }
         else
         {
-            health = 0;
+            playerInfo.health = 0;
             print("Player Died");
         }
         updateGage();
     }
 
-    public void cure(int amount)
+    public void cure(short amount)
     {
-        if (health + amount > maxHealth)
+        if (playerInfo.health + amount > playerInfo.maxHealth)
         {
-            health = maxHealth;
+            playerInfo.health = playerInfo.maxHealth;
         }
         else
         {
-            health += amount;
+            playerInfo.health += amount;
         }
         updateGage();
     }
 
+    private void cureTick()
+    {
+        cureTickAmount++;
+        if (cureTickAmount == 20 * 10)
+        {
+            cureTickAmount = 0;
+            if (playerInfo.health >= 90) cure(1);
+        }
+    }
+
     private void updateGage()
     {
-        healthGage.transform.GetChild(0).localScale = new Vector3(1.9f * (health / (float)maxHealth), healthGage.transform.GetChild(0).localScale.y, healthGage.transform.GetChild(0).localScale.z);
-        oxygenGage.transform.GetChild(0).localScale = new Vector3(1.9f * (oxygen / (float)maxOxygen), oxygenGage.transform.GetChild(0).localScale.y, oxygenGage.transform.GetChild(0).localScale.z);
+        healthGage.transform.GetChild(0).localScale = new Vector3(1.9f * (playerInfo.health / (float)playerInfo.maxHealth), healthGage.transform.GetChild(0).localScale.y, healthGage.transform.GetChild(0).localScale.z);
+        oxygenGage.transform.GetChild(0).localScale = new Vector3(1.9f * (playerInfo.oxygen / (float)playerInfo.maxOxygen), oxygenGage.transform.GetChild(0).localScale.y, oxygenGage.transform.GetChild(0).localScale.z);
     }
 
     private void calculateFallDamage()
@@ -552,7 +568,7 @@ public class Player : MonoBehaviour
         {
             if (isGround)
             {
-                damage(Mathf.FloorToInt((lastGroundTouchPosFallDamageCalculation.y - transform.position.y - 2) * 10));
+                damage((short)Mathf.FloorToInt((lastGroundTouchPosFallDamageCalculation.y - transform.position.y - 2) * 10));
                 fallDamageCalculated = true;
             }
             else

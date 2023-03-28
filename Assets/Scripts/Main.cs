@@ -21,7 +21,7 @@ public struct GameSettings
 public class World
 {
     public WorldInfo worldInfo;
-    public PlayerInfo playerinfo;
+    public PlayerInfoData playerinfoData;
     public Planet[] planet = new Planet[1];
 }
 
@@ -89,13 +89,13 @@ public class DroppedItem
     public Item item;
 }
 
-public class PlayerInfo
+public class PlayerInfoData
 {
     public Vector2 playerPos;
     public byte hotBarPos;
     public Slot[] backpack = new Slot[40];
-    public Backpack Backpack;
     public int ResearchPoint;
+    public PlayerInfo playerInfo;
 }
 
 public class Main : MonoBehaviour
@@ -147,6 +147,6 @@ public class Main : MonoBehaviour
         // liquidPipe calculate
         // gasPipe calculate
         // machine calculate
-        player.doOxygenTick();
+        player.playerTick();
     }
 }
