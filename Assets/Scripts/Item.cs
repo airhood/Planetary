@@ -7,7 +7,7 @@ public enum ItemType
     Item, Matter, Block
 }
 
-[CreateAssetMenu(menuName = "Item", fileName = "new Item", order = 32)]
+[CreateAssetMenu(menuName = "World/Item", fileName = "new Item", order = 32)]
 public class Item : ScriptableObject
 {
     public short id;

@@ -53,7 +53,7 @@ public class BuildingState
     public List<BuildingTile> buildingParts = new List<BuildingTile>();
 }
 
-[CreateAssetMenu(menuName = "Block", fileName = "new Block", order = 31)]
+[CreateAssetMenu(menuName = "World/Block", fileName = "new Block", order = 31)]
 public class Block : ScriptableObject
 {
     [Header("Info")]

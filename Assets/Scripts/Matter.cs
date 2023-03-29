@@ -12,7 +12,7 @@ public enum Matters
     vacuum, stone, Dirt
 }
 
-[CreateAssetMenu(menuName = "Matter", fileName = "new Matter", order = 30)]
+[CreateAssetMenu(menuName = "World/Matter", fileName = "new Matter", order = 30)]
 public class Matter : ScriptableObject
 {
     public short id;
