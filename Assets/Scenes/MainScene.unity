@@ -690,7 +690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &150119082
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6334,6 +6334,7 @@ MonoBehaviour:
   _blockList:
   - {fileID: 0}
   - {fileID: 11400000, guid: bad1ff15a57f916459a8ceeaa7a0ad32, type: 2}
+  - {fileID: 11400000, guid: 13794cde7dcc87e4482ce0e631784e52, type: 2}
   _matterList:
   - {fileID: 11400000, guid: 0ad6e1b4d7a98cc4fb79551d3e5f884e, type: 2}
   - {fileID: 11400000, guid: 0f6dde1caf4166a4a83402a98636e0e2, type: 2}
@@ -6343,6 +6344,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 457c0bd8aca49b248b9925ddc850c4ec, type: 2}
   - {fileID: 11400000, guid: 1d8a6d52a29bf304e88b71f961506b51, type: 2}
   - {fileID: 11400000, guid: 0b048014988579a47ab9642eb671aef2, type: 2}
+  - {fileID: 11400000, guid: f6f852d0eb2f094408af6861fac7b2f3, type: 2}
   player: {fileID: 1998346817}
 --- !u!114 &725686024
 MonoBehaviour:
@@ -16772,6 +16774,14 @@ PrefabInstance:
       propertyPath: hotBar
       value: 
       objectReference: {fileID: 394448738}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: slots.Array.data[1].amount
+      value: 255
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: slots.Array.data[1].itemID
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570273, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -580,8 +580,11 @@ public class Player : MonoBehaviour
 
     private void setBlock(Vector2Int position)
     {
-        blockModify.SetBlock(position, Main.itemList[backpack.slots[backpack.index].itemID].placeableID);
-        backpack.removeItem(backpack.index, 1);
+        bool result = blockModify.SetBlock(position, Main.itemList[backpack.slots[backpack.index].itemID].placeableID);
+        if (result)
+        {
+            backpack.removeItem(backpack.index, 1);
+        }
     }
 
     private bool checkSetBlockAvailable(Vector2Int position)

@@ -60,7 +60,6 @@ public class GameTime
 public class ConveyerSystem
 {
     public List<MovingItem> movingItemMemory = new List<MovingItem>();
-
     public ConveyerBelt[,] conveyerOverlayMap = new ConveyerBelt[100, 100];
 }
 

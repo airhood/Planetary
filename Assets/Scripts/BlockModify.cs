@@ -39,7 +39,7 @@ public class BlockModify : MonoBehaviour
         return true;
     }
 
-    public void SetBlock(Vector2Int position, short blockCode)
+    public bool SetBlock(Vector2Int position, short blockCode)
     {
         Block block = Main.blockList[blockCode];
 
@@ -47,29 +47,56 @@ public class BlockModify : MonoBehaviour
         {
             collidableBlock.SetTile((Vector3Int)position, block.tile);
             main.world.planet[0].map.map[position.x, position.y] = blockCode;
-            return;
+            return true;
         }
 
         BuildingState buildingState = block.building[block.defaultStateCode];
 
-        main.world.planet[0].map.map[position.x, position.y] = -1;
-
         // code -1 : a block is placed but it is not the main part of the
         // block and any matter or block cannot be placed at that position
+
+        foreach (Vector2Int pos in block.requiredFloor)
+        {
+            Vector2Int floorPos = position + (pos - block.BuildPoint);
+            if (main.world.planet[0].map.map[floorPos.x, floorPos.y] == 0 || main.world.planet[0].map.map[floorPos.x, floorPos.y] <= -20000)
+            {
+                return false;
+            }
+        }
 
         foreach (BuildingTile buildingTile in buildingState.buildingParts)
         {
             Vector2Int pos = position + (buildingTile.pos - block.BuildPoint);
+            if (main.world.planet[0].map.map[pos.x, pos.y] != 0)
+            {
+                return false;
+            }
+        }
 
-            if (pos == position) {
-                main.world.planet[0].map.map[pos.x, pos.y] = (short)((10 * block.id) + block.defaultStateCode);
+        foreach (BuildingTile buildingTile in buildingState.buildingParts)
+        {
+            Vector2Int relativePos = buildingTile.pos - block.BuildPoint;
+            Vector2Int implicitPos = position + relativePos;
+
+            if (buildingTile.pos == block.BuildPoint) {
+                main.world.planet[0].map.map[implicitPos.x, implicitPos.y] = (short)((10 * block.id) + block.defaultStateCode);
             }
             else
             {
-                main.world.planet[0].map.map[pos.x, pos.y] = -30000;
+                main.world.planet[0].map.map[implicitPos.x, implicitPos.y] = (short)(-20000 - (( (relativePos.x > 0) ? 0 : 1)* 1000) - (Mathf.Abs(relativePos.x) * 100) - (( (relativePos.y > 0) ? 0 : 1 ) * 10) -(relativePos.y));
             }
-            collidableBlock.SetTile((Vector3Int)(position + pos), buildingTile.tile);
+            
+            if (buildingTile.isCollidable)
+            {
+                collidableBlock.SetTile((Vector3Int)implicitPos, buildingTile.tile);
+            }
+            else
+            {
+                nonCollidableBlock.SetTile((Vector3Int)implicitPos, buildingTile.tile);
+            }
         }
+
+        return true;
     }
 
     public void DeleteBlock(Vector2Int position)

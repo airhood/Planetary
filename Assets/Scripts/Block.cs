@@ -76,6 +76,7 @@ public class Block : ScriptableObject
     public bool hasInstance;
     public byte defaultStateCode;
     public List<BuildingState> building = new List<BuildingState>();
+    public List<Vector2Int> requiredFloor = new List<Vector2Int>();
 
     [Header("Port")]
     public List<Port> ports = new List<Port>();
