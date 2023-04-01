@@ -209,7 +209,7 @@ public class Player : MonoBehaviour
                 {
                     gizmosList.Add(0);
 
-                    if (main.world.planet[0].map.map[pos.x, pos.y] < 0)
+                    if (main.world.planet[0].map.map[pos.x, pos.y] < 0 && main.world.planet[0].map.map[pos.x, pos.y] > -20000)
                     {
                         gizmosList.Add(1);
 
@@ -229,10 +229,11 @@ public class Player : MonoBehaviour
                 {
                     if (main.world.planet[0].map.map[pos.x, pos.y] > 0)
                     {
-                        if (Main.blockList[main.world.planet[0].map.map[pos.x, pos.y]].type == BlockType.Tile)
-                        {
-                            destructBlock(pos);
-                        }
+                        destructBlock(pos);
+                    }
+                    else if (main.world.planet[0].map.map[pos.x, pos.y] < 0 && main.world.planet[0].map.map[pos.x, pos.y] <= -20000)
+                    {
+                        destructBlock(pos);
                     }
                 }
                 else
@@ -603,14 +604,17 @@ public class Player : MonoBehaviour
 
     private void destructBlock(Vector2Int position)
     {
+        print(1);
         if (isDestructingBlock)
         {
             if (position == destructingPos)
             {
                 if (destructBlockTickRemain <= 0)
                 {
-                    itemManager.spawnItem(Main.blockList[main.world.planet[0].map.map[position.x, position.y]].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), 1);
-                    blockModify.DeleteBlock(position);
+                    (short, Vector2Int?) result = blockModify.DeleteBlock(position);
+                    print($"result.Item1: {result.Item1}");
+                    // TODO: 아이템 소환 위치를 block main pos 로 변경하기
+                    itemManager.spawnItem(Main.blockList[result.Item1].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)result.Item2) + new Vector2(0.5f, 0.2f), 1);
                     isDestructingBlock = false;
                     destructBlockTickRemain = 0; ;
                     currentDestructingBlockOriginalTick = 0;

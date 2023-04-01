@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -79,7 +80,7 @@ public class BlockModify : MonoBehaviour
             Vector2Int implicitPos = position + relativePos;
 
             if (buildingTile.pos == block.BuildPoint) {
-                main.world.planet[0].map.map[implicitPos.x, implicitPos.y] = (short)((10 * block.id) + block.defaultStateCode);
+                main.world.planet[0].map.map[implicitPos.x, implicitPos.y] = (short)(block.id + ((block.defaultStateCode + 1) * 10000));
             }
             else
             {
@@ -99,16 +100,139 @@ public class BlockModify : MonoBehaviour
         return true;
     }
 
-    public void DeleteBlock(Vector2Int position)
+    public (short, Vector2Int?) DeleteBlock(Vector2Int position)
     {
-        Block block = Main.blockList[main.world.planet[0].map.map[position.x, position.y]];
-        
-        if (block.type == BlockType.Tile)
+        short blockCode = main.world.planet[0].map.map[position.x, position.y];
+        Block block;
+        if (blockCode > 0 && blockCode < 10000)
         {
-            collidableBlock.SetTile((Vector3Int)position, null);
-            main.world.planet[0].map.map[position.x, position.y] = 0;
-            return;
+            block = Main.blockList[blockCode];
+
+            if (block.type == BlockType.Tile)
+            {
+                collidableBlock.SetTile((Vector3Int)position, null);
+                main.world.planet[0].map.map[position.x, position.y] = 0;
+                return (blockCode, position);
+            }
         }
+        else if (blockCode >= 10000 || blockCode <= -20000)
+        {
+            Vector2Int? _blockMainPos = null;
+            if (blockCode >= 10000)
+            {
+                _blockMainPos = position;
+            }
+            else
+            {
+                _blockMainPos = BlockRelativePosToBlockMainPos(position);
+            }
+            Vector2Int blockMainPos;
+            if (_blockMainPos == null) return (0, null);
+            blockMainPos = (Vector2Int)_blockMainPos;
+            print($"playerMouseOnTilePos: {position}, blockMainPos: {blockMainPos}");
+            short realBlockCode = MainBlockWorldMapCodeToBlockCode(main.world.planet[0].map.map[blockMainPos.x, blockMainPos.y]);
+            print(deleteBlockParts(blockMainPos) ? "Delete block success" : "Delete block error");
+
+            print($"realBlockCode: {realBlockCode}");
+            (short, Vector2Int?) returnValue = (realBlockCode, blockMainPos);
+            return returnValue;
+        }
+
+        return (0, null);
+    }
+
+    public Vector2Int? BlockRelativePosToBlockMainPos(Vector2Int position)
+    {
+        string _blockCode = main.world.planet[0].map.map[position.x, position.y].ToString();
+        print($"main.world.planet[0].map.map[position.x, position.y].ToString(); : {main.world.planet[0].map.map[position.x, position.y].ToString()}");
+        char[] blockCodeDevided = _blockCode.ToCharArray();
+
+        bool xSign;
+        int xRelativePos;
+        bool ySign;
+        int yRelativePos;
+
+        try
+        {
+            xSign = (blockCodeDevided[1] == 0 ? true : false);
+            xRelativePos = int.Parse(blockCodeDevided[2].ToString());
+            ySign = (blockCodeDevided[3] == 0 ? true : false);
+            yRelativePos = int.Parse(blockCodeDevided[4].ToString());
+        }
+        catch (Exception ex)
+        {
+            print($"Cannot convert position ({position.x},{position.y}) block code to relative blockCode. Error Code: {ex}");
+            return null;
+        }
+
+        int xFinalRelativePos = xSign ? xRelativePos : xRelativePos * (-1);
+        int yFinalRelativePos = ySign ? yRelativePos : yRelativePos * (-1);
+
+        Vector2Int finalRelativePos = new Vector2Int(xFinalRelativePos, yFinalRelativePos);
+        Vector2Int blockMainPos = position - finalRelativePos;
+        return blockMainPos;
+    }
+
+    private bool deleteBlockParts(Vector2Int position)
+    {
+        print($"main.world.planet[0].map.map[position.x, position.y]: {main.world.planet[0].map.map[position.x, position.y]}");
+        char[] blockCode;
+        byte blockState;
+        try
+        {
+            blockCode = main.world.planet[0].map.map[position.x, position.y].ToString().ToCharArray();
+            blockState = (byte)(byte.Parse(blockCode[0].ToString()) - 1);
+        }
+        catch (Exception ex)
+        {
+            print($"Cannot extract blockState from block main position ({position.x},{position.y}). Error code: {ex}");
+            return false;
+        }
+        Block block = Main.blockList[MainBlockWorldMapCodeToBlockCode(main.world.planet[0].map.map[position.x, position.y])];
+        BuildingState buildingState = block.building[blockState];
+
+        foreach(BuildingTile buildingTile in buildingState.buildingParts)
+        {
+            Vector2Int pos = position + buildingTile.pos;
+            main.world.planet[0].map.map[pos.x, pos.y] = 0;
+
+            if (buildingTile.isCollidable)
+            {
+                collidableBlock.SetTile((Vector3Int)pos, null);
+            }
+            else
+            {
+                nonCollidableBlock.SetTile((Vector3Int)pos, null);
+            }
+        }
+
+        return true;
+    }
+
+    public short MainBlockWorldMapCodeToBlockCode(short worldMapCode)
+    {
+        print($"worldMapCode: {worldMapCode}");
+        char[] _worldMapCode;
+        char[] blockCode = new char[4];
+        try
+        {
+            _worldMapCode = worldMapCode.ToString().ToCharArray();
+            for(int i = 0; i < 4; i++)
+            {
+                blockCode[i] = _worldMapCode[i + 1];
+            }
+        }
+        catch (Exception ex)
+        {
+            print($"Error while converting MainBlockWorldMapCode to BlockCode. Error code: {ex}");
+        }
+        string _blockCode = string.Empty;
+        foreach (char c in blockCode)
+        {
+            _blockCode += c;
+        }
+        print($"int.Parse(_blockCode): {int.Parse(_blockCode)}");
+        return (short)int.Parse(_blockCode);
     }
 
     public void ModifyTerrain(Vector2Int position, short matterCode)

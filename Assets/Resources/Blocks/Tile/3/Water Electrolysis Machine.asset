@@ -16,8 +16,8 @@ MonoBehaviour:
   name: Water Electrolysis Machine
   description: 
   type: 1
-  destructionTime: 0
-  itemID: 0
+  destructionTime: 5
+  itemID: 4
   tile: {fileID: 0}
   BuildPoint: {x: 0, y: 0}
   rotation: 0

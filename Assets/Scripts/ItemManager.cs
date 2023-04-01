@@ -31,6 +31,7 @@ public class ItemManager : MonoBehaviour
 
     public void spawnItem(short itemID, Vector2 pos, ushort amount)
     {
+        print($"itemID: {itemID}");
         GameObject gameObject = Instantiate(itemPrefab, pos, Quaternion.identity);
         gameObject.transform.SetParent(item.transform);
         gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[itemID].image;
