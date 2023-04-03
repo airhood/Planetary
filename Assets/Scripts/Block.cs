@@ -74,6 +74,8 @@ public class Block : ScriptableObject
     public Rotation rotation;
     public bool buildOnAirAvailable;
     public bool hasInstance;
+    public bool isInteractive;
+    public bool isUIDisplayable;
     public byte defaultStateCode;
     public List<BuildingState> building = new List<BuildingState>();
     public List<Vector2Int> requiredFloor = new List<Vector2Int>();

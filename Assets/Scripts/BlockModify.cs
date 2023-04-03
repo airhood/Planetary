@@ -80,7 +80,7 @@ public class BlockModify : MonoBehaviour
             Vector2Int implicitPos = position + relativePos;
 
             if (buildingTile.pos == block.BuildPoint) {
-                main.world.planet[0].map.map[implicitPos.x, implicitPos.y] = (short)(block.id + ((block.defaultStateCode + 1) * 10000));
+                main.world.planet[0].map.map[implicitPos.x, implicitPos.y] = block.id;
             }
             else
             {
@@ -103,8 +103,18 @@ public class BlockModify : MonoBehaviour
     public (short, Vector2Int?) DeleteBlock(Vector2Int position)
     {
         short blockCode = main.world.planet[0].map.map[position.x, position.y];
+        print($"blockCode: {blockCode}");
         Block block;
-        if (blockCode > 0 && blockCode < 10000)
+        sbyte type = -1;
+        if (blockCode > 0)
+        {
+            block = Main.blockList[blockCode];
+
+            if (block.type == BlockType.Tile) type = 0;
+            else if (block.type == BlockType.Building) type = 1;
+        }
+
+        if (type == 0)
         {
             block = Main.blockList[blockCode];
 
@@ -115,10 +125,11 @@ public class BlockModify : MonoBehaviour
                 return (blockCode, position);
             }
         }
-        else if (blockCode >= 10000 || blockCode <= -20000)
+        else if (type == 1 || blockCode <= -20000)
         {
-            Vector2Int? _blockMainPos = null;
-            if (blockCode >= 10000)
+            print("hi");
+            Vector2Int ? _blockMainPos = null;
+            if (blockCode > 0)
             {
                 _blockMainPos = position;
             }
@@ -130,11 +141,11 @@ public class BlockModify : MonoBehaviour
             if (_blockMainPos == null) return (0, null);
             blockMainPos = (Vector2Int)_blockMainPos;
             print($"playerMouseOnTilePos: {position}, blockMainPos: {blockMainPos}");
-            short realBlockCode = MainBlockWorldMapCodeToBlockCode(main.world.planet[0].map.map[blockMainPos.x, blockMainPos.y]);
+            short mainBlockCode = main.world.planet[0].map.map[blockMainPos.x, blockMainPos.y];
             print(deleteBlockParts(blockMainPos) ? "Delete block success" : "Delete block error");
 
-            print($"realBlockCode: {realBlockCode}");
-            (short, Vector2Int?) returnValue = (realBlockCode, blockMainPos);
+            print($"mainBlockCode: {mainBlockCode}");
+            (short, Vector2Int?) returnValue = (mainBlockCode, blockMainPos);
             return returnValue;
         }
 
@@ -188,7 +199,7 @@ public class BlockModify : MonoBehaviour
             print($"Cannot extract blockState from block main position ({position.x},{position.y}). Error code: {ex}");
             return false;
         }
-        Block block = Main.blockList[MainBlockWorldMapCodeToBlockCode(main.world.planet[0].map.map[position.x, position.y])];
+        Block block = Main.blockList[main.world.planet[0].map.map[position.x, position.y]];
         BuildingState buildingState = block.building[blockState];
 
         foreach(BuildingTile buildingTile in buildingState.buildingParts)
@@ -269,5 +280,13 @@ public class BlockModify : MonoBehaviour
         return Main.blockList[main.world.planet[0].map.map[position.x, position.y]].destructionTime;
     }
 
+    public void UpdateBlockTilemap(Vector2Int position)
+    {
 
+    }
+
+    public void UpdateBlockStateTilemap(Vector2Int position, byte state)
+    {
+
+    }
 }

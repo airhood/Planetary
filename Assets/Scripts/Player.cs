@@ -604,7 +604,6 @@ public class Player : MonoBehaviour
 
     private void destructBlock(Vector2Int position)
     {
-        print(1);
         if (isDestructingBlock)
         {
             if (position == destructingPos)
