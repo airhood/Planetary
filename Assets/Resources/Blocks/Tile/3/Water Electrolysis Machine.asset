@@ -13,46 +13,52 @@ MonoBehaviour:
   m_Name: Water Electrolysis Machine
   m_EditorClassIdentifier: 
   id: 2
-  name: Water Electrolysis Machine
-  description: 
+  name: "\uBB3C \uC804\uAE30\uBD84\uD574\uAE30"
+  description: "\uC804\uAE30\uB97C \uC774\uC6A9\uD574 \uBB3C\uC744 \uC218\uC18C\uC640
+    \uC0B0\uC18C\uB85C 2:1\uC758 \uBE44\uC728\uB85C \uBD84\uD574\uD569\uB2C8\uB2E4."
   type: 1
-  destructionTime: 5
+  destructionTime: 3
   itemID: 4
   tile: {fileID: 0}
   BuildPoint: {x: 0, y: 0}
-  rotation: 0
   buildOnAirAvailable: 0
-  hasInstance: 0
+  hasInstance: 1
+  isInteractive: 1
+  isUIDisplayable: 1
   defaultStateCode: 0
   building:
   - stateName: WatarFull
-    buildingParts:
-    - pos: {x: 0, y: 0}
-      tile: {fileID: 11400000, guid: 2e6ccac43836fd74c9f02c16dae552a8, type: 2}
-      isCollidable: 0
-    - pos: {x: 0, y: 1}
-      tile: {fileID: 11400000, guid: 841a20be44b8ea24590f0faa4eb8320d, type: 2}
-      isCollidable: 0
-    - pos: {x: 1, y: 0}
-      tile: {fileID: 11400000, guid: b7942411acc37d64ea444c4a753393b4, type: 2}
-      isCollidable: 0
-    - pos: {x: 1, y: 1}
-      tile: {fileID: 11400000, guid: 890ec1ebd6e6f834a8f237e20823fca1, type: 2}
-      isCollidable: 0
+    buildingRotations:
+    - rotation: 0
+      buildingParts:
+      - pos: {x: 0, y: 0}
+        tile: {fileID: 11400000, guid: 2e6ccac43836fd74c9f02c16dae552a8, type: 2}
+        isCollidable: 0
+      - pos: {x: 0, y: 1}
+        tile: {fileID: 11400000, guid: 841a20be44b8ea24590f0faa4eb8320d, type: 2}
+        isCollidable: 0
+      - pos: {x: 1, y: 0}
+        tile: {fileID: 11400000, guid: b7942411acc37d64ea444c4a753393b4, type: 2}
+        isCollidable: 0
+      - pos: {x: 1, y: 1}
+        tile: {fileID: 11400000, guid: 890ec1ebd6e6f834a8f237e20823fca1, type: 2}
+        isCollidable: 0
   - stateName: NoWater
-    buildingParts:
-    - pos: {x: 0, y: 0}
-      tile: {fileID: 11400000, guid: 935d3e228797ad7479a6fcd66ed23666, type: 2}
-      isCollidable: 0
-    - pos: {x: 0, y: 1}
-      tile: {fileID: 11400000, guid: 9af473a756c803241b3d8238b597943c, type: 2}
-      isCollidable: 0
-    - pos: {x: 1, y: 0}
-      tile: {fileID: 11400000, guid: 49d3239ca7e6e1f42b719958d62d75b4, type: 2}
-      isCollidable: 0
-    - pos: {x: 1, y: 1}
-      tile: {fileID: 11400000, guid: 230a8ab6845eda844913bc5983089c08, type: 2}
-      isCollidable: 0
+    buildingRotations:
+    - rotation: 0
+      buildingParts:
+      - pos: {x: 0, y: 0}
+        tile: {fileID: 11400000, guid: 935d3e228797ad7479a6fcd66ed23666, type: 2}
+        isCollidable: 0
+      - pos: {x: 0, y: 1}
+        tile: {fileID: 11400000, guid: 9af473a756c803241b3d8238b597943c, type: 2}
+        isCollidable: 0
+      - pos: {x: 1, y: 0}
+        tile: {fileID: 11400000, guid: 49d3239ca7e6e1f42b719958d62d75b4, type: 2}
+        isCollidable: 0
+      - pos: {x: 1, y: 1}
+        tile: {fileID: 11400000, guid: 230a8ab6845eda844913bc5983089c08, type: 2}
+        isCollidable: 0
   requiredFloor:
   - {x: 0, y: -1}
   - {x: 1, y: -1}
@@ -65,7 +71,11 @@ MonoBehaviour:
     type: 1
     relativePos: {x: 0, y: 0}
     flow: 1
-  - portName: Default_G
+  - portName: Hydrogen_G
+    type: 2
+    relativePos: {x: 1, y: 0}
+    flow: 2
+  - portName: Oxygen_G
     type: 2
     relativePos: {x: 0, y: 0}
-    flow: 1
+    flow: 2

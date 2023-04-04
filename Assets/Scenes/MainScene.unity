@@ -6266,6 +6266,7 @@ GameObject:
   - component: {fileID: 725686021}
   - component: {fileID: 725686024}
   - component: {fileID: 725686025}
+  - component: {fileID: 725686026}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6388,6 +6389,18 @@ MonoBehaviour:
   itemPrefab: {fileID: 7786698790569168462, guid: e61e063156570d044abf01818be300c0, type: 3}
   item: {fileID: 221629958}
   player: {fileID: 1998346817}
+--- !u!114 &725686026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725686020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1668ee322a52d46468257fa1b3285223, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &732206370
 GameObject:
   m_ObjectHideFlags: 0
@@ -16770,6 +16783,10 @@ PrefabInstance:
       propertyPath: nonCollidableBlock
       value: 
       objectReference: {fileID: 2057826175}
+    - target: {fileID: 1998346812, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: blockInstanceManager
+      value: 
+      objectReference: {fileID: 725686026}
     - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: hotBar
       value: 

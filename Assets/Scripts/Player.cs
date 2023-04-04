@@ -246,7 +246,8 @@ public class Player : MonoBehaviour
                             {
                                 if (backpack.slots[backpack.index].amount > 0)
                                 {
-                                    setBlock(pos);
+                                    // TODO: custom rotation
+                                    setBlock(pos, Rotation.None);
                                 }
                             }
                         }
@@ -579,9 +580,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void setBlock(Vector2Int position)
+    private void setBlock(Vector2Int position, Rotation rotation)
     {
-        bool result = blockModify.SetBlock(position, Main.itemList[backpack.slots[backpack.index].itemID].placeableID);
+        bool result = blockModify.SetBlock(position, Main.itemList[backpack.slots[backpack.index].itemID].placeableID, rotation);
         if (result)
         {
             backpack.removeItem(backpack.index, 1);

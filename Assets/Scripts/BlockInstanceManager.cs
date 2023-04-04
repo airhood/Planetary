@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,7 @@ public struct StorageContent
     public object content;
 }
 
-public class Door : IBlockInstance
+public class WaterElectrolysis : IBlockInstance
 {
     public Vector2Int position { get; set; }
     public Rotation rotation { get; set; }
@@ -41,7 +42,7 @@ public class Door : IBlockInstance
 
     }
 
-    public Door(Vector2Int position, Rotation rotation, byte state)
+    public WaterElectrolysis(Vector2Int position, Rotation rotation, byte state)
     {
         this.position = position;
         this.rotation = rotation;
@@ -57,7 +58,7 @@ public class MatterStore
 
 public class BlockInstanceManager : MonoBehaviour
 {
-    public List<IBlockInstance> blockInstances = new List<IBlockInstance>();
+    public Dictionary<Vector2Int, IBlockInstance> blockInstances = new Dictionary<Vector2Int, IBlockInstance>();
 
     // Start is called before the first frame update
     void Start()
@@ -71,14 +72,37 @@ public class BlockInstanceManager : MonoBehaviour
 
     }
 
-    public void AddBlockInstance(Vector2Int position, Block block)
+    public void AddBlockInstance(Vector2Int position, short blockID, Rotation rotation)
     {
-
+        object instance;
+        switch(blockID)
+        {
+            case 2:
+                instance = new WaterElectrolysis(position, rotation, 0);
+                break;
+            default:
+                return;
+        }
+        blockInstances.Add(position, (IBlockInstance)instance);
     }
 
-    public void RemoveBlockInstance(Vector2Int position, Block block)
+    public IBlockInstance? GetBlockInstance(Vector2Int position)
     {
+        try
+        {
+            return blockInstances[position];
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"BlockInstanceManager.GetBlockInstance: Cannot get block instance. Position: {position}. Error Code: {ex}");
+        }
 
+        return null;
+    }
+
+    public void RemoveBlockInstance(Vector2Int position)
+    {
+        blockInstances.Remove(position);
     }
 
     public void RunInstances()

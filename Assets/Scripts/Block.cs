@@ -20,7 +20,7 @@ public enum BlockType
 
 public enum Blocks
 {
-
+    WoodenTile, WaterElectrolysis
 }
 
 [System.Serializable]
@@ -43,14 +43,21 @@ public class BuildingTile
 [System.Serializable]
 public enum Rotation
 {
-    None, UD, RL, URDL
+    None, R90, R180, R270, Vertival, Horizontal
+}
+
+[System.Serializable]
+public class BuildingRotation
+{
+    public Rotation rotation;
+    public List<BuildingTile> buildingParts = new List<BuildingTile>();
 }
 
 [System.Serializable]
 public class BuildingState
 {
     public string stateName;
-    public List<BuildingTile> buildingParts = new List<BuildingTile>();
+    public List<BuildingRotation> buildingRotations = new List<BuildingRotation>();
 }
 
 [CreateAssetMenu(menuName = "World/Block", fileName = "new Block", order = 31)]
@@ -71,7 +78,6 @@ public class Block : ScriptableObject
 
     [Header("Building")]
     public Vector2Int BuildPoint;
-    public Rotation rotation;
     public bool buildOnAirAvailable;
     public bool hasInstance;
     public bool isInteractive;

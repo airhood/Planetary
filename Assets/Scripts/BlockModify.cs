@@ -9,6 +9,7 @@ public class BlockModify : MonoBehaviour
     public Main main;
     public Tilemap collidableBlock;
     public Tilemap nonCollidableBlock;
+    public BlockInstanceManager blockInstanceManager;
 
     // Start is called before the first frame update
     void Start()
@@ -22,13 +23,20 @@ public class BlockModify : MonoBehaviour
 
     }
 
-    public bool CheckSetBlockAvailable(Vector2Int position, short blockCode)
+    public bool CheckSetBlockAvailable(Vector2Int position, short blockID, Rotation rotation)
     {
-        Block block = Main.blockList[blockCode];
+        Block block = Main.blockList[blockID];
 
         BuildingState buildingState = block.building[block.defaultStateCode];
 
-        foreach (BuildingTile buildingTile in buildingState.buildingParts)
+        byte? rotationID = FindRotationID(buildingState, rotation);
+        if (rotationID == null)
+        {
+            Debug.LogError($"Block rotation not found. BlockID: {blockID}");
+            return false;
+        }
+
+        foreach (BuildingTile buildingTile in buildingState.buildingRotations[(byte)rotationID].buildingParts)
         {
             Vector2Int pos = position + buildingTile.pos;
             if (main.world.planet[0].map.map[pos.x, pos.y] != 0)
@@ -40,14 +48,36 @@ public class BlockModify : MonoBehaviour
         return true;
     }
 
-    public bool SetBlock(Vector2Int position, short blockCode)
+    private byte? FindRotationID(BuildingState buildingState, Rotation rotation)
     {
-        Block block = Main.blockList[blockCode];
+        byte? rotationID = null;
+        bool rotationFound = false;
+
+        foreach (BuildingRotation buildingRotation in buildingState.buildingRotations)
+        {
+            if (buildingRotation.rotation == rotation)
+            {
+                rotationID = (byte)rotation;
+                rotationFound = true;
+            }
+        }
+
+        if (!rotationFound || rotationID == null)
+        {
+            return null;
+        }
+
+        return rotationID;
+    }
+
+    public bool SetBlock(Vector2Int position, short blockID, Rotation rotation)
+    {
+        Block block = Main.blockList[blockID];
 
         if (block.type == BlockType.Tile)
         {
             collidableBlock.SetTile((Vector3Int)position, block.tile);
-            main.world.planet[0].map.map[position.x, position.y] = blockCode;
+            main.world.planet[0].map.map[position.x, position.y] = blockID;
             return true;
         }
 
@@ -65,7 +95,14 @@ public class BlockModify : MonoBehaviour
             }
         }
 
-        foreach (BuildingTile buildingTile in buildingState.buildingParts)
+        byte? rotationID = FindRotationID(buildingState, rotation);
+        if (rotationID == null)
+        {
+            Debug.LogError($"BlockModify.SetBlock: Block rotation not found. BlockID: {blockID}");
+            return false;
+        }
+
+        foreach (BuildingTile buildingTile in buildingState.buildingRotations[(byte)rotationID].buildingParts)
         {
             Vector2Int pos = position + (buildingTile.pos - block.BuildPoint);
             if (main.world.planet[0].map.map[pos.x, pos.y] != 0)
@@ -74,7 +111,7 @@ public class BlockModify : MonoBehaviour
             }
         }
 
-        foreach (BuildingTile buildingTile in buildingState.buildingParts)
+        foreach (BuildingTile buildingTile in buildingState.buildingRotations[(byte)rotationID].buildingParts)
         {
             Vector2Int relativePos = buildingTile.pos - block.BuildPoint;
             Vector2Int implicitPos = position + relativePos;
@@ -96,19 +133,20 @@ public class BlockModify : MonoBehaviour
                 nonCollidableBlock.SetTile((Vector3Int)implicitPos, buildingTile.tile);
             }
         }
+        print("setBlock");
+        blockInstanceManager.AddBlockInstance(position, blockID, rotation);
 
         return true;
     }
 
     public (short, Vector2Int?) DeleteBlock(Vector2Int position)
     {
-        short blockCode = main.world.planet[0].map.map[position.x, position.y];
-        print($"blockCode: {blockCode}");
+        short blockID = main.world.planet[0].map.map[position.x, position.y];
         Block block;
         sbyte type = -1;
-        if (blockCode > 0)
+        if (blockID > 0)
         {
-            block = Main.blockList[blockCode];
+            block = Main.blockList[blockID];
 
             if (block.type == BlockType.Tile) type = 0;
             else if (block.type == BlockType.Building) type = 1;
@@ -116,20 +154,19 @@ public class BlockModify : MonoBehaviour
 
         if (type == 0)
         {
-            block = Main.blockList[blockCode];
+            block = Main.blockList[blockID];
 
             if (block.type == BlockType.Tile)
             {
                 collidableBlock.SetTile((Vector3Int)position, null);
                 main.world.planet[0].map.map[position.x, position.y] = 0;
-                return (blockCode, position);
+                return (blockID, position);
             }
         }
-        else if (type == 1 || blockCode <= -20000)
+        else if (type == 1 || blockID <= -20000)
         {
-            print("hi");
             Vector2Int ? _blockMainPos = null;
-            if (blockCode > 0)
+            if (blockID > 0)
             {
                 _blockMainPos = position;
             }
@@ -146,6 +183,7 @@ public class BlockModify : MonoBehaviour
 
             print($"mainBlockCode: {mainBlockCode}");
             (short, Vector2Int?) returnValue = (mainBlockCode, blockMainPos);
+            blockInstanceManager.RemoveBlockInstance(blockMainPos);
             return returnValue;
         }
 
@@ -154,9 +192,9 @@ public class BlockModify : MonoBehaviour
 
     public Vector2Int? BlockRelativePosToBlockMainPos(Vector2Int position)
     {
-        string _blockCode = main.world.planet[0].map.map[position.x, position.y].ToString();
+        string _blockID = main.world.planet[0].map.map[position.x, position.y].ToString();
         print($"main.world.planet[0].map.map[position.x, position.y].ToString(); : {main.world.planet[0].map.map[position.x, position.y].ToString()}");
-        char[] blockCodeDevided = _blockCode.ToCharArray();
+        char[] blockIDDevided = _blockID.ToCharArray();
 
         bool xSign;
         int xRelativePos;
@@ -165,10 +203,10 @@ public class BlockModify : MonoBehaviour
 
         try
         {
-            xSign = (blockCodeDevided[1] == 0 ? true : false);
-            xRelativePos = int.Parse(blockCodeDevided[2].ToString());
-            ySign = (blockCodeDevided[3] == 0 ? true : false);
-            yRelativePos = int.Parse(blockCodeDevided[4].ToString());
+            xSign = (blockIDDevided[1] == 0 ? true : false);
+            xRelativePos = int.Parse(blockIDDevided[2].ToString());
+            ySign = (blockIDDevided[3] == 0 ? true : false);
+            yRelativePos = int.Parse(blockIDDevided[4].ToString());
         }
         catch (Exception ex)
         {
@@ -187,22 +225,35 @@ public class BlockModify : MonoBehaviour
     private bool deleteBlockParts(Vector2Int position)
     {
         print($"main.world.planet[0].map.map[position.x, position.y]: {main.world.planet[0].map.map[position.x, position.y]}");
-        char[] blockCode;
+        char[] blockID;
         byte blockState;
         try
         {
-            blockCode = main.world.planet[0].map.map[position.x, position.y].ToString().ToCharArray();
-            blockState = (byte)(byte.Parse(blockCode[0].ToString()) - 1);
+            blockID = main.world.planet[0].map.map[position.x, position.y].ToString().ToCharArray();
+            blockState = (byte)(byte.Parse(blockID[0].ToString()) - 1);
         }
         catch (Exception ex)
         {
-            print($"Cannot extract blockState from block main position ({position.x},{position.y}). Error code: {ex}");
+            Debug.LogError($"BlockModify.deleteBlockParts: Cannot extract blockState from block main position ({position.x},{position.y}). Error code: {ex}");
             return false;
         }
         Block block = Main.blockList[main.world.planet[0].map.map[position.x, position.y]];
         BuildingState buildingState = block.building[blockState];
 
-        foreach(BuildingTile buildingTile in buildingState.buildingParts)
+        IBlockInstance? blockInstance = blockInstanceManager.GetBlockInstance(position);
+        if (blockInstance == null)
+        {
+            Debug.LogError($"BlockModify.deleteBlockParts: BlockInstance not found. Position: {position}");
+            return false;
+        }
+
+        byte? rotationID = FindRotationID(buildingState, blockInstance.rotation);
+        if (rotationID == null)
+        {
+            Debug.LogError($"BlockModify.deleteBlockParts: Block rotation not found. BlockID: {blockID}");
+        }
+
+        foreach(BuildingTile buildingTile in buildingState.buildingRotations[(byte)rotationID].buildingParts)
         {
             Vector2Int pos = position + buildingTile.pos;
             main.world.planet[0].map.map[pos.x, pos.y] = 0;
@@ -220,14 +271,15 @@ public class BlockModify : MonoBehaviour
         return true;
     }
 
-    public short MainBlockWorldMapCodeToBlockCode(short worldMapCode)
+    /*
+    public short MainBlockWorldMapCodeToBlockCode(short worldMapBlockID)
     {
-        print($"worldMapCode: {worldMapCode}");
+        print($"worldMapCode: {worldMapBlockID}");
         char[] _worldMapCode;
         char[] blockCode = new char[4];
         try
         {
-            _worldMapCode = worldMapCode.ToString().ToCharArray();
+            _worldMapCode = worldMapBlockID.ToString().ToCharArray();
             for(int i = 0; i < 4; i++)
             {
                 blockCode[i] = _worldMapCode[i + 1];
@@ -237,14 +289,15 @@ public class BlockModify : MonoBehaviour
         {
             print($"Error while converting MainBlockWorldMapCode to BlockCode. Error code: {ex}");
         }
-        string _blockCode = string.Empty;
+        string _blockID = string.Empty;
         foreach (char c in blockCode)
         {
-            _blockCode += c;
+            _blockID += c;
         }
-        print($"int.Parse(_blockCode): {int.Parse(_blockCode)}");
-        return (short)int.Parse(_blockCode);
+        print($"int.Parse(_blockCode): {int.Parse(_blockID)}");
+        return (short)int.Parse(_blockID);
     }
+    */
 
     public void ModifyTerrain(Vector2Int position, short matterCode)
     {
@@ -278,15 +331,5 @@ public class BlockModify : MonoBehaviour
             return -1;
         }
         return Main.blockList[main.world.planet[0].map.map[position.x, position.y]].destructionTime;
-    }
-
-    public void UpdateBlockTilemap(Vector2Int position)
-    {
-
-    }
-
-    public void UpdateBlockStateTilemap(Vector2Int position, byte state)
-    {
-
     }
 }
