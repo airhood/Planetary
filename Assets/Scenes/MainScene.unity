@@ -6288,7 +6288,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   main: {fileID: 0}
   amount: 0
-  tickRate: 30
   movingSpeed: 0.05
   solid: {fileID: 570974537}
   conveyerCart: {fileID: 0}
@@ -7231,7 +7230,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845189068}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -15371,21 +15370,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffb1b4917b74544b9b0f4eb2805b3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1998346820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1998346811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ff18ee6eae3cb4f822bb05cc305bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  achievementDisplayUI: {fileID: 150119081}
-  achievements:
-  - {fileID: 11400000, guid: ffe6f95af3572494aa1b6222f7417803, type: 2}
 --- !u!1 &1998926886
 GameObject:
   m_ObjectHideFlags: 0
@@ -16791,14 +16775,6 @@ PrefabInstance:
       propertyPath: hotBar
       value: 
       objectReference: {fileID: 394448738}
-    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: slots.Array.data[1].amount
-      value: 255
-      objectReference: {fileID: 0}
-    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: slots.Array.data[1].itemID
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570273, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -16868,12 +16844,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 725686024}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: playerInfo.playerName
-      value: Airhood
-      objectReference: {fileID: 0}
-    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: matterDiggingAnimation
       value: 
       objectReference: {fileID: 1246810016}
+    - target: {fileID: 7441538994740689043, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: achievementDisplayUI
+      value: 
+      objectReference: {fileID: 150119081}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}

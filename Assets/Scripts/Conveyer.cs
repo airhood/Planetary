@@ -42,7 +42,6 @@ public class Conveyer : MonoBehaviour
 
     public int amount;
 
-    public int tickRate;
     int index;
     int tickDuration;
 

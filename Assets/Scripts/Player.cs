@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
 
     private void MovePlayer()
     {
-        float x = Input.GetAxisRaw("Horizontal");
+        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
 
         if (x > 0)
         {
@@ -236,7 +236,7 @@ public class Player : MonoBehaviour
                         destructBlock(pos);
                     }
                 }
-                else
+                else if (Input.GetKey(KeyCode.LeftShift))
                 {
                     if (checkSetBlockAvailable(pos))
                     {
@@ -252,6 +252,10 @@ public class Player : MonoBehaviour
                             }
                         }
                     }
+                }
+                else
+                {
+                    // Block Interaction
                 }
             }
         }

@@ -112,6 +112,7 @@ public class Main : MonoBehaviour
     public List<Item> _itemList = new List<Item>();
 
     public Player player;
+    bool tick;
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -136,7 +137,11 @@ public class Main : MonoBehaviour
 
     void FixedUpdate()
     {
-        Tick();
+        if (tick)
+        {
+            Tick();
+        }
+        tick = !tick;
     }
 
     private void Tick()

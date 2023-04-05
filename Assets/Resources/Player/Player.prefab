@@ -414,6 +414,7 @@ GameObject:
   - component: {fileID: 523758309}
   - component: {fileID: 1998346812}
   - component: {fileID: 1998346820}
+  - component: {fileID: 7441538994740689043}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -544,8 +545,8 @@ MonoBehaviour:
   collidableBlock: {fileID: 0}
   terrainGeneration: {fileID: 0}
   rb: {fileID: 3468241435639570274}
-  moveSpeed: 5
-  jumpSpeed: 600
+  moveSpeed: 300
+  jumpSpeed: 410
   jumpEnabled: 0
   isGround: 0
   isJumping: 0
@@ -590,7 +591,8 @@ MonoBehaviour:
   jetFuelLeft: 0
   gizmosList: 
   playerInfo:
-    playerName: 
+    playerName: Airhood
+    playerPosition: {x: 0, y: 0, z: 0, w: 0}
     maxHealth: 100
     health: 100
     maxOxygen: 100
@@ -701,6 +703,7 @@ MonoBehaviour:
   main: {fileID: 0}
   collidableBlock: {fileID: 0}
   nonCollidableBlock: {fileID: 0}
+  blockInstanceManager: {fileID: 0}
 --- !u!114 &1998346820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,8 +720,8 @@ MonoBehaviour:
   slots:
   - itemID: 2
     amount: 255
-  - itemID: 0
-    amount: 0
+  - itemID: 4
+    amount: 255
   - itemID: 0
     amount: 0
   - itemID: 0
@@ -798,6 +801,21 @@ MonoBehaviour:
   hotBar: {fileID: 0}
   hotBarFrame: {fileID: 8119064645845067680, guid: a18e42719c2716a4087876981f2c3bee, type: 3}
   player: {fileID: 3468241435639570285}
+--- !u!114 &7441538994740689043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3468241435639570284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ff18ee6eae3cb4f822bb05cc305bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievementDisplayUI: {fileID: 0}
+  achievements:
+  - {fileID: 11400000, guid: ffe6f95af3572494aa1b6222f7417803, type: 2}
 --- !u!1 &4486422635326348499
 GameObject:
   m_ObjectHideFlags: 0
