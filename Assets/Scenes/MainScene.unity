@@ -6286,7 +6286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c181793291ab4cb4a91a09803e2bf83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  main: {fileID: 0}
+  main: {fileID: 725686023}
   amount: 0
   movingSpeed: 0.05
   solid: {fileID: 570974537}
@@ -6400,6 +6400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1668ee322a52d46468257fa1b3285223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positions: []
 --- !u!1 &732206370
 GameObject:
   m_ObjectHideFlags: 0
@@ -16843,6 +16844,10 @@ PrefabInstance:
       propertyPath: terrainGeneration
       value: 
       objectReference: {fileID: 725686024}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: blockInstanceManager
+      value: 
+      objectReference: {fileID: 725686026}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: matterDiggingAnimation
       value: 

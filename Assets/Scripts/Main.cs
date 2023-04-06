@@ -115,7 +115,7 @@ public class Main : MonoBehaviour
     bool tick;
     void Awake()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 80;
         blockList = _blockList;
         matterList = _matterList;
         itemList = _itemList;

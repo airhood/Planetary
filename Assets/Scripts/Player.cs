@@ -99,6 +99,10 @@ public class Player : MonoBehaviour
     [Header("UI")]
     public TextMesh nameDisplay;
 
+    [Header("Interaction")]
+    public BlockInstanceManager blockInstanceManager;
+    public bool didInteract = false;
+
     void Awake()
     {
         jumpEnabled = true;
@@ -256,6 +260,20 @@ public class Player : MonoBehaviour
                 else
                 {
                     // Block Interaction
+                    if (!didInteract)
+                    {
+                        short blockID = main.world.planet[0].map.map[pos.x, pos.y];
+                        if (blockID > 0)
+                        {
+                            blockInstanceManager.InteractBlock(pos);
+                            didInteract = true;
+                        }
+                        else if (blockID <= -20000)
+                        {
+                            blockInstanceManager.InteractBlock((Vector2Int)blockModify.BlockRelativePosToBlockMainPos(pos));
+                            didInteract = true;
+                        }
+                    }
                 }
             }
         }
@@ -264,6 +282,7 @@ public class Player : MonoBehaviour
             isModifyingTerrain = false;
             modifyTerrainTileTickRemain = 0;
             currentModifyTerrainTileOriginalTick = 0;
+            didInteract = false;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -406,7 +425,6 @@ public class Player : MonoBehaviour
     {
         if (modifyTerrainTileTickRemain > 0 && currentModifyTerrainTileOriginalTick > 0)
         {
-            //print((int)Mathf.Ceil(((currentModifyTerrainTileOriginalTick - modifyTerrainTileTickRemain) / (float)currentModifyTerrainTileOriginalTick) * 9));
             matterDiggingAnimation.sprite = matterDiggingAnimationImage[(int)Mathf.Ceil(((currentModifyTerrainTileOriginalTick - modifyTerrainTileTickRemain) / (float)currentModifyTerrainTileOriginalTick) * 9) - 1];
             matterDigging.transform.position = (Vector3)((Vector2)(Vector2Int)collidableBlock.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition)) + new Vector2(0.5f, 0.5f));
             matterDigging.SetActive(true);
@@ -616,7 +634,6 @@ public class Player : MonoBehaviour
                 if (destructBlockTickRemain <= 0)
                 {
                     (short, Vector2Int?) result = blockModify.DeleteBlock(position);
-                    print($"result.Item1: {result.Item1}");
                     // TODO: 아이템 소환 위치를 block main pos 로 변경하기
                     itemManager.spawnItem(Main.blockList[result.Item1].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)result.Item2) + new Vector2(0.5f, 0.2f), 1);
                     isDestructingBlock = false;

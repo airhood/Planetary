@@ -39,7 +39,7 @@ public class WaterElectrolysis : IBlockInstance
 
     public void Interaction()
     {
-
+        Debug.Log("Interaction");
     }
 
     public WaterElectrolysis(Vector2Int position, Rotation rotation, byte state)
@@ -58,7 +58,8 @@ public class MatterStore
 
 public class BlockInstanceManager : MonoBehaviour
 {
-    public Dictionary<Vector2Int, IBlockInstance> blockInstances = new Dictionary<Vector2Int, IBlockInstance>();
+    public List<Vector2Int> positions = new List<Vector2Int>();
+    public List<IBlockInstance> blockInstances = new List<IBlockInstance>();
 
     // Start is called before the first frame update
     void Start()
@@ -83,14 +84,15 @@ public class BlockInstanceManager : MonoBehaviour
             default:
                 return;
         }
-        blockInstances.Add(position, (IBlockInstance)instance);
+        positions.Add(position);
+        blockInstances.Add((IBlockInstance)instance);
     }
 
     public IBlockInstance? GetBlockInstance(Vector2Int position)
     {
         try
         {
-            return blockInstances[position];
+            return blockInstances[positions.IndexOf(position)];
         }
         catch (Exception ex)
         {
@@ -102,11 +104,22 @@ public class BlockInstanceManager : MonoBehaviour
 
     public void RemoveBlockInstance(Vector2Int position)
     {
-        blockInstances.Remove(position);
+        int index = positions.IndexOf(position);
+        positions.RemoveAt(index);
+        blockInstances.RemoveAt(index);
     }
 
     public void RunInstances()
     {
+        int count = blockInstances.Count;
+        for(int i = 0; i < count; i++)
+        {
+            blockInstances[i].InstanceTick();
+        }
+    }
 
+    public void InteractBlock(Vector2Int position)
+    {
+        blockInstances[positions.IndexOf(position)].Interaction();
     }
 }

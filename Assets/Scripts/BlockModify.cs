@@ -121,7 +121,7 @@ public class BlockModify : MonoBehaviour
             }
             else
             {
-                main.world.planet[0].map.map[implicitPos.x, implicitPos.y] = (short)(-20000 - (( (relativePos.x > 0) ? 0 : 1)* 1000) - (Mathf.Abs(relativePos.x) * 100) - (( (relativePos.y > 0) ? 0 : 1 ) * 10) -(relativePos.y));
+                main.world.planet[0].map.map[implicitPos.x, implicitPos.y] = (short)(-20000 - (( (relativePos.x >= 0) ? 0 : 1)* 1000) - (Mathf.Abs(relativePos.x) * 100) - (( (relativePos.y >= 0) ? 0 : 1 ) * 10) -(relativePos.y));
             }
             
             if (buildingTile.isCollidable)
@@ -133,7 +133,6 @@ public class BlockModify : MonoBehaviour
                 nonCollidableBlock.SetTile((Vector3Int)implicitPos, buildingTile.tile);
             }
         }
-        print("setBlock");
         blockInstanceManager.AddBlockInstance(position, blockID, rotation);
 
         return true;
@@ -177,11 +176,7 @@ public class BlockModify : MonoBehaviour
             Vector2Int blockMainPos;
             if (_blockMainPos == null) return (0, null);
             blockMainPos = (Vector2Int)_blockMainPos;
-            print($"playerMouseOnTilePos: {position}, blockMainPos: {blockMainPos}");
             short mainBlockCode = main.world.planet[0].map.map[blockMainPos.x, blockMainPos.y];
-            print(deleteBlockParts(blockMainPos) ? "Delete block success" : "Delete block error");
-
-            print($"mainBlockCode: {mainBlockCode}");
             (short, Vector2Int?) returnValue = (mainBlockCode, blockMainPos);
             blockInstanceManager.RemoveBlockInstance(blockMainPos);
             return returnValue;
@@ -192,8 +187,7 @@ public class BlockModify : MonoBehaviour
 
     public Vector2Int? BlockRelativePosToBlockMainPos(Vector2Int position)
     {
-        string _blockID = main.world.planet[0].map.map[position.x, position.y].ToString();
-        print($"main.world.planet[0].map.map[position.x, position.y].ToString(); : {main.world.planet[0].map.map[position.x, position.y].ToString()}");
+        string _blockID = Math.Abs(main.world.planet[0].map.map[position.x, position.y]).ToString();
         char[] blockIDDevided = _blockID.ToCharArray();
 
         bool xSign;
@@ -203,20 +197,19 @@ public class BlockModify : MonoBehaviour
 
         try
         {
-            xSign = (blockIDDevided[1] == 0 ? true : false);
+            xSign = (blockIDDevided[1] == '0' ? true : false);
             xRelativePos = int.Parse(blockIDDevided[2].ToString());
-            ySign = (blockIDDevided[3] == 0 ? true : false);
+            ySign = (blockIDDevided[3] == '0' ? true : false);
             yRelativePos = int.Parse(blockIDDevided[4].ToString());
         }
         catch (Exception ex)
         {
-            print($"Cannot convert position ({position.x},{position.y}) block code to relative blockCode. Error Code: {ex}");
+            Debug.LogError($"Cannot convert position ({position.x},{position.y}) block code to relative blockCode. Error Code: {ex}");
             return null;
         }
 
         int xFinalRelativePos = xSign ? xRelativePos : xRelativePos * (-1);
         int yFinalRelativePos = ySign ? yRelativePos : yRelativePos * (-1);
-
         Vector2Int finalRelativePos = new Vector2Int(xFinalRelativePos, yFinalRelativePos);
         Vector2Int blockMainPos = position - finalRelativePos;
         return blockMainPos;
@@ -224,7 +217,6 @@ public class BlockModify : MonoBehaviour
 
     private bool deleteBlockParts(Vector2Int position)
     {
-        print($"main.world.planet[0].map.map[position.x, position.y]: {main.world.planet[0].map.map[position.x, position.y]}");
         char[] blockID;
         byte blockState;
         try
