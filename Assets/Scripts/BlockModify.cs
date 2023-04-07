@@ -177,6 +177,11 @@ public class BlockModify : MonoBehaviour
             if (_blockMainPos == null) return (0, null);
             blockMainPos = (Vector2Int)_blockMainPos;
             short mainBlockCode = main.world.planet[0].map.map[blockMainPos.x, blockMainPos.y];
+            bool deleteBlockPartsResult = deleteBlockParts(blockMainPos);
+            if (!deleteBlockPartsResult)
+            {
+                Debug.LogError("BlockModify.DeleteBlock: Error occured at BlockModify.deleteBlockParts(blockMainPos)");
+            }
             (short, Vector2Int?) returnValue = (mainBlockCode, blockMainPos);
             blockInstanceManager.RemoveBlockInstance(blockMainPos);
             return returnValue;

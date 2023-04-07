@@ -16776,6 +16776,22 @@ PrefabInstance:
       propertyPath: hotBar
       value: 
       objectReference: {fileID: 394448738}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: slots.Array.data[0].amount
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: slots.Array.data[1].amount
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: slots.Array.data[2].amount
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: slots.Array.data[2].itemID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570273, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: m_RootOrder
       value: 2

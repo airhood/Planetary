@@ -17,4 +17,5 @@ MonoBehaviour:
   description: 
   image: {fileID: 2537882373423050008, guid: 5f1d191885bf0ce4c84183d3c4f91e57, type: 3}
   type: 2
+  maxStackAmount: 128
   placeableID: 1

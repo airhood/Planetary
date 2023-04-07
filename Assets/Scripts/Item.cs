@@ -15,5 +15,6 @@ public class Item : ScriptableObject
     public string description;
     public Sprite image;
     public ItemType type;
+    public byte maxStackAmount;
     public short placeableID;
 }

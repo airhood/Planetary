@@ -84,12 +84,13 @@ public class Backpack : MonoBehaviour
 
     public void addItemToBackpack(short itemID, ushort amount)
     {
+        byte maxStackAmount = Main.itemList[itemID].maxStackAmount;
         ushort amountLeft = amount;
         for(int i = 0; i < slots.Count; i++)
         {
             if (slots[i].itemID == itemID)
             {
-                if (slots[i].amount + amountLeft <= 255)
+                if (slots[i].amount + amountLeft <= maxStackAmount)
                 {
                     slots[i].amount += (byte)amountLeft;
                     updateHotBarUI();
@@ -98,14 +99,14 @@ public class Backpack : MonoBehaviour
                 else
                 {
                     byte prevAmount = slots[i].amount;
-                    slots[i].amount = 255;
-                    amountLeft -= (byte)(255 - prevAmount);
+                    slots[i].amount = maxStackAmount;
+                    amountLeft -= (byte)(maxStackAmount - prevAmount);
                 }
             }
             else if (slots[i].amount == 0)
             {
                 slots[i].itemID = itemID;
-                if (amountLeft <= 255)
+                if (amountLeft <= maxStackAmount)
                 {
                     slots[i].amount = (byte)amountLeft;
                     updateHotBarUI();
@@ -113,8 +114,8 @@ public class Backpack : MonoBehaviour
                 }
                 else
                 {
-                    slots[i].amount = 255;
-                    amountLeft -= 255;
+                    slots[i].amount = maxStackAmount;
+                    amountLeft -= maxStackAmount;
                 }
             }
         }
