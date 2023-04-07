@@ -95,6 +95,7 @@ public class Player : MonoBehaviour
     public GameObject healthGage;
     public GameObject oxygenGage;
     int cureTickAmount;
+    public GameObject damgeText;
 
     [Header("UI")]
     public TextMesh nameDisplay;
@@ -554,6 +555,7 @@ public class Player : MonoBehaviour
             playerInfo.health = 0;
             print("Player Died");
         }
+        Instantiate(damgeText, transform.position + new Vector3(0, 2, 0), Quaternion.identity).GetComponent<DamageText>().text.text = "-" + amount.ToString();
         updateGage();
     }
 

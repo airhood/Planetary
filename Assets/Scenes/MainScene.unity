@@ -16845,6 +16845,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 725686023}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: damgeText
+      value: 
+      objectReference: {fileID: 1330546019536225363, guid: cddcfbfff29570b4890ff1398e188237, type: 3}
+    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: itemManager
       value: 
       objectReference: {fileID: 725686025}
