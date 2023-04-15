@@ -45,16 +45,16 @@ public class Backpack : MonoBehaviour
         {
             slots.Add(new Slot(0, 0));
         }
-        updateHotBarUI();
+       UpdateHotBarUI();
     }
 
-    public void changeHotBarPos(byte index)
+    public void ChangeHotBarPos(byte index)
     {
         this.index = index;
-        updateHotBarUI();
+        UpdateHotBarUI();
     }
 
-    public void updateHotBarUI()
+    public void UpdateHotBarUI()
     {
         for(int i = 0; i < 10; i++)
         {
@@ -82,7 +82,7 @@ public class Backpack : MonoBehaviour
         }
     }
 
-    public void addItemToBackpack(short itemID, ushort amount)
+    public void AddItemToBackpack(short itemID, ushort amount)
     {
         byte maxStackAmount = Main.itemList[itemID].maxStackAmount;
         ushort amountLeft = amount;
@@ -93,7 +93,7 @@ public class Backpack : MonoBehaviour
                 if (slots[i].amount + amountLeft <= maxStackAmount)
                 {
                     slots[i].amount += (byte)amountLeft;
-                    updateHotBarUI();
+                    UpdateHotBarUI();
                     return;
                 }
                 else
@@ -109,7 +109,7 @@ public class Backpack : MonoBehaviour
                 if (amountLeft <= maxStackAmount)
                 {
                     slots[i].amount = (byte)amountLeft;
-                    updateHotBarUI();
+                    UpdateHotBarUI();
                     return;
                 }
                 else
@@ -119,22 +119,22 @@ public class Backpack : MonoBehaviour
                 }
             }
         }
-        updateHotBarUI();
+        UpdateHotBarUI();
     }
 
-    public void removeItem(byte index, byte amount)
+    public void RemoveItem(byte index, byte amount)
     {
         if (slots[index].amount - amount < 0)
         {
             slots[index].amount = 0;
-            updateHotBarUI();
+            UpdateHotBarUI();
             return;
         }
         slots[index].amount -= amount;
-        updateHotBarUI();
+        UpdateHotBarUI();
     }
 
-    public void autoBackpackSerialization()
+    public void AutoBackpackSerialization()
     {
         for(int i = 0; i < slots.Count; i++)
         {

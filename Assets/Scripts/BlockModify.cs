@@ -202,9 +202,9 @@ public class BlockModify : MonoBehaviour
 
         try
         {
-            xSign = (blockIDDevided[1] == '0' ? true : false);
+            xSign = blockIDDevided[1] == '0';
             xRelativePos = int.Parse(blockIDDevided[2].ToString());
-            ySign = (blockIDDevided[3] == '0' ? true : false);
+            ySign = blockIDDevided[3] == '0';
             yRelativePos = int.Parse(blockIDDevided[4].ToString());
         }
         catch (Exception ex)

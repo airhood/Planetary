@@ -45,7 +45,7 @@ public class WorldMap
     public ConveyerSystem conveyerSystem = new ConveyerSystem();
     public LiquidPipeSystem liquidPipeSystem = new LiquidPipeSystem();
     public GasPipeSystem gasPipeSystem = new GasPipeSystem();
-    public Entity entity = new Entity();
+    public CustomArray<EntityData> entities = new CustomArray<EntityData>(1000);
 }
 
 [System.Serializable]
@@ -76,12 +76,6 @@ public class GasPipeSystem
 }
 
 [System.Serializable]
-public class Entity
-{
-    public List<DroppedItem> DroppedItems = new List<DroppedItem>();
-}
-
-[System.Serializable]
 public class DroppedItem
 {
     public Matter matter;
@@ -95,6 +89,38 @@ public class PlayerInfoData
     public Slot[] backpack = new Slot[40];
     public int ResearchPoint;
     public PlayerInfo playerInfo;
+}
+
+public class CustomArray<T>
+{
+    public List<int> indexAvailable = new List<int>();
+    public T[] array;
+    public int length;
+
+    public T this[int index] { get { return array[index]; } set { array[index] = value; } }
+    public CustomArray(int length)
+    {
+        this.length = length;
+        array = new T[length];
+        for(int i = 0; i < length; i++)
+        {
+            indexAvailable.Add(i);
+        }
+    }
+
+    public int Add(T item)
+    {
+        int index = indexAvailable[0];
+        array[indexAvailable[0]] = item;
+        indexAvailable.RemoveAt(0);
+        return index;
+    }
+
+    public void Remove(int index)
+    {
+        array[index] = default(T);
+        indexAvailable.Add(index);
+    }
 }
 
 public class Main : MonoBehaviour

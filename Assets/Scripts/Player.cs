@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
 
     private void MovePlayer()
     {
-        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
+        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * (Application.targetFrameRate / 60f);
 
         if (x > 0)
         {
@@ -314,43 +314,43 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            backpack.changeHotBarPos(0);
+            backpack.ChangeHotBarPos(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            backpack.changeHotBarPos(1);
+            backpack.ChangeHotBarPos(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            backpack.changeHotBarPos(2);
+            backpack.ChangeHotBarPos(2);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            backpack.changeHotBarPos(3);
+            backpack.ChangeHotBarPos(3);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            backpack.changeHotBarPos(4);
+            backpack.ChangeHotBarPos(4);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            backpack.changeHotBarPos(5);
+            backpack.ChangeHotBarPos(5);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            backpack.changeHotBarPos(6);
+            backpack.ChangeHotBarPos(6);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            backpack.changeHotBarPos(7);
+            backpack.ChangeHotBarPos(7);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            backpack.changeHotBarPos(8);
+            backpack.ChangeHotBarPos(8);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            backpack.changeHotBarPos(9);
+            backpack.ChangeHotBarPos(9);
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -524,7 +524,8 @@ public class Player : MonoBehaviour
     private void collectItem(GameObject itemObject)
     {
         DroppedItemInstance droppedItemInstance = itemObject.GetComponent<DroppedItemInstance>();
-        backpack.addItemToBackpack(droppedItemInstance.itemID, droppedItemInstance.amount);
+        backpack.AddItemToBackpack(droppedItemInstance.itemID, droppedItemInstance.amount);
+        main.world.planet[0].map.entities.Remove(itemObject.GetComponent<DroppedItemInstance>().entityID);
         Destroy(itemObject);
     }
 
@@ -609,7 +610,7 @@ public class Player : MonoBehaviour
         bool result = blockModify.SetBlock(position, Main.itemList[backpack.slots[backpack.index].itemID].placeableID, rotation);
         if (result)
         {
-            backpack.removeItem(backpack.index, 1);
+            backpack.RemoveItem(backpack.index, 1);
         }
     }
 
