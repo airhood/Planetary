@@ -45,7 +45,22 @@ public class WorldMap
     public ConveyerSystem conveyerSystem = new ConveyerSystem();
     public LiquidPipeSystem liquidPipeSystem = new LiquidPipeSystem();
     public GasPipeSystem gasPipeSystem = new GasPipeSystem();
-    public CustomArray<EntityData> entities = new CustomArray<EntityData>(1000);
+    public EntitySystem entitySystem = new EntitySystem();
+}
+
+[System.Serializable]
+public class EntitySystem
+{
+    public List<EntityData> visibleEntities = new List<EntityData>();
+    public List<EntityData> hiddenEntities = new List<EntityData>();
+    public List<GameObject> spawnedEntityGameObject = new List<GameObject>();
+    public DroppedItemSystem droppedItemSystem = new DroppedItemSystem();
+}
+
+[System.Serializable]
+public class DroppedItemSystem
+{
+    public List<DroppedItemData> droppedItemData = new List<DroppedItemData>();
 }
 
 [System.Serializable]
@@ -91,11 +106,13 @@ public class PlayerInfoData
     public PlayerInfo playerInfo;
 }
 
+[System.Serializable]
 public class CustomArray<T>
 {
     public List<int> indexAvailable = new List<int>();
     public T[] array;
     public int length;
+    public int amount;
 
     public T this[int index] { get { return array[index]; } set { array[index] = value; } }
     public CustomArray(int length)
@@ -106,6 +123,7 @@ public class CustomArray<T>
         {
             indexAvailable.Add(i);
         }
+        amount = 0;
     }
 
     public int Add(T item)
@@ -113,6 +131,7 @@ public class CustomArray<T>
         int index = indexAvailable[0];
         array[indexAvailable[0]] = item;
         indexAvailable.RemoveAt(0);
+        amount++;
         return index;
     }
 
@@ -120,6 +139,7 @@ public class CustomArray<T>
     {
         array[index] = default(T);
         indexAvailable.Add(index);
+        amount--;
     }
 }
 
@@ -127,7 +147,7 @@ public class Main : MonoBehaviour
 {
     public World world = new World();
 
-    public Conveyer conveyer;
+    [SerializeField] Conveyer conveyer;
 
     public static List<Block> blockList = new List<Block>();
     public static List<Matter> matterList = new List<Matter>();
@@ -138,7 +158,10 @@ public class Main : MonoBehaviour
     public List<Item> _itemList = new List<Item>();
 
     public Player player;
+    public EntityHandler entityHandler;
+
     bool tick;
+
     void Awake()
     {
         Application.targetFrameRate = 80;
@@ -178,5 +201,6 @@ public class Main : MonoBehaviour
         // gasPipe calculate
         // machine calculate
         player.playerTick();
+        entityHandler.EntityTick();
     }
 }

@@ -28,12 +28,12 @@ public enum ToolMode
 public class Player : MonoBehaviour
 {
     [Header("World")]
-    public Main main;
-    public Tilemap collidableBlock;
-    public TerrainGeneration terrainGeneration;
+    [SerializeField] Main main;
+    [SerializeField] Tilemap collidableBlock;
+    [SerializeField] TerrainGeneration terrainGeneration;
 
     [Header("Movement")]
-    public Rigidbody2D rb;
+    [SerializeField] Rigidbody2D rb;
     public float moveSpeed;
     public float jumpSpeed;
     public bool jumpEnabled;
@@ -266,8 +266,11 @@ public class Player : MonoBehaviour
                         short blockID = main.world.planet[0].map.map[pos.x, pos.y];
                         if (blockID > 0)
                         {
-                            blockInstanceManager.InteractBlock(pos);
-                            didInteract = true;
+                            if (Main.blockList[blockID].type == BlockType.Building)
+                            {
+                                blockInstanceManager.InteractBlock(pos);
+                                didInteract = true;
+                            }
                         }
                         else if (blockID <= -20000)
                         {
@@ -525,7 +528,9 @@ public class Player : MonoBehaviour
     {
         DroppedItemInstance droppedItemInstance = itemObject.GetComponent<DroppedItemInstance>();
         backpack.AddItemToBackpack(droppedItemInstance.itemID, droppedItemInstance.amount);
-        main.world.planet[0].map.entities.Remove(itemObject.GetComponent<DroppedItemInstance>().entityID);
+        main.world.planet[0].map.entitySystem.visibleEntities.RemoveAt(droppedItemInstance.entityID);
+        main.world.planet[0].map.entitySystem.spawnedEntityGameObject.RemoveAt(droppedItemInstance.spawnedItemGameObjectID);
+        main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.RemoveAt(droppedItemInstance.droppedItemDataID);
         Destroy(itemObject);
     }
 

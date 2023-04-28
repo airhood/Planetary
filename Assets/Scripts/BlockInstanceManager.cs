@@ -61,16 +61,17 @@ public class BlockInstanceManager : MonoBehaviour
     public List<Vector2Int> positions = new List<Vector2Int>();
     public List<IBlockInstance> blockInstances = new List<IBlockInstance>();
 
-    // Start is called before the first frame update
-    void Start()
+    int tick;
+    public int blockInstanceTickRate;
+
+    public void BlockInstanceTick()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        tick++;
+        if (tick == blockInstanceTickRate)
+        {
+            tick = 0;
+            CalculateInstances();
+        }
     }
 
     public void AddBlockInstance(Vector2Int position, short blockID, Rotation rotation)
@@ -109,7 +110,7 @@ public class BlockInstanceManager : MonoBehaviour
         blockInstances.RemoveAt(index);
     }
 
-    public void RunInstances()
+    public void CalculateInstances()
     {
         int count = blockInstances.Count;
         for(int i = 0; i < count; i++)

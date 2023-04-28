@@ -4,24 +4,12 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-    public World world;
+    public Main main;
 
     public GameObject itemPrefab;
     public GameObject item;
 
     public Player player;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void spawnItems(short itemID, Vector2 pos, ushort eachAmount, byte itemGroupAmount)
     {
@@ -34,19 +22,47 @@ public class ItemManager : MonoBehaviour
     public void spawnItem(short itemID, Vector2 pos, ushort amount)
     {
         print($"itemID: {itemID}");
-        int entityID = world.planet[0].map.entities.Add(new DroppedItemData(pos, itemID, amount));
+        int relativeID = main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.Count;
+        main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.Add(new DroppedItemData(itemID, amount));
+        int entityID = main.world.planet[0].map.entitySystem.visibleEntities.Count;
+        main.world.planet[0].map.entitySystem.visibleEntities.Add(new EntityData(pos, EntityType.DroppedItem, relativeID));
         GameObject gameObject = Instantiate(itemPrefab, pos, Quaternion.identity);
         gameObject.transform.SetParent(item.transform);
         gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[itemID].image;
         DroppedItemInstance droppedItemInstance = gameObject.AddComponent<DroppedItemInstance>();
+        droppedItemInstance.entityID = entityID;
+        droppedItemInstance.droppedItemDataID = relativeID;
         droppedItemInstance.itemID = itemID;
         droppedItemInstance.amount = amount;
         droppedItemInstance.collectTickLeft = -1;
         droppedItemInstance.isBeingCollected = false;
         droppedItemInstance.player = player;
-        droppedItemInstance.entityID = entityID;
         gameObject.AddComponent<Rigidbody2D>();
         gameObject.layer = 10;
         gameObject.tag = "dropped_item";
+        droppedItemInstance.spawnedItemGameObjectID = main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Count;
+        main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Add(gameObject);
+    }
+
+    public void respawnItem(int entityID, EntityData entityData)
+    {
+        DroppedItemData droppedItemData = main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[entityData.relatedID];
+        GameObject gameObject = Instantiate(itemPrefab, entityData.position, Quaternion.identity);
+        gameObject.transform.SetParent(item.transform);
+        gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[droppedItemData.itemID].image;
+        DroppedItemInstance droppedItemInstance = gameObject.AddComponent<DroppedItemInstance>();
+        droppedItemInstance.entityID = entityID;
+        droppedItemInstance.droppedItemDataID = entityData.relatedID;
+        droppedItemInstance.itemID = droppedItemData.itemID;
+        droppedItemInstance.amount = droppedItemData.amount;
+        droppedItemInstance.collectTickLeft = -1;
+        droppedItemInstance.isBeingCollected = false;
+        droppedItemInstance.player = player;
+        gameObject.AddComponent<Rigidbody2D>();
+        gameObject.layer = 10;
+        gameObject.tag = "dropped_item";
+        main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Add(gameObject);
+        droppedItemInstance.spawnedItemGameObjectID = main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Count;
+        main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Add(gameObject);
     }
 }

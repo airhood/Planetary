@@ -6267,6 +6267,7 @@ GameObject:
   - component: {fileID: 725686024}
   - component: {fileID: 725686025}
   - component: {fileID: 725686026}
+  - component: {fileID: 725686027}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6328,8 +6329,12 @@ MonoBehaviour:
     - map:
         conveyerSystem:
           movingItemMemory: []
-        entity:
-          DroppedItems: []
+        entitySystem:
+          visibleEntities: []
+          hiddenEntities: []
+          spawnedEntityGameObject: []
+          droppedItemSystem:
+            droppedItemData: []
   conveyer: {fileID: 725686021}
   _blockList:
   - {fileID: 0}
@@ -6346,6 +6351,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b048014988579a47ab9642eb671aef2, type: 2}
   - {fileID: 11400000, guid: f6f852d0eb2f094408af6861fac7b2f3, type: 2}
   player: {fileID: 1998346817}
+  entityHandler: {fileID: 725686027}
 --- !u!114 &725686024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6385,6 +6391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c0f683a72c42a408c095ac98026731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  main: {fileID: 725686023}
   itemPrefab: {fileID: 7786698790569168462, guid: e61e063156570d044abf01818be300c0, type: 3}
   item: {fileID: 221629958}
   player: {fileID: 1998346817}
@@ -6401,6 +6408,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positions: []
+  blockInstanceTickRate: 1
+--- !u!114 &725686027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725686020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5f8c714a18b9194f953fa7bffa32e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1998346817}
+  main: {fileID: 725686023}
+  itemManager: {fileID: 725686025}
+  despawnDistance: 50
+  respawnDistance: 35
+  droppedItemCheckTickRate: 40
 --- !u!1 &732206370
 GameObject:
   m_ObjectHideFlags: 0
@@ -10087,7 +10113,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246810015}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

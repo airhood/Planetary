@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class DroppedItemData : EntityData
+public class DroppedItemData
 {
-    public Vector2 position { get; set; }
     public short itemID;
     public ushort amount;
 
-    public DroppedItemData(Vector2 position, short itemID, ushort amount)
+    public DroppedItemData(short itemID, ushort amount)
     {
-        this.position = position;
         this.itemID = itemID;
         this.amount = amount;
     }
@@ -22,6 +20,8 @@ public class DroppedItemInstance : MonoBehaviour
     public Player player;
 
     public int entityID;
+    public int droppedItemDataID;
+    public int spawnedItemGameObjectID;
     public short itemID;
     public ushort amount;
     public short collectTickLeft;
