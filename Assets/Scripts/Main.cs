@@ -159,8 +159,9 @@ public class Main : MonoBehaviour
 
     public Player player;
     public EntityHandler entityHandler;
+    public TimeSystem timeSystem;
 
-    bool tick;
+    int tick = 0;
 
     void Awake()
     {
@@ -186,11 +187,16 @@ public class Main : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (tick)
+        if (tick % 2 == 0)
         {
             Tick();
+            if (tick == 40)
+            {
+                tick = 0;
+                timeSystem.timeTick();
+            }
         }
-        tick = !tick;
+        tick++;
     }
 
     private void Tick()
