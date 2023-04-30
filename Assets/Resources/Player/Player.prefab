@@ -802,7 +802,7 @@ MonoBehaviour:
   - itemID: 0
     amount: 0
   hotBar: {fileID: 0}
-  hotBarFrame: {fileID: 8119064645845067680, guid: a18e42719c2716a4087876981f2c3bee, type: 3}
+  hotBarFrame: {fileID: 0}
   player: {fileID: 3468241435639570285}
 --- !u!114 &7441538994740689043
 MonoBehaviour:

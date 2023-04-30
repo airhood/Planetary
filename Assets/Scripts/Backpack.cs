@@ -40,12 +40,7 @@ public class Backpack : MonoBehaviour
 
     void Start()
     {
-        index = 0;
-        for(int i = 0; i < 40; i++)
-        {
-            slots.Add(new Slot(0, 0));
-        }
-       UpdateHotBarUI();
+        UpdateHotBarUI();
     }
 
     public void ChangeHotBarPos(byte index)

@@ -92,9 +92,10 @@ public class ItemManager : MonoBehaviour
             }
             if (update)
             {
-                main.world.planet[0].map.entitySystem.spawnedEntityGameObject[i].GetComponent<DroppedItemInstance>().entityID--;
-                main.world.planet[0].map.entitySystem.spawnedEntityGameObject[i].GetComponent<DroppedItemInstance>().droppedItemDataID--;
-                main.world.planet[0].map.entitySystem.spawnedEntityGameObject[i].GetComponent<DroppedItemInstance>().spawnedItemGameObjectID--;
+                var droppedItemInstance = main.world.planet[0].map.entitySystem.spawnedEntityGameObject[i].GetComponent<DroppedItemInstance>();
+                droppedItemInstance.entityID--;
+                droppedItemInstance.droppedItemDataID--;
+                droppedItemInstance.spawnedItemGameObjectID--;
             }
         }
     }
