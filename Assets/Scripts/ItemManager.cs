@@ -65,4 +65,37 @@ public class ItemManager : MonoBehaviour
         droppedItemInstance.spawnedItemGameObjectID = main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Count;
         main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Add(gameObject);
     }
+
+    public void updateEntityRelatedID()
+    {
+        int count = main.world.planet[0].map.entitySystem.visibleEntities.Count;
+        int k = 0;
+        for(int i = 0; i < count; i++)
+        {
+            if (main.world.planet[0].map.entitySystem.visibleEntities[i].type == EntityType.DroppedItem)
+            {
+                main.world.planet[0].map.entitySystem.visibleEntities[i].relatedID = k;
+                k++;
+            }
+        }
+    }
+
+    public void updateDroppedItemInstance(int removedIndex)
+    {
+        int count = main.world.planet[0].map.entitySystem.visibleEntities.Count;
+        bool update = false;
+        for(int i = 0; i < count; i++)
+        {
+            if (i == removedIndex)
+            {
+                update = true;
+            }
+            if (update)
+            {
+                main.world.planet[0].map.entitySystem.spawnedEntityGameObject[i].GetComponent<DroppedItemInstance>().entityID--;
+                main.world.planet[0].map.entitySystem.spawnedEntityGameObject[i].GetComponent<DroppedItemInstance>().droppedItemDataID--;
+                main.world.planet[0].map.entitySystem.spawnedEntityGameObject[i].GetComponent<DroppedItemInstance>().spawnedItemGameObjectID--;
+            }
+        }
+    }
 }

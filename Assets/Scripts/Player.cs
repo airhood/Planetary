@@ -528,10 +528,13 @@ public class Player : MonoBehaviour
     {
         DroppedItemInstance droppedItemInstance = itemObject.GetComponent<DroppedItemInstance>();
         backpack.AddItemToBackpack(droppedItemInstance.itemID, droppedItemInstance.amount);
-        main.world.planet[0].map.entitySystem.visibleEntities.RemoveAt(droppedItemInstance.entityID);
+        int entityID = droppedItemInstance.entityID;
+        main.world.planet[0].map.entitySystem.visibleEntities.RemoveAt(entityID);
         main.world.planet[0].map.entitySystem.spawnedEntityGameObject.RemoveAt(droppedItemInstance.spawnedItemGameObjectID);
         main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.RemoveAt(droppedItemInstance.droppedItemDataID);
         Destroy(itemObject);
+        itemManager.updateEntityRelatedID();
+        itemManager.updateDroppedItemInstance(entityID);
     }
 
     public void doOxygenTick()
