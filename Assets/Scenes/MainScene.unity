@@ -1273,7 +1273,7 @@ GameObject:
   - component: {fileID: 294102751}
   - component: {fileID: 294102750}
   m_Layer: 5
-  m_Name: 25
+  m_Name: 22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1293,7 +1293,7 @@ RectTransform:
   - {fileID: 1600380996}
   - {fileID: 106193849}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 14
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1350,7 +1350,7 @@ GameObject:
   - component: {fileID: 300855883}
   - component: {fileID: 300855882}
   m_Layer: 5
-  m_Name: 18
+  m_Name: 20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1370,7 +1370,7 @@ RectTransform:
   - {fileID: 1025685678}
   - {fileID: 1998926887}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1682,7 +1682,7 @@ GameObject:
   - component: {fileID: 387411326}
   - component: {fileID: 387411325}
   m_Layer: 5
-  m_Name: 16
+  m_Name: 18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1702,7 +1702,7 @@ RectTransform:
   - {fileID: 940167400}
   - {fileID: 1315590372}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1922,7 +1922,7 @@ GameObject:
   - component: {fileID: 431023580}
   - component: {fileID: 431023579}
   m_Layer: 5
-  m_Name: 28
+  m_Name: 30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1942,7 +1942,7 @@ RectTransform:
   - {fileID: 374101647}
   - {fileID: 1655388270}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 17
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2910,7 +2910,7 @@ GameObject:
   - component: {fileID: 523280223}
   - component: {fileID: 523280222}
   m_Layer: 5
-  m_Name: 20
+  m_Name: 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2930,7 +2930,7 @@ RectTransform:
   - {fileID: 1369129547}
   - {fileID: 1180602818}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3433,7 +3433,7 @@ GameObject:
   - component: {fileID: 570642053}
   - component: {fileID: 570642052}
   m_Layer: 5
-  m_Name: 21
+  m_Name: 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3453,7 +3453,7 @@ RectTransform:
   - {fileID: 1911264084}
   - {fileID: 1580784187}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5988,7 +5988,7 @@ GameObject:
   - component: {fileID: 659897471}
   - component: {fileID: 659897470}
   m_Layer: 5
-  m_Name: 30
+  m_Name: 27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6008,7 +6008,7 @@ RectTransform:
   - {fileID: 71299721}
   - {fileID: 1964865233}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 19
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6823,21 +6823,21 @@ RectTransform:
   - {fileID: 591789099}
   - {fileID: 732206371}
   - {fileID: 397161745}
+  - {fileID: 1630462417}
+  - {fileID: 523280221}
   - {fileID: 387411324}
   - {fileID: 1862073354}
   - {fileID: 300855881}
-  - {fileID: 1630462417}
-  - {fileID: 523280221}
+  - {fileID: 1935339719}
+  - {fileID: 294102749}
   - {fileID: 570642051}
   - {fileID: 1652638989}
   - {fileID: 917686328}
-  - {fileID: 1935339719}
-  - {fileID: 294102749}
+  - {fileID: 793896282}
+  - {fileID: 659897469}
   - {fileID: 795767441}
   - {fileID: 1400551742}
   - {fileID: 431023578}
-  - {fileID: 793896282}
-  - {fileID: 659897469}
   - {fileID: 1598247641}
   - {fileID: 1104801403}
   - {fileID: 1342374852}
@@ -6981,7 +6981,7 @@ GameObject:
   - component: {fileID: 793896284}
   - component: {fileID: 793896283}
   m_Layer: 5
-  m_Name: 29
+  m_Name: 26
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7001,7 +7001,7 @@ RectTransform:
   - {fileID: 1411911655}
   - {fileID: 1618569020}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 18
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7058,7 +7058,7 @@ GameObject:
   - component: {fileID: 795767443}
   - component: {fileID: 795767442}
   m_Layer: 5
-  m_Name: 26
+  m_Name: 28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7078,7 +7078,7 @@ RectTransform:
   - {fileID: 866984612}
   - {fileID: 1218571454}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 15
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8408,7 +8408,7 @@ GameObject:
   - component: {fileID: 917686330}
   - component: {fileID: 917686329}
   m_Layer: 5
-  m_Name: 23
+  m_Name: 25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8428,7 +8428,7 @@ RectTransform:
   - {fileID: 548128105}
   - {fileID: 816523017}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -12865,7 +12865,7 @@ GameObject:
   - component: {fileID: 1400551744}
   - component: {fileID: 1400551743}
   m_Layer: 5
-  m_Name: 27
+  m_Name: 29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12885,7 +12885,7 @@ RectTransform:
   - {fileID: 1090963870}
   - {fileID: 1662274123}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 16
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13961,7 +13961,7 @@ GameObject:
   - component: {fileID: 1630462419}
   - component: {fileID: 1630462418}
   m_Layer: 5
-  m_Name: 19
+  m_Name: 16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13981,7 +13981,7 @@ RectTransform:
   - {fileID: 2117907516}
   - {fileID: 1587116796}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14113,7 +14113,7 @@ GameObject:
   - component: {fileID: 1652638991}
   - component: {fileID: 1652638990}
   m_Layer: 5
-  m_Name: 22
+  m_Name: 24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14133,7 +14133,7 @@ RectTransform:
   - {fileID: 1827827988}
   - {fileID: 1380629256}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14731,7 +14731,7 @@ GameObject:
   - component: {fileID: 1862073356}
   - component: {fileID: 1862073355}
   m_Layer: 5
-  m_Name: 17
+  m_Name: 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14751,7 +14751,7 @@ RectTransform:
   - {fileID: 1069862774}
   - {fileID: 895119305}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15149,7 +15149,7 @@ GameObject:
   - component: {fileID: 1935339721}
   - component: {fileID: 1935339720}
   m_Layer: 5
-  m_Name: 24
+  m_Name: 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15169,7 +15169,7 @@ RectTransform:
   - {fileID: 1061635084}
   - {fileID: 2106400028}
   m_Father: {fileID: 740238870}
-  m_RootOrder: 13
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16880,6 +16880,10 @@ PrefabInstance:
       propertyPath: hotBar
       value: 
       objectReference: {fileID: 394448738}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 740238869}
     - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: hotBarFrame
       value: 

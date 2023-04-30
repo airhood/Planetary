@@ -36,11 +36,14 @@ public class Backpack : MonoBehaviour
 
     public GameObject hotBarFrame;
 
+    public GameObject inventory;
+
     public Player player;
 
     void Start()
     {
         UpdateHotBarUI();
+        UpdateInventoryUI();
     }
 
     public void ChangeHotBarPos(byte index)
@@ -53,16 +56,17 @@ public class Backpack : MonoBehaviour
     {
         for(int i = 0; i < 10; i++)
         {
+            var hotBarSlot = hotBar.transform.GetChild(i);
             if (slots[i].amount != 0)
             {
-                hotBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = Main.itemList[(int)slots[i].itemID].image;
-                hotBar.transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
-                hotBar.transform.GetChild(i).GetChild(1).GetComponent<Text>().text = slots[i].amount.ToString();
+                hotBarSlot.GetChild(0).GetComponent<Image>().sprite = Main.itemList[slots[i].itemID].image;
+                hotBarSlot.GetChild(1).gameObject.SetActive(true);
+                hotBarSlot.GetChild(1).GetComponent<Text>().text = slots[i].amount.ToString();
             }
             else
             {
-                hotBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = null;
-                hotBar.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
+                hotBarSlot.GetChild(0).GetComponent<Image>().sprite = null;
+                hotBarSlot.GetChild(1).gameObject.SetActive(false);
             }
         }
 
@@ -74,6 +78,26 @@ public class Backpack : MonoBehaviour
         else
         {
             hotBarFrame.SetActive(false);
+        }
+    }
+
+    public void UpdateInventoryUI()
+    {
+        for(int i = 10; i < 40; i++)
+        {
+            var inventorySlot = inventory.transform.GetChild(i - 10);
+            print($"i:{i}, slots[i].amount:{slots[i].amount}");
+            if (slots[i].amount != 0)
+            {
+                inventorySlot.GetChild(0).GetComponent<Image>().sprite = Main.itemList[slots[i].itemID].image;
+                inventorySlot.GetChild(1).gameObject.SetActive(true);
+                inventorySlot.GetChild(1).GetComponent<Text>().text = slots[i].amount.ToString();
+            }
+            else
+            {
+                inventorySlot.GetChild(0).GetComponent<Image>().sprite = null;
+                inventorySlot.GetChild(1).gameObject.SetActive(false);
+            }
         }
     }
 
@@ -89,6 +113,7 @@ public class Backpack : MonoBehaviour
                 {
                     slots[i].amount += (byte)amountLeft;
                     UpdateHotBarUI();
+                    UpdateInventoryUI();
                     return;
                 }
                 else
@@ -105,6 +130,7 @@ public class Backpack : MonoBehaviour
                 {
                     slots[i].amount = (byte)amountLeft;
                     UpdateHotBarUI();
+                    UpdateInventoryUI();
                     return;
                 }
                 else
@@ -115,6 +141,7 @@ public class Backpack : MonoBehaviour
             }
         }
         UpdateHotBarUI();
+        UpdateInventoryUI();
     }
 
     public void RemoveItem(byte index, byte amount)
@@ -123,10 +150,12 @@ public class Backpack : MonoBehaviour
         {
             slots[index].amount = 0;
             UpdateHotBarUI();
+            UpdateInventoryUI();
             return;
         }
         slots[index].amount -= amount;
         UpdateHotBarUI();
+        UpdateInventoryUI();
     }
 
     public void AutoBackpackSerialization()
