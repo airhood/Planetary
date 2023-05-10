@@ -8,6 +8,7 @@ TagManager:
   - liquidPipe_liquid
   - gasPipe_gas
   - dropped_item
+  - ItemIconUI
   layers:
   - Default
   - TransparentFX

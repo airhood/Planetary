@@ -32,13 +32,11 @@ public class EntityHandler : MonoBehaviour
 
     public void RespawnCheck()
     {
-        print("respawn check");
         int amount = main.world.planet[0].map.entitySystem.hiddenEntities.Count;
         for(int i = 0; i < amount; i++)
         {
             if (Vector2.Distance(player.transform.position, main.world.planet[0].map.entitySystem.hiddenEntities[i].position) <= respawnDistance)
             {
-                print("respawn");
                 var entityData = main.world.planet[0].map.entitySystem.hiddenEntities[i];
                 switch (main.world.planet[0].map.entitySystem.hiddenEntities[i].type)
                 {
@@ -50,33 +48,22 @@ public class EntityHandler : MonoBehaviour
                     default:
                         break;
                 }
-                print("respawned");
             }
         }
     }
 
     public void DespawnCheck()
     {
-        print("despawn check");
         int amount = main.world.planet[0].map.entitySystem.visibleEntities.Count;
         for(int i = 0; i < amount; i++)
         {
-            for(int t = 0; t < amount; t++)
-            {
-                print($"{main.world.planet[0].map.entitySystem.visibleEntities[t]}");
-            }
-            print(i);
-            var n = main.world.planet[0].map.entitySystem.visibleEntities[i].position;
-            print($"{i} success");
             if (Vector2.Distance(player.transform.position, main.world.planet[0].map.entitySystem.visibleEntities[i].position) >= despawnDistance)
             {
-                print("despawn");
                 var entityData = main.world.planet[0].map.entitySystem.visibleEntities[i];
                 main.world.planet[0].map.entitySystem.visibleEntities.RemoveAt(i);
                 main.world.planet[0].map.entitySystem.hiddenEntities.Add(entityData);
                 Destroy(main.world.planet[0].map.entitySystem.spawnedEntityGameObject[i]);
                 main.world.planet[0].map.entitySystem.spawnedEntityGameObject.RemoveAt(i);
-                print("despawned");
             }
         }
     }
