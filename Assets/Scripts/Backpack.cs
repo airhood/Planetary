@@ -196,7 +196,6 @@ public class Backpack : MonoBehaviour
                         {
                             if (slotAmount + drag_element_itemDragUI.amount > 255)
                             {
-                                // ¿ìÅ¬¸¯
                                 byte addAmount = (byte)(255 - slots[slot - 1].amount);
                                 slots[slot - 1].amount = 255;
                                 slots[lastSlot].itemID = drag_element_itemDragUI.itemID;
@@ -210,7 +209,6 @@ public class Backpack : MonoBehaviour
                         }
                         else
                         {
-                            print("fnfnfnfn");
                             slots[slot - 1].itemID = drag_element_itemDragUI.itemID;
                             slots[slot - 1].amount = drag_element_itemDragUI.amount;
                             drag_element_itemDragUI.itemID = slotItemID;
@@ -368,5 +366,15 @@ public class Backpack : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OpenInventory()
+    {
+        inventory.SetActive(true);
+    }
+
+    public void CloseInventory()
+    {
+        inventory.SetActive(false);
     }
 }

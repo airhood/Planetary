@@ -119,6 +119,7 @@ public class Player : MonoBehaviour
     {
         toolMode = ToolMode.None;
         nameDisplay.text = playerInfo.playerName;
+        backpack.CloseInventory();
     }
 
     // Update is called once per frame
@@ -281,7 +282,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        if (!Input.GetMouseButton(0))
+        else
         {
             isModifyingTerrain = false;
             modifyTerrainTileTickRemain = 0;
@@ -290,8 +291,8 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (isBackpackOpen) closeBackpack();
-            else if (!isBackpackOpen) openBackpack();
+            if (isBackpackOpen) backpack.CloseInventory();
+            else if (!isBackpackOpen) backpack.OpenInventory(); 
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -413,16 +414,6 @@ public class Player : MonoBehaviour
     {
         doOxygenTick();
         cureTick();
-    }
-
-    private void openBackpack()
-    {
-
-    }
-
-    private void closeBackpack()
-    {
-
     }
 
     private void calculateAnimation()
@@ -645,7 +636,6 @@ public class Player : MonoBehaviour
                 if (destructBlockTickRemain <= 0)
                 {
                     (short, Vector2Int?) result = blockModify.DeleteBlock(position);
-                    // TODO: 아이템 소환 위치를 block main pos 로 변경하기
                     itemManager.spawnItem(Main.blockList[result.Item1].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)result.Item2) + new Vector2(0.5f, 0.2f), 1);
                     isDestructingBlock = false;
                     destructBlockTickRemain = 0; ;
