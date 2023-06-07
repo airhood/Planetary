@@ -97,7 +97,7 @@ public class BlockInstanceManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"BlockInstanceManager.GetBlockInstance: Cannot get block instance. Position: {position}. Error Code: {ex}");
+            Log.LogError($"BlockInstanceManager.GetBlockInstance: Cannot get block instance. Position: {position}. Error Code: {ex}");
         }
 
         return null;

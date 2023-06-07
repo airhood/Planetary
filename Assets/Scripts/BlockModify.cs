@@ -32,7 +32,7 @@ public class BlockModify : MonoBehaviour
         byte? rotationID = FindRotationID(buildingState, rotation);
         if (rotationID == null)
         {
-            Debug.LogError($"Block rotation not found. BlockID: {blockID}");
+            Log.LogError($"Block rotation not found. BlockID: {blockID}");
             return false;
         }
 
@@ -98,7 +98,7 @@ public class BlockModify : MonoBehaviour
         byte? rotationID = FindRotationID(buildingState, rotation);
         if (rotationID == null)
         {
-            Debug.LogError($"BlockModify.SetBlock: Block rotation not found. BlockID: {blockID}");
+            Log.LogError($"BlockModify.SetBlock: Block rotation not found. BlockID: {blockID}");
             return false;
         }
 
@@ -180,7 +180,7 @@ public class BlockModify : MonoBehaviour
             bool deleteBlockPartsResult = deleteBlockParts(blockMainPos);
             if (!deleteBlockPartsResult)
             {
-                Debug.LogError("BlockModify.DeleteBlock: Error occured at BlockModify.deleteBlockParts(blockMainPos)");
+                Log.LogError("BlockModify.DeleteBlock: Error occured at BlockModify.deleteBlockParts(blockMainPos)");
             }
             (short, Vector2Int?) returnValue = (mainBlockCode, blockMainPos);
             blockInstanceManager.RemoveBlockInstance(blockMainPos);
@@ -209,7 +209,7 @@ public class BlockModify : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Cannot convert position ({position.x},{position.y}) block code to relative blockCode. Error Code: {ex}");
+            Log.LogError($"Cannot convert position ({position.x},{position.y}) block code to relative blockCode. Error Code: {ex}");
             return null;
         }
 
@@ -231,7 +231,7 @@ public class BlockModify : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"BlockModify.deleteBlockParts: Cannot extract blockState from block main position ({position.x},{position.y}). Error code: {ex}");
+            Log.LogError($"BlockModify.deleteBlockParts: Cannot extract blockState from block main position ({position.x},{position.y}). Error code: {ex}");
             return false;
         }
         Block block = Main.blockList[main.world.planet[0].map.map[position.x, position.y]];
@@ -240,14 +240,14 @@ public class BlockModify : MonoBehaviour
         IBlockInstance? blockInstance = blockInstanceManager.GetBlockInstance(position);
         if (blockInstance == null)
         {
-            Debug.LogError($"BlockModify.deleteBlockParts: BlockInstance not found. Position: {position}");
+            Log.LogError($"BlockModify.deleteBlockParts: BlockInstance not found. Position: {position}");
             return false;
         }
 
         byte? rotationID = FindRotationID(buildingState, blockInstance.rotation);
         if (rotationID == null)
         {
-            Debug.LogError($"BlockModify.deleteBlockParts: Block rotation not found. BlockID: {blockID}");
+            Log.LogError($"BlockModify.deleteBlockParts: Block rotation not found. BlockID: {blockID}");
         }
 
         foreach(BuildingTile buildingTile in buildingState.buildingRotations[(byte)rotationID].buildingParts)
@@ -314,7 +314,7 @@ public class BlockModify : MonoBehaviour
     {
         if (main.world.planet[0].map.map[position.x, position.y] >= 0)
         {
-            Debug.LogError("BlockModify.GetTerrainTileHardness: this position is not a matter");
+            Log.LogError("BlockModify.GetTerrainTileHardness: this position is not a matter");
             return -1;
         }
         return Main.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].hardness;
@@ -324,7 +324,7 @@ public class BlockModify : MonoBehaviour
     {
         if (main.world.planet[0].map.map[position.x, position.y] <= 0)
         {
-            Debug.LogError("BlockModify.GetBlockHardness: this position is not a block");
+            Log.LogError("BlockModify.GetBlockHardness: this position is not a block");
             return -1;
         }
         return Main.blockList[main.world.planet[0].map.map[position.x, position.y]].destructionTime;

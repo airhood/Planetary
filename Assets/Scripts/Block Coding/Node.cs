@@ -1,61 +1,77 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum NodeType
 {
-    Start, OnActiveTrue, OnActiveFalse, Tick, OnEvent
+    print,
+    Start, OnActiveTrue, OnActiveFalse, Tick, OnEvent,
+    _if, _if_else, _for, _while, _switch, _try_catch,
+    ADD, SUBSTRACT, MULTIPLY, DIVIDE, Pow, Sqrt, Abs, Vector2_Distance, Vector2_magnitude,
+    Combine, Split, toChar, toString,
+    EqualOperator, NotEqualOperater, LeftBigger, RightBigger, LeftBiggerOrSame, RightBiggerOrSame, ANDOperator, OROperator,
+    setActive, getActiveState, getPortData, setPortData,
+    Time_day, Time_hour, Time_minute,
+    sendDataAt, readSignalFrom, getSignalOrigin
 }
 
 public enum DataType
 {
-    _int, _float, _bool, _string, _Vector2, _Vector2Int
+    _int, _float, _bool, _string, _Vector2, _Vector2Int, NULL, VOID, Node
 }
 
-[System.Serializable]
-public struct NodeParameter<T>
+public struct NodeParameter
 {
     public DataType dataType;
-    public T value;
+    public Type type;
+    public object value;
 
-    public NodeParameter(DataType dataType, T value)
+    public NodeParameter(DataType dataType, object value)
     {
+        type = value.GetType();
         switch(dataType)
         {
             case DataType._int:
-                if (typeof(T) != typeof(int?))
+                if (type != typeof(int?))
                 {
-                    Debug.LogError("DataType not matching");
+                    Log.LogError("DataType not matching");
                 }
                 break;
             case DataType._float:
-                if (typeof(T) != typeof(float?))
+                if (type != typeof(float?))
                 {
-                    Debug.LogError("DataType not matching");
+                    Log.LogError("DataType not matching");
                 }
                 break;
             case DataType._bool:
-                if (typeof(T) != typeof(bool?))
+                if (type != typeof(bool?))
                 {
-                    Debug.LogError("DataType not matching");
+                    Log.LogError("DataType not matching");
                 }
                 break;
             case DataType._string:
-                if (typeof(T) != typeof(string))
+                if (type != typeof(string))
                 {
-                    Debug.LogError("DataType not matching");
+                    Log.LogError("DataType not matching");
                 }
                 break;
             case DataType._Vector2:
-                if (typeof(T) != typeof(Vector2?))
+                if (type != typeof(Vector2?))
                 {
-                    Debug.LogError("DataType not matching");
+                    Log.LogError("DataType not matching");
                 }
                 break;
             case DataType._Vector2Int:
-                if (typeof(T) != typeof(Vector2Int?))
+                if (type != typeof(Vector2Int?))
                 {
-                    Debug.LogError("DataType not matching");
+                    Log.LogError("DataType not matching");
+                }
+                break;
+            case DataType.Node:
+                if (type != typeof(Node))
+                {
+                    Log.LogError("DataType not matching");
                 }
                 break;
         }
@@ -68,43 +84,47 @@ public struct NodeParameter<T>
 public class Node
 {
     public NodeType type;
-    public bool hasNextNode;
-    public ArrayList parameters;
+    public bool hasNodeBracket;
+    public List<NodeParameter> parameters;
+    public DataType returnType;
     public List<NodeBracket>? nodeBrackets;
 
-    public Node(NodeType type, ArrayList parameters)
+    public Node(NodeType type, List<NodeParameter> parameters, DataType returnType)
     {
         this.parameters = parameters;
         this.type = type;
         nodeBrackets = new List<NodeBracket>();
-        hasNextNode = false;
+        hasNodeBracket = false;
+        this.returnType = returnType;
     }
 
-    public Node(NodeType type, ArrayList parameters, Node nodeInBracket)
+    public Node(NodeType type, List<NodeParameter> parameters, Node nodeInBracket, DataType returnType)
     {
         this.parameters = parameters;
         this.type = type;
         nodeBrackets.Add(new NodeBracket(nodeInBracket));
-        hasNextNode = true;
+        hasNodeBracket = true;
+        this.returnType = returnType;
     }
 
-    public Node(NodeType type, ArrayList parameters, NodeBracket nodeBracket)
+    public Node(NodeType type, List<NodeParameter> parameters, NodeBracket nodeBracket, DataType returnType)
     {
         this.parameters = parameters;
         this.type = type;
         nodeBrackets = new List<NodeBracket>();
         nodeBrackets.Add(nodeBracket);
-        hasNextNode = true;
-        nodeBrackets.Add(nodeBracket);
+        hasNodeBracket = true;
+        this.returnType = returnType;
     }
 
-    public Node(NodeType type, ArrayList parameters, List<NodeBracket> nodeBrackets)
+    public Node(NodeType type, List<NodeParameter> parameters, List<NodeBracket> nodeBrackets, DataType returnType)
     {
         this.parameters = parameters;
         this.type = type;
         this.nodeBrackets = nodeBrackets;
-        hasNextNode = true;
+        hasNodeBracket = true;
         this.nodeBrackets = nodeBrackets;
+        this.returnType = returnType;
     }
 }
 
