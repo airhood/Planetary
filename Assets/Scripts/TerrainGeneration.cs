@@ -9,6 +9,7 @@ public class TerrainGeneration : MonoBehaviour
     public Main main;
     public Tilemap collidableBlock;
     public Tilemap nonCollidableBlock;
+    public Tilemap ladder;
 
     [Header("World Generation")]
     public float surfaceValue = 0.7f;

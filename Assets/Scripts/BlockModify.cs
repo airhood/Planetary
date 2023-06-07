@@ -9,19 +9,8 @@ public class BlockModify : MonoBehaviour
     public Main main;
     public Tilemap collidableBlock;
     public Tilemap nonCollidableBlock;
+    public Tilemap ladder;
     public BlockInstanceManager blockInstanceManager;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public bool CheckSetBlockAvailable(Vector2Int position, short blockID, Rotation rotation)
     {
@@ -76,7 +65,9 @@ public class BlockModify : MonoBehaviour
 
         if (block.type == BlockType.Tile)
         {
-            collidableBlock.SetTile((Vector3Int)position, block.tile);
+            if (block.isLadder) ladder.SetTile((Vector3Int)position, block.tile);
+            else if (block.isCollidable) collidableBlock.SetTile((Vector3Int)position, block.tile);
+            else nonCollidableBlock.SetTile((Vector3Int)position, block.tile);
             main.world.planet[0].map.map[position.x, position.y] = blockID;
             return true;
         }
@@ -158,6 +149,7 @@ public class BlockModify : MonoBehaviour
             if (block.type == BlockType.Tile)
             {
                 collidableBlock.SetTile((Vector3Int)position, null);
+                if (block.isLadder) ladder.SetTile((Vector3Int)position, null);
                 main.world.planet[0].map.map[position.x, position.y] = 0;
                 return (blockID, position);
             }

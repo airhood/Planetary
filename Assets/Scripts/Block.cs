@@ -57,6 +57,7 @@ public class BuildingRotation
 public class BuildingState
 {
     public string stateName;
+    public byte defaultRotation;
     public List<BuildingRotation> buildingRotations = new List<BuildingRotation>();
 }
 
@@ -75,6 +76,8 @@ public class Block : ScriptableObject
 
     [Header("Tile")]
     public RuleTile tile;
+    public bool isCollidable;
+    public bool isLadder;
 
     [Header("Building")]
     public Vector2Int BuildPoint;

@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
     public Vector2 lastGroundTouchPos;
     public Vector2 lastGroundTouchPosFallDamageCalculation;
     public bool fallDamageCalculated;
+    public bool inLadder;
+    public float ladderSpeed;
 
     [Header("Animation")]
     public Animator animator;
@@ -112,6 +114,7 @@ public class Player : MonoBehaviour
         modifyTerrainTileTickRemain = 0;
         jetEnabled = false;
         jetFuelLeft = 0;
+        inLadder = false;
     }
 
     // Start is called before the first frame update
@@ -139,6 +142,9 @@ public class Player : MonoBehaviour
     private void MovePlayer()
     {
         float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * (Application.targetFrameRate / 60f);
+        float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * (Application.targetFrameRate / 60f);
+
+        if (y != 0) Ladder(y > 0);
 
         if (x > 0)
         {
@@ -244,7 +250,7 @@ public class Player : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (checkSetBlockAvailable(pos))
+                    if (checkSetBlockAvailable(pos, Main.itemList[backpack.slots[backpack.index].itemID].placeableID))
                     {
                         if (backpack.slots[backpack.index].itemID != 0)
                         {
@@ -613,15 +619,35 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool checkSetBlockAvailable(Vector2Int position)
+    private bool checkSetBlockAvailable(Vector2Int position, short blockID)
     {
-        if (main.world.planet[0].map.map[position.x, position.y] == 0)
+        if (main.world.planet[0].map.map[position.x, position.y] != 0) return false;
+
+        Block block = Main.blockList[blockID];
+
+        if (block.isLadder) return true;
+        if (block.type == BlockType.Tile && !block.isCollidable) return true;
+
+        Vector2Int playerTilePos = (Vector2Int)collidableBlock.WorldToCell(this.transform.position);
+        switch (block.type)
         {
-            Vector2Int playerTilePos = (Vector2Int)collidableBlock.WorldToCell(this.transform.position);
-            if (position != playerTilePos && position != playerTilePos + new Vector2Int(0, 1))
-            {
+            case BlockType.Tile:
+                if (position != playerTilePos && position != playerTilePos + new Vector2Int(0, 1))
+                {
+                    return true;
+                }
+                break;
+            case BlockType.Building:
+                foreach (var buildingPart in block.building[block.defaultStateCode].buildingRotations[block.building[block.defaultStateCode].defaultRotation].buildingParts)
+                {
+                    if (!buildingPart.isCollidable) continue;
+
+                    var pos = position + buildingPart.pos;
+
+                    if (pos != playerTilePos && pos != playerTilePos + new Vector2Int(0, 1)) continue;
+                    return false;
+                }
                 return true;
-            }
         }
 
         return false;
@@ -659,6 +685,53 @@ public class Player : MonoBehaviour
             destructBlockTickRemain = currentDestructingBlockOriginalTick;
             destructBlockTickRemain -= destructAmount;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("collision");
+
+        if (collision == null) return;
+
+        if (collision.gameObject.layer == 7)
+        {
+            print("collision ladder");
+            inLadder = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 7) LadderOut();
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision == null) return;
+        
+        if (collision.gameObject.layer == 7)
+        {
+            inLadder = true;
+            rb.velocity = new Vector2(0, 0);
+            rb.gravityScale = 0;
+        }
+    }
+
+    private void Ladder(bool state)
+    {
+        if (inLadder)
+        {
+            rb.velocity = new Vector2(0, 0);
+            rb.gravityScale = 0; // default: 2
+            transform.Translate(0, (state ? ladderSpeed : (-ladderSpeed)) * Time.deltaTime, 0);
+        }
+    }
+
+    private void LadderOut()
+    {
+        rb.gravityScale = 2;
+        gameObject.layer = 10;
+        inLadder = false;
     }
 
     private bool checkGround()
