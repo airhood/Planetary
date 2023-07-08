@@ -25,7 +25,6 @@ public class EntityHandler : MonoBehaviour
 
     public void DroppedItemCheckTick()
     {
-        print("DroppedItemCheckTick");
         DespawnCheck();
         RespawnCheck();
     }

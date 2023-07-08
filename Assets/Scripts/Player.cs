@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
     public GameObject oxygenGage;
     int cureTickAmount;
     public GameObject damgeText;
+    public short calories;
 
     [Header("UI")]
     public TextMesh nameDisplay;
@@ -288,6 +289,10 @@ public class Player : MonoBehaviour
                 }
             }
         }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            backpack.UseItem();
+        }
         else
         {
             isModifyingTerrain = false;
@@ -295,6 +300,7 @@ public class Player : MonoBehaviour
             currentModifyTerrainTileOriginalTick = 0;
             didInteract = false;
         }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (isBackpackOpen) backpack.CloseInventory();
@@ -697,6 +703,7 @@ public class Player : MonoBehaviour
         {
             print("collision ladder");
             inLadder = true;
+            isJumping = false;
         }
     }
 
@@ -714,6 +721,7 @@ public class Player : MonoBehaviour
             inLadder = true;
             rb.velocity = new Vector2(0, 0);
             rb.gravityScale = 0;
+            isJumping = false;
         }
     }
 
@@ -724,6 +732,8 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(0, 0);
             rb.gravityScale = 0; // default: 2
             transform.Translate(0, (state ? ladderSpeed : (-ladderSpeed)) * Time.deltaTime, 0);
+            lastGroundTouchPosFallDamageCalculation = transform.position;
+            isJumping = false;
         }
     }
 

@@ -101,7 +101,7 @@ public class PlayerInfoData
 {
     public Vector2 playerPos;
     public byte hotBarPos;
-    public Slot[] backpack = new Slot[40];
+    public ItemStack[] backpack = new ItemStack[40];
     public int ResearchPoint;
     public PlayerInfo playerInfo;
 }
@@ -152,10 +152,12 @@ public class Main : MonoBehaviour
     public static List<Block> blockList = new List<Block>();
     public static List<Matter> matterList = new List<Matter>();
     public static List<Item> itemList = new List<Item>();
+    public static List<Recipe> recipeList = new List<Recipe>();
 
     public List<Block> _blockList = new List<Block>();
     public List<Matter> _matterList = new List<Matter>();
     public List<Item> _itemList = new List<Item>();
+    public List<Recipe> _recipeList = new List<Recipe>();
 
     public Player player;
     public EntityHandler entityHandler;

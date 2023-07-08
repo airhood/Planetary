@@ -13487,7 +13487,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -17325,21 +17325,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 740238869}
     - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: itemDragUI
-      value: 
-      objectReference: {fileID: 8287387379220168864, guid: 004d8d50e2d837b4d96c2c2a5af8c8c3, type: 3}
-    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: hotBarFrame
       value: 
       objectReference: {fileID: 492490344}
-    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: slots.Array.data[3].amount
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: slots.Array.data[3].itemID
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570273, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -17396,10 +17384,6 @@ PrefabInstance:
       propertyPath: itemManager
       value: 
       objectReference: {fileID: 725686025}
-    - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: ladderSpeed
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: matterDigging
       value: 

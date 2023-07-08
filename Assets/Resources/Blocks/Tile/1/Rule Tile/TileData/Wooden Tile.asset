@@ -19,10 +19,14 @@ MonoBehaviour:
   destructionTime: 1
   itemID: 2
   tile: {fileID: 11400000, guid: aafb6d5a6ce16c4419b62f04b4b20314, type: 2}
+  isCollidable: 1
+  isLadder: 0
   BuildPoint: {x: 0, y: 0}
-  rotation: 0
   buildOnAirAvailable: 0
   hasInstance: 0
+  isInteractive: 0
+  isUIDisplayable: 0
   defaultStateCode: 0
   building: []
+  requiredFloor: []
   ports: []

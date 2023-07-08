@@ -553,6 +553,8 @@ MonoBehaviour:
   lastGroundTouchPos: {x: 0, y: 0}
   lastGroundTouchPosFallDamageCalculation: {x: 0, y: 0}
   fallDamageCalculated: 1
+  inLadder: 0
+  ladderSpeed: 3
   animator: {fileID: 3468241435639570279}
   spriteRenderer: {fileID: 3468241435639570276}
   backpack: {fileID: 1998346820}
@@ -600,6 +602,7 @@ MonoBehaviour:
   healthGage: {fileID: 4486422635326348499}
   oxygenGage: {fileID: 903043563}
   damgeText: {fileID: 1330546019536225363, guid: cddcfbfff29570b4890ff1398e188237, type: 3}
+  calories: 0
   nameDisplay: {fileID: 327875728}
   blockInstanceManager: {fileID: 0}
   didInteract: 0
@@ -706,6 +709,7 @@ MonoBehaviour:
   main: {fileID: 0}
   collidableBlock: {fileID: 0}
   nonCollidableBlock: {fileID: 0}
+  ladder: {fileID: 0}
   blockInstanceManager: {fileID: 0}
 --- !u!114 &1998346820
 MonoBehaviour:
@@ -727,8 +731,8 @@ MonoBehaviour:
     amount: 16
   - itemID: 1
     amount: 128
-  - itemID: 0
-    amount: 0
+  - itemID: 5
+    amount: 64
   - itemID: 0
     amount: 0
   - itemID: 0
@@ -803,7 +807,11 @@ MonoBehaviour:
     amount: 0
   hotBar: {fileID: 0}
   hotBarFrame: {fileID: 0}
+  inventory: {fileID: 0}
   player: {fileID: 3468241435639570285}
+  canvas: {fileID: 0}
+  isDragging: 0
+  itemDragUI: {fileID: 8287387379220168864, guid: 004d8d50e2d837b4d96c2c2a5af8c8c3, type: 3}
 --- !u!114 &7441538994740689043
 MonoBehaviour:
   m_ObjectHideFlags: 0

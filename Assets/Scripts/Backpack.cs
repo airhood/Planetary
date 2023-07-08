@@ -6,12 +6,12 @@ using UnityEngine.EventSystems;
 using System.Linq;
 
 [System.Serializable]
-public class Slot
+public class ItemStack
 {
     public short itemID;
-    public byte amount;
+    public int amount;
 
-    public Slot(short itemID, byte amount)
+    public ItemStack(short itemID, int amount)
     {
         this.itemID = itemID;
         this.amount = amount;
@@ -28,8 +28,7 @@ public class Backpack : MonoBehaviour
 {
     public int BackPackLevel;
 
-    //public List<Slot> slots = Enumerable.Repeat(new Slot(null, 0), 10).ToList();
-    public List<Slot> slots = new List<Slot>();
+    public List<ItemStack> slots = new List<ItemStack>();
 
     public byte index { get; private set; }
 
@@ -121,8 +120,8 @@ public class Backpack : MonoBehaviour
                         drag_element.transform.parent = canvas.transform;
                         drag_element.GetComponent<RectTransform>().position = Input.mousePosition;
                         drag_element_itemDragUI = drag_element.GetComponent<ItemDragUI>();
-                        drag_element_itemDragUI.itemID = slots[slot].itemID;
-                        drag_element_itemDragUI.amount = slots[slot].amount;
+                        drag_element_itemDragUI.itemID = (byte)slots[slot].itemID;
+                        drag_element_itemDragUI.amount = (byte)slots[slot].amount;
                         drag_element_itemDragUI.updateUI();
                         drag_element.transform.GetChild(0).GetComponent<Image>().sprite = Main.itemList[slots[slot].itemID].image;
                         slots[slot].itemID = 0;
@@ -189,9 +188,8 @@ public class Backpack : MonoBehaviour
                     print($"clickedElement.name: {clickedElement.name}");
                     if (byte.TryParse(clickedElement.name, out slot))
                     {
-                        print("alalalal");
                         short slotItemID = slots[slot - 1].itemID;
-                        byte slotAmount = slots[slot - 1].amount;
+                        short slotAmount = (short)slots[slot - 1].amount;
                         if (drag_element_itemDragUI.itemID == slotItemID)
                         {
                             if (slotAmount + drag_element_itemDragUI.amount > 255)
@@ -199,7 +197,7 @@ public class Backpack : MonoBehaviour
                                 byte addAmount = (byte)(255 - slots[slot - 1].amount);
                                 slots[slot - 1].amount = 255;
                                 slots[lastSlot].itemID = drag_element_itemDragUI.itemID;
-                                slots[lastSlot].amount = (byte)(slotAmount - addAmount);
+                                slots[lastSlot].amount = slotAmount - addAmount;
                             }
                             else
                             {
@@ -212,7 +210,7 @@ public class Backpack : MonoBehaviour
                             slots[slot - 1].itemID = drag_element_itemDragUI.itemID;
                             slots[slot - 1].amount = drag_element_itemDragUI.amount;
                             drag_element_itemDragUI.itemID = slotItemID;
-                            drag_element_itemDragUI.amount = slotAmount;
+                            drag_element_itemDragUI.amount = (byte)slotAmount;
                             if (drag_element_itemDragUI.amount == 0)
                             {
                                 Destroy(drag_element);
@@ -293,34 +291,34 @@ public class Backpack : MonoBehaviour
         }
     }
 
-    public void AddItemToBackpack(short itemID, ushort amount)
+    public void AddItemToBackpack(ItemStack itemStack)
     {
-        byte maxStackAmount = Main.itemList[itemID].maxStackAmount;
-        ushort amountLeft = amount;
+        byte maxStackAmount = Main.itemList[itemStack.itemID].maxStackAmount;
+        short amountLeft = (short)itemStack.amount;
         for(int i = 0; i < slots.Count; i++)
         {
-            if (slots[i].itemID == itemID)
+            if (slots[i].itemID == itemStack.itemID)
             {
                 if (slots[i].amount + amountLeft <= maxStackAmount)
                 {
-                    slots[i].amount += (byte)amountLeft;
+                    slots[i].amount += amountLeft;
                     UpdateHotBarUI();
                     UpdateInventoryUI();
                     return;
                 }
                 else
                 {
-                    byte prevAmount = slots[i].amount;
+                    byte prevAmount = (byte)slots[i].amount;
                     slots[i].amount = maxStackAmount;
                     amountLeft -= (byte)(maxStackAmount - prevAmount);
                 }
             }
             else if (slots[i].amount == 0)
             {
-                slots[i].itemID = itemID;
+                slots[i].itemID = itemStack.itemID;
                 if (amountLeft <= maxStackAmount)
                 {
-                    slots[i].amount = (byte)amountLeft;
+                    slots[i].amount = amountLeft;
                     UpdateHotBarUI();
                     UpdateInventoryUI();
                     return;
@@ -376,5 +374,32 @@ public class Backpack : MonoBehaviour
     public void CloseInventory()
     {
         inventory.SetActive(false);
+    }
+
+    public void UseItem()
+    {
+        Item item = Main.itemList[slots[index].itemID];
+        if (!item.isUsable)
+        {
+            Log.LogError("Backpack.UseItem: cannot use nonUsable item");
+            return;
+        }
+
+        if (item.isRemoveOnUse) slots[index].amount--;
+        ItemFunctionManager.InvoketemFunc(index, item.name, "use", null);
+    }
+
+    public bool CheckItemExist(ItemStack itemStack)
+    {
+        int amount = 0;
+        for(int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].itemID == itemStack.itemID)
+            {
+                amount += slots[i].amount;
+            }
+        }
+        if (amount >= itemStack.amount) return true;
+        return false;
     }
 }
