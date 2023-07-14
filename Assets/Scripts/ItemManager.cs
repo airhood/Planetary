@@ -37,7 +37,7 @@ public class ItemManager : MonoBehaviour
         droppedItemInstance.collectTickLeft = -1;
         droppedItemInstance.isBeingCollected = false;
         droppedItemInstance.player = player;
-        gameObject.AddComponent<Rigidbody2D>();
+        //gameObject.AddComponent<Rigidbody2D>();
         gameObject.layer = 10;
         gameObject.tag = "dropped_item";
         droppedItemInstance.spawnedItemGameObjectID = main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Count;
@@ -58,7 +58,7 @@ public class ItemManager : MonoBehaviour
         droppedItemInstance.collectTickLeft = -1;
         droppedItemInstance.isBeingCollected = false;
         droppedItemInstance.player = player;
-        gameObject.AddComponent<Rigidbody2D>();
+        //gameObject.AddComponent<Rigidbody2D>();
         gameObject.layer = 10;
         gameObject.tag = "dropped_item";
         main.world.planet[0].map.entitySystem.spawnedEntityGameObject.Add(gameObject);

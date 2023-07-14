@@ -27,6 +27,7 @@ public class EntityHandler : MonoBehaviour
     {
         DespawnCheck();
         RespawnCheck();
+        UpdateEntityPosition();
     }
 
     public void RespawnCheck()
@@ -65,5 +66,16 @@ public class EntityHandler : MonoBehaviour
                 main.world.planet[0].map.entitySystem.spawnedEntityGameObject.RemoveAt(i);
             }
         }
+    }
+
+    public void UpdateEntityPosition()
+    {
+        int amount = main.world.planet[0].map.entitySystem.visibleEntities.Count;
+        for(int i = 0; i < amount; i++)
+        {
+            var entity = main.world.planet[0].map.entitySystem.visibleEntities[i];
+            entity.position = main.world.planet[0].map.entitySystem.spawnedEntityGameObject[entity.relatedID].transform.position;
+        }
+        print("updated entity position");
     }
 }

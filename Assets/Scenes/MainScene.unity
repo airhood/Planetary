@@ -6434,6 +6434,98 @@ MonoBehaviour:
         Year: 0
         Day: 0
         hour: 0
+    playerinfoData:
+      playerPos: {x: 0, y: 0}
+      hotBarPos: 0
+      backpack:
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      - itemID: 0
+        amount: 0
+      ResearchPoint: 0
+      playerInfo:
+        playerName: 
+        playerPosition: {x: 0, y: 0, z: 0, w: 0}
+        maxHealth: 0
+        health: 0
+        maxOxygen: 0
+        oxygen: 0
     planet:
     - map:
         conveyerSystem:
@@ -6461,6 +6553,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b048014988579a47ab9642eb671aef2, type: 2}
   - {fileID: 11400000, guid: f6f852d0eb2f094408af6861fac7b2f3, type: 2}
   - {fileID: 11400000, guid: 74587b67dc094bd4c9bc509a19226429, type: 2}
+  _recipeList: []
   player: {fileID: 1998346817}
   entityHandler: {fileID: 725686027}
   timeSystem: {fileID: 725686028}
@@ -13487,7 +13580,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

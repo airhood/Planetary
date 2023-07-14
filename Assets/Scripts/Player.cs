@@ -459,9 +459,9 @@ public class Player : MonoBehaviour
                     //backpack.addItemToBackpack(Main.matterList[main.world.planet[0].map.map[position.x, position.y]].itemID, 1);
                     itemManager.spawnItem(Main.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), 32);
                     blockModify.ModifyTerrain(position, 0);
-                    isModifyingTerrain = false;
                     modifyTerrainTileTickRemain = 0;
                     currentModifyTerrainTileOriginalTick = 0;
+                    isModifyingTerrain = false;
                     return;
                 }
                 modifyTerrainTileTickRemain -= digAmount;
@@ -530,7 +530,7 @@ public class Player : MonoBehaviour
     private void collectItem(GameObject itemObject)
     {
         DroppedItemInstance droppedItemInstance = itemObject.GetComponent<DroppedItemInstance>();
-        backpack.AddItemToBackpack(droppedItemInstance.itemID, droppedItemInstance.amount);
+        backpack.AddItemToBackpack(new ItemStack(droppedItemInstance.itemID, droppedItemInstance.amount));
         int entityID = droppedItemInstance.entityID;
         main.world.planet[0].map.entitySystem.visibleEntities.RemoveAt(entityID);
         main.world.planet[0].map.entitySystem.spawnedEntityGameObject.RemoveAt(droppedItemInstance.spawnedItemGameObjectID);
@@ -695,13 +695,10 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("collision");
-
         if (collision == null) return;
 
         if (collision.gameObject.layer == 7)
         {
-            print("collision ladder");
             inLadder = true;
             isJumping = false;
         }
