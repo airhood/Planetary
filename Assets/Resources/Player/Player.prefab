@@ -808,6 +808,7 @@ MonoBehaviour:
   hotBar: {fileID: 0}
   hotBarFrame: {fileID: 0}
   inventory: {fileID: 0}
+  sidePopUp: {fileID: 0}
   player: {fileID: 3468241435639570285}
   canvas: {fileID: 0}
   isDragging: 0

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a42572f0f8f33b54189d85195ff4b5cf, type: 3}
-  m_Name: Stone Matter
+  m_Name: Diamond
   m_EditorClassIdentifier: 
-  id: 1
-  name: Stone
+  id: 7
+  name: Diamond
   description: 
   matterType: 0
-  hardness: 4
-  tile: {fileID: 11400000, guid: f39b8cc57837ab64ea9a69358b83bc91, type: 2}
+  hardness: 20
+  tile: {fileID: 11400000, guid: 04da3937fc9544342922566e1ea626cd, type: 2}
   canBePlacedAsBlock: 1
   canBeConvertedToItem: 1
-  itemID: 1
-  rarity: 0
-  size: 0
+  itemID: 10
+  rarity: 0.3
+  size: 0.9

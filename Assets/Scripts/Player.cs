@@ -121,6 +121,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.GetComponent<Rigidbody2D>().gravityScale = 0;
         toolMode = ToolMode.None;
         nameDisplay.text = playerInfo.playerName;
         backpack.CloseInventory();
@@ -303,8 +304,16 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (isBackpackOpen) backpack.CloseInventory();
-            else if (!isBackpackOpen) backpack.OpenInventory(); 
+            if (isBackpackOpen)
+            {
+                backpack.CloseInventory();
+                isBackpackOpen = false;
+            }
+            else if (!isBackpackOpen)
+            {
+                backpack.OpenInventory();
+                isBackpackOpen = true;
+            }
         }
         if (Input.GetKeyDown(KeyCode.G))
         {

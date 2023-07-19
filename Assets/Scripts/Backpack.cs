@@ -35,6 +35,7 @@ public class Backpack : MonoBehaviour
     public GameObject hotBar;
     public GameObject hotBarFrame;
     public GameObject inventory;
+    public GameObject sidePopUp;
 
     public Player player;
 
@@ -274,6 +275,7 @@ public class Backpack : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
+        if (!inventory.activeSelf) return;
         for(int i = 10; i < 40; i++)
         {
             var inventorySlot = inventory.transform.GetChild(i - 10);
@@ -368,12 +370,13 @@ public class Backpack : MonoBehaviour
 
     public void OpenInventory()
     {
-        inventory.SetActive(true);
+        sidePopUp.SetActive(true);
+        UpdateInventoryUI();
     }
 
     public void CloseInventory()
     {
-        inventory.SetActive(false);
+        sidePopUp.SetActive(false);
     }
 
     public void UseItem()

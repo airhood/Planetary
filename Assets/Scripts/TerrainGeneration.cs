@@ -11,18 +11,29 @@ public class TerrainGeneration : MonoBehaviour
     public Tilemap nonCollidableBlock;
     public Tilemap ladder;
 
-    [Header("World Generation")]
-    public float surfaceValue = 0.7f;
+    [Header("Generation Settings")]
     public int worldSize;
-    public float terrainFreq = 0.05f;
-    public float caveFreq = 0.05f;
+    public int dirtLayerHeight = 5;
+    public float surfaceValue = 0.25f;
     public float heightMultiplier = 4f;
     public int heightAddition = 25;
+
+    [Header("Noise Settings")]
+    public float terrainFreq = 0.05f;
+    public float caveFreq = 0.05f;
     public float seed;
-    public Texture2D noiseTexture;
+    public Texture2D caveNoiseTexture;
+
+    [Header("Ore")]
+    public Texture2D coalSpread;
+    public Texture2D copperSpread;
+    public Texture2D ironSpread;
+    public Texture2D goldSpread;
+    public Texture2D diamondSpread;
+
+    [Header("Output")]
     public bool isLoaded;
     public Texture2D colorMap;
-    public int grassMinHeight;
 
     [Header("Player")]
     public GameObject player;
@@ -30,142 +41,93 @@ public class TerrainGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateNoiseTexture();
-        GenerateTerrain(noiseTexture);
+        if (caveNoiseTexture == null)
+        {
+            caveNoiseTexture = new Texture2D(worldSize, worldSize);
+            coalSpread = new Texture2D(worldSize, worldSize);
+            copperSpread = new Texture2D(worldSize, worldSize);
+            ironSpread = new Texture2D(worldSize, worldSize);
+            goldSpread = new Texture2D(worldSize, worldSize);
+            diamondSpread = new Texture2D(worldSize, worldSize);
+        }
+
+        GenerateNoiseTexture(seed, caveFreq, surfaceValue, caveNoiseTexture);
+
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Coal), Main.matterList[(int)Matters.Coal].rarity, Main.matterList[(int)Matters.Coal].size, coalSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Copper), Main.matterList[(int)Matters.Copper].rarity, Main.matterList[(int)Matters.Copper].size, copperSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Iron), Main.matterList[(int)Matters.Iron].rarity, Main.matterList[(int)Matters.Iron].size, ironSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Gold), Main.matterList[(int)Matters.Gold].rarity, Main.matterList[(int)Matters.Gold].size, goldSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Diamond), Main.matterList[(int)Matters.Diamond].rarity, Main.matterList[(int)Matters.Diamond].size, diamondSpread);
+
+        GenerateTerrain();
         SetPlayer();
         isLoaded = true;
+
+        Invoke("StartPlayer", 5);
     }
 
-    public void GenerateNoiseTexture()
+    public void StartPlayer()
     {
-        noiseTexture = new Texture2D(worldSize, worldSize);
-        
-        for (int x = 0; x < noiseTexture.width; x++)
+        player.GetComponent<Rigidbody2D>().gravityScale = 2;
+    }
+
+    public void GenerateNoiseTexture(float seed, float frequency, float limit, Texture2D noiseTexture)
+    {        
+        for(int x = 0; x < noiseTexture.width; x++)
         {
-            for (int y = 0; y < noiseTexture.height; y++)
+            for(int y = 0; y < noiseTexture.height; y++)
             {
-                float v = Mathf.PerlinNoise((x + seed) * caveFreq, (y + seed) * caveFreq);
-                noiseTexture.SetPixel(x, y, new Color(v, v, v));
+                float v = Mathf.PerlinNoise((x + seed) * frequency, (y + seed) * frequency);
+                if (v > limit)
+                    noiseTexture.SetPixel(x, y, Color.white);
+                else
+                    noiseTexture.SetPixel(x, y, Color.black);
             }
         }
 
         noiseTexture.Apply();
     }
 
-    public Texture2D addNoise(Texture2D noise1, Texture2D noise2)
-    {
-        if (noise1.width != noise2.width) return null;
-        if (noise1.height != noise2.height) return null;
-        int width = noise1.width;
-        int height = noise1.height;
-        Texture2D resultTexture = new Texture2D(width, height);
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                float r = noise1.GetPixel(x, y).r + noise2.GetPixel(x, y).r;
-                float g = noise1.GetPixel(x, y).g + noise2.GetPixel(x, y).g;
-                float b = noise1.GetPixel(x, y).b + noise2.GetPixel(x,y).b;
-                if (r > 1) r = 1;
-                if (g > 1) g = 1;
-                if (b > 1) b = 1;
-                if (r < 0) r = 0;
-                if (g < 0) g = 0;
-                if (b < 0) b = 0;
-                resultTexture.SetPixel(x, y, new Color(r, g, b));
-            }
-        }
-        resultTexture.Apply();
-        return resultTexture;
-    }
 
-    public Texture2D substractNoise(Texture2D noise1, Texture2D noise2)
-    {
-        if (noise1.width != noise2.width) return null;
-        if (noise1.height != noise2.height) return null;
-        int width = noise1.width;
-        int height = noise1.height;
-        Texture2D resultTexture = new Texture2D(width, height);
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                float r = noise1.GetPixel(x, y).r - noise2.GetPixel(x, y).r;
-                float g = noise1.GetPixel(x, y).g - noise2.GetPixel(x, y).g;
-                float b = noise1.GetPixel(x, y).b - noise2.GetPixel(x, y).b;
-                if (r > 1) r = 1;
-                if (g > 1) g = 1;
-                if (b > 1) b = 1;
-                if (r < 0) r = 0;
-                if (g < 0) g = 0;
-                if (b < 0) b = 0;
-                resultTexture.SetPixel(x, y, new Color(r, g, b));
-            }
-        }
-        resultTexture.Apply();
-        return resultTexture;
-    }
 
-    public Texture2D multiplyNoise(Texture2D noise1, Texture2D noise2)
+    public void GenerateTerrain()
     {
-        if (noise1.width != noise2.width) return null;
-        if (noise1.height != noise2.height) return null;
-        int width = noise1.width;
-        int height = noise1.height;
-        Texture2D resultTexture = new Texture2D(width, height);
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                float r = noise1.GetPixel(x, y).r * noise2.GetPixel(x, y).r;
-                float g = noise1.GetPixel(x, y).g * noise2.GetPixel(x, y).g;
-                float b = noise1.GetPixel(x, y).b * noise2.GetPixel(x, y).b;
-                if (r > 1) r = 1;
-                if (g > 1) g = 1;
-                if (b > 1) b = 1;
-                if (r < 0) r = 0;
-                if (g < 0) g = 0;
-                if (b < 0) b = 0;
-                resultTexture.SetPixel(x, y, new Color(r, g, b));
-            }
-        }
-        resultTexture.Apply();
-        return resultTexture;
-    }
-
-    public void GenerateTerrain(Texture2D worldPerlinNoise)
-    {
-        for (int x = 0; x < worldPerlinNoise.width; x++)
+        for (int x = 0; x < caveNoiseTexture.width; x++)
         {
             float height = (Mathf.PerlinNoise((x + seed) * terrainFreq, seed * terrainFreq) * heightMultiplier) + heightAddition;
-            short maxHeight = 0;
             for (int y = 0; y < height; y++)
             {
-                if (noiseTexture.GetPixel(x, y).r > surfaceValue)
+                Matters tile;
+                if (y < height - dirtLayerHeight)
                 {
-                    collidableBlock.SetTile(new Vector3Int(x, y, 0), Main.matterList[(int)Matters.stone].tile);
-                    main.world.planet[0].map.map[x, y] = (short)Matters.stone * (-1);
-                    maxHeight = (short)y;
+                    if (coalSpread.GetPixel(x, y).r > 0.5f)
+                        tile = Matters.Coal;
+                    else if (copperSpread.GetPixel(x, y).r > 0.5f)
+                        tile = Matters.Copper;
+                    else if (ironSpread.GetPixel(x, y).r > 0.5f)
+                        tile = Matters.Iron;
+                    else if (goldSpread.GetPixel(x, y).r > 0.5f)
+                        tile = Matters.Gold;
+                    else if (diamondSpread.GetPixel(x, y).r > 0.5f)
+                        tile = Matters.Diamond;
+                    else
+                        tile = Matters.stone;
+                }
+                else if (y < height - 1)
+                {
+                    tile = Matters.Dirt;
+                }
+                else
+                {
+                    tile = Matters.Dirt;
+                }
+
+                if (caveNoiseTexture.GetPixel(x, y).r > 0.5f)
+                {
+                    collidableBlock.SetTile(new Vector3Int(x, y, 0), Main.matterList[(int)tile].tile);
+                    main.world.planet[0].map.map[x, y] = (short)((short)tile * (-1));
                 }
             }
-
-            /*
-            if (maxHeight < grassMinHeight) continue;
-
-            float dirtNoise = Mathf.PerlinNoise((x + seed) * terrainFreq, seed * terrainFreq);
-            byte dirtHeight;
-            if (dirtNoise > 0 && dirtNoise <= 0.3) dirtHeight = 1;
-            else if (dirtNoise > 0.3 && dirtNoise <= 0.55) dirtHeight = 2;
-            else if (dirtNoise > 0.5 && dirtNoise <= 0.8) dirtHeight = 3;
-            else if (dirtNoise > 8 && dirtNoise <= 1) dirtHeight = 4;
-            else dirtHeight = 0;
-
-            for (int d = 1; d <= dirtHeight; d++)
-            {
-                collidableBlock.SetTile(new Vector3Int(x, maxHeight + d, 0), Main.matterList[(int)Matters.Dirt].tile);
-                main.world.planet[0].map.map[x, maxHeight + d] = (short)Matters.Dirt * (-1);
-            }
-            */
         }
     }
 

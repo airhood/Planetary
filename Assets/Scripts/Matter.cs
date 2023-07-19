@@ -9,12 +9,13 @@ public enum MatterType
 
 public enum Matters
 {
-    vacuum, stone, Dirt
+    vacuum, stone, Dirt, Coal, Copper, Iron, Gold, Diamond
 }
 
 [CreateAssetMenu(menuName = "World/Matter", fileName = "new Matter", order = 30)]
 public class Matter : ScriptableObject
 {
+    [Header("Info")]
     public short id;
     public string name;
     public string description;
@@ -25,10 +26,12 @@ public class Matter : ScriptableObject
 
     public RuleTile tile;
 
-    public Color color;
-
     public bool canBePlacedAsBlock;
 
     public bool canBeConvertedToItem;
     public short itemID;
+
+    [Header("Ore")]
+    public float rarity;
+    public float size;
 }
