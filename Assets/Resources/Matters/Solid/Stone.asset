@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a42572f0f8f33b54189d85195ff4b5cf, type: 3}
-  m_Name: Dirt Matter
+  m_Name: Stone
   m_EditorClassIdentifier: 
-  id: 2
-  name: Dirt
+  id: 1
+  name: "\uB3CC"
   description: 
   matterType: 0
-  hardness: 2
-  tile: {fileID: 11400000, guid: d1d54745203f0a7409b7e4f93ca1e988, type: 2}
-  color: {r: 0, g: 0, b: 0, a: 0}
+  hardness: 4
+  tile: {fileID: 11400000, guid: f39b8cc57837ab64ea9a69358b83bc91, type: 2}
   canBePlacedAsBlock: 1
   canBeConvertedToItem: 1
-  itemID: 3
+  itemID: 1
+  rarity: 0
+  size: 0

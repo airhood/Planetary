@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron
   m_EditorClassIdentifier: 
   id: 8
-  name: Iron
+  name: "\uCCA0"
   description: 
   image: {fileID: 21300000, guid: 37aef9b4d8ace114b8f07b048c38e040, type: 3}
   type: 1

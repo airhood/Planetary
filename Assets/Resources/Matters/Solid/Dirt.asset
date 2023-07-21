@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 944ff5902644c5640a10110cb9798225, type: 3}
-  m_Name: Stone Item
+  m_Script: {fileID: 11500000, guid: a42572f0f8f33b54189d85195ff4b5cf, type: 3}
+  m_Name: Dirt
   m_EditorClassIdentifier: 
-  id: 1
-  name: Stone
+  id: 2
+  name: "\uD759"
   description: 
-  image: {fileID: 21300000, guid: ee680911fa090f94987e07a068927ffe, type: 3}
-  type: 1
-  maxStackAmount: 128
-  isUsable: 0
-  isRemoveOnUse: 0
-  calorieAddAmount: 0
-  placeableID: -1
+  matterType: 0
+  hardness: 2
+  tile: {fileID: 11400000, guid: d1d54745203f0a7409b7e4f93ca1e988, type: 2}
+  canBePlacedAsBlock: 1
+  canBeConvertedToItem: 1
+  itemID: 3
+  rarity: 0
+  size: 0

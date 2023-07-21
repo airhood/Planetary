@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Coal
   m_EditorClassIdentifier: 
   id: 3
-  name: Coal
+  name: "\uC11D\uD0C4"
   description: 
   matterType: 0
   hardness: 7

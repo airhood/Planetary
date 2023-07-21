@@ -122,6 +122,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         this.GetComponent<Rigidbody2D>().gravityScale = 0;
+        this.GetComponent<Collider2D>().enabled = false;
         toolMode = ToolMode.None;
         nameDisplay.text = playerInfo.playerName;
         backpack.CloseInventory();
@@ -143,8 +144,8 @@ public class Player : MonoBehaviour
 
     private void MovePlayer()
     {
-        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * (Application.targetFrameRate / 60f);
-        float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * (Application.targetFrameRate / 60f);
+        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
+        float y = Input.GetAxisRaw("Vertical") * Time.deltaTime;
 
         if (y != 0) Ladder(y > 0);
 

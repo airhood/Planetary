@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: Water Electrolysis
   m_EditorClassIdentifier: 
   id: 4
-  name: Water Electrolysis
+  name: "\uBB3C \uC804\uAE30\uBD84\uD574 \uC7A5\uCE58"
   description: 
   image: {fileID: 21300000, guid: 74363dad2b9cd7543a0f940ec463af5e, type: 3}
   type: 2
   maxStackAmount: 16
+  isUsable: 0
+  isRemoveOnUse: 0
+  itemTag: 0
+  recipeID: 0
+  calorieAddAmount: 0
   placeableID: 2

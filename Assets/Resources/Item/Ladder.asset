@@ -10,12 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 944ff5902644c5640a10110cb9798225, type: 3}
-  m_Name: Ladder Item
+  m_Name: Ladder
   m_EditorClassIdentifier: 
   id: 5
-  name: Ladder
+  name: "\uC0AC\uB2E4\uB9AC"
   description: 
   image: {fileID: -6212912972022354129, guid: 5f1d191885bf0ce4c84183d3c4f91e57, type: 3}
   type: 2
   maxStackAmount: 64
+  isUsable: 0
+  isRemoveOnUse: 0
+  itemTag: 0
+  recipeID: 0
+  calorieAddAmount: 0
   placeableID: 3

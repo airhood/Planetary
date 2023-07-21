@@ -10,12 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 944ff5902644c5640a10110cb9798225, type: 3}
-  m_Name: Dirt Item
+  m_Name: Wooden Tile
   m_EditorClassIdentifier: 
-  id: 3
-  name: Dirt
+  id: 2
+  name: "\uB098\uBB34 \uD0C0\uC77C"
   description: 
-  image: {fileID: 21300000, guid: 3982a11f3b4b92b43a9aa2d0d1037bde, type: 3}
-  type: 0
+  image: {fileID: 2537882373423050008, guid: 5f1d191885bf0ce4c84183d3c4f91e57, type: 3}
+  type: 2
   maxStackAmount: 128
-  placeableID: -2
+  isUsable: 0
+  isRemoveOnUse: 0
+  itemTag: 0
+  recipeID: 0
+  calorieAddAmount: 0
+  placeableID: 1

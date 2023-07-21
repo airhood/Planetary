@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Copper
   m_EditorClassIdentifier: 
   id: 4
-  name: Copper
+  name: "\uAD6C\uB9AC"
   description: 
   matterType: 0
   hardness: 9

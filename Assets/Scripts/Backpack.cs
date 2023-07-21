@@ -61,6 +61,12 @@ public class Backpack : MonoBehaviour
 
     public GameObject itemDragUI;
 
+    public Image resultItemImage;
+    public Text resultItemName;
+    public Text description;
+    public Text requiredItems1;
+    public Text requiredItems2;
+
     void Start()
     {
         ui_raycaster = canvas.GetComponent<GraphicRaycaster>();
@@ -404,5 +410,32 @@ public class Backpack : MonoBehaviour
         }
         if (amount >= itemStack.amount) return true;
         return false;
+    }
+
+    public void DisplayRecipe(short id)
+    {
+        Recipe recipe = Main.recipeList[id];
+        resultItemImage.sprite = Main.itemList[recipe.resultItem.itemID].image;
+        resultItemName.text = Main.itemList[recipe.resultItem.itemID].name;
+        description.text = Main.itemList[recipe.resultItem.itemID].description;
+        for(int i = 0; i < recipe.requiredItems.Count; i++)
+        {
+            if (i < 3)
+            {
+                if (i != 0)
+                {
+                    requiredItems1.text += "\n";
+                }
+                requiredItems1.text += Main.itemList[recipe.requiredItems[i].itemID].name + " x " + recipe.requiredItems[i].amount;
+            }
+            else
+            {
+                if (i != 3)
+                {
+                    requiredItems2.text += "\n";
+                }
+                requiredItems2.text += "\n" + Main.itemList[recipe.requiredItems[i].itemID].name + " x " + recipe.requiredItems[i].amount;
+            }
+        }
     }
 }

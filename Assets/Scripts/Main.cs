@@ -168,7 +168,7 @@ public class Main : MonoBehaviour
 
     void Awake()
     {
-        Application.targetFrameRate = 80;
+        Application.targetFrameRate = 120;
         blockList = _blockList;
         matterList = _matterList;
         itemList = _itemList;

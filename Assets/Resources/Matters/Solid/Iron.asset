@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron
   m_EditorClassIdentifier: 
   id: 5
-  name: Iron
+  name: "\uCCA0"
   description: 
   matterType: 0
   hardness: 10

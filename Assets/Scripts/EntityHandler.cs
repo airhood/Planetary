@@ -20,7 +20,6 @@ public class EntityHandler : MonoBehaviour
         {
             tick = 0;
             DroppedItemCheckTick();
-            print($"player.transform.position:{player.transform.position}");
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -41,6 +42,20 @@ public class TerrainGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Load();
+    }
+
+    public async void Load()
+    {
+        await GenerateWorld();
+        print("map loaded");
+        SetPlayer();
+        StartPlayer();
+        print("load done");
+    }
+
+    public async Task GenerateWorld()
+    {
         if (caveNoiseTexture == null)
         {
             caveNoiseTexture = new Texture2D(worldSize, worldSize);
@@ -59,16 +74,17 @@ public class TerrainGeneration : MonoBehaviour
         GenerateNoiseTexture(seed + (100f * (int)Matters.Gold), Main.matterList[(int)Matters.Gold].rarity, Main.matterList[(int)Matters.Gold].size, goldSpread);
         GenerateNoiseTexture(seed + (100f * (int)Matters.Diamond), Main.matterList[(int)Matters.Diamond].rarity, Main.matterList[(int)Matters.Diamond].size, diamondSpread);
 
-        GenerateTerrain();
-        SetPlayer();
-        isLoaded = true;
+        await Task.Delay(100);
 
-        Invoke("StartPlayer", 5);
+        await GenerateTerrain();
+        
+        isLoaded = true;
     }
 
     public void StartPlayer()
     {
         player.GetComponent<Rigidbody2D>().gravityScale = 2;
+        player.GetComponent<Collider2D>().enabled = this;
     }
 
     public void GenerateNoiseTexture(float seed, float frequency, float limit, Texture2D noiseTexture)
@@ -90,7 +106,7 @@ public class TerrainGeneration : MonoBehaviour
 
 
 
-    public void GenerateTerrain()
+    public async Task GenerateTerrain()
     {
         for (int x = 0; x < caveNoiseTexture.width; x++)
         {
@@ -128,6 +144,7 @@ public class TerrainGeneration : MonoBehaviour
                     main.world.planet[0].map.map[x, y] = (short)((short)tile * (-1));
                 }
             }
+            await Task.Delay(25);
         }
     }
 
