@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public enum MatterType
 {
@@ -24,7 +25,7 @@ public class Matter : ScriptableObject
 
     public short hardness;
 
-    public RuleTile tile;
+    public TileBase tile;
 
     public bool canBePlacedAsBlock;
 

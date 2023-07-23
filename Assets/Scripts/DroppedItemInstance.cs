@@ -5,13 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class DroppedItemData
 {
-    public short itemID;
-    public ushort amount;
+    public ItemStack itemStack;
 
-    public DroppedItemData(short itemID, ushort amount)
+    public DroppedItemData(short itemID, int amount)
     {
-        this.itemID = itemID;
-        this.amount = amount;
+        itemStack = new ItemStack(itemID, amount);
     }
 }
 
@@ -22,8 +20,7 @@ public class DroppedItemInstance : MonoBehaviour
     public int entityID;
     public int droppedItemDataID;
     public int spawnedItemGameObjectID;
-    public short itemID;
-    public ushort amount;
+    public ItemStack itemStack;
     public short collectTickLeft;
     public bool isBeingCollected;
 

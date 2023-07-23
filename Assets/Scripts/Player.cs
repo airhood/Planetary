@@ -467,7 +467,7 @@ public class Player : MonoBehaviour
                 if (modifyTerrainTileTickRemain <= 0)
                 {
                     //backpack.addItemToBackpack(Main.matterList[main.world.planet[0].map.map[position.x, position.y]].itemID, 1);
-                    itemManager.spawnItem(Main.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), 32);
+                    itemManager.spawnItem((Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), new ItemStack(Main.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].itemID, 32));
                     blockModify.ModifyTerrain(position, 0);
                     modifyTerrainTileTickRemain = 0;
                     currentModifyTerrainTileOriginalTick = 0;
@@ -540,12 +540,27 @@ public class Player : MonoBehaviour
     private void collectItem(GameObject itemObject)
     {
         DroppedItemInstance droppedItemInstance = itemObject.GetComponent<DroppedItemInstance>();
-        backpack.AddItemToBackpack(new ItemStack(droppedItemInstance.itemID, droppedItemInstance.amount));
+        ItemStack result = backpack.AddItemToBackpack(droppedItemInstance.itemStack);
         int entityID = droppedItemInstance.entityID;
-        main.world.planet[0].map.entitySystem.visibleEntities.RemoveAt(entityID);
-        main.world.planet[0].map.entitySystem.spawnedEntityGameObject.RemoveAt(droppedItemInstance.spawnedItemGameObjectID);
-        main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.RemoveAt(droppedItemInstance.droppedItemDataID);
-        Destroy(itemObject);
+        if (result.amount == 0)
+        {
+            main.world.planet[0].map.entitySystem.visibleEntities.RemoveAt(entityID);
+            main.world.planet[0].map.entitySystem.spawnedEntityGameObject.RemoveAt(droppedItemInstance.spawnedItemGameObjectID);
+            main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.RemoveAt(droppedItemInstance.droppedItemDataID);
+            Destroy(itemObject);
+        }
+        else
+        {
+            if (main.world.planet[0].map.entitySystem.visibleEntities[entityID].type == EntityType.DroppedItem)
+            {
+                if (main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[
+                    main.world.planet[0].map.entitySystem.visibleEntities[entityID].relatedID].itemStack.amount - result.amount > 0)
+                {
+                    main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[
+                    main.world.planet[0].map.entitySystem.visibleEntities[entityID].relatedID].itemStack.amount -= result.amount;
+                }
+            }
+        }
         itemManager.updateEntityRelatedID();
         itemManager.updateDroppedItemInstance(entityID);
     }
@@ -678,9 +693,9 @@ public class Player : MonoBehaviour
                 if (destructBlockTickRemain <= 0)
                 {
                     (short, Vector2Int?) result = blockModify.DeleteBlock(position);
-                    itemManager.spawnItem(Main.blockList[result.Item1].itemID, (Vector2)collidableBlock.CellToWorld((Vector3Int)result.Item2) + new Vector2(0.5f, 0.2f), 1);
+                    itemManager.spawnItem((Vector2)collidableBlock.CellToWorld((Vector3Int)result.Item2) + new Vector2(0.5f, 0.2f), new ItemStack(Main.blockList[result.Item1].itemID, 1));
                     isDestructingBlock = false;
-                    destructBlockTickRemain = 0; ;
+                    destructBlockTickRemain = 0;
                     currentDestructingBlockOriginalTick = 0;
                     return;
                 }

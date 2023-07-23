@@ -545,8 +545,8 @@ MonoBehaviour:
   collidableBlock: {fileID: 0}
   terrainGeneration: {fileID: 0}
   rb: {fileID: 3468241435639570274}
-  moveSpeed: 300
-  jumpSpeed: 410
+  moveSpeed: 500
+  jumpSpeed: 400
   jumpEnabled: 0
   isGround: 0
   isJumping: 0
@@ -813,6 +813,12 @@ MonoBehaviour:
   canvas: {fileID: 0}
   isDragging: 0
   itemDragUI: {fileID: 8287387379220168864, guid: 004d8d50e2d837b4d96c2c2a5af8c8c3, type: 3}
+  resultItemImage: {fileID: 0}
+  resultItemName: {fileID: 0}
+  description: {fileID: 0}
+  requiredItems1: {fileID: 0}
+  requiredItems2: {fileID: 0}
+  currentRecipeID: 0
 --- !u!114 &7441538994740689043
 MonoBehaviour:
   m_ObjectHideFlags: 0

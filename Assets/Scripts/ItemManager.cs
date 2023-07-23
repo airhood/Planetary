@@ -11,29 +11,28 @@ public class ItemManager : MonoBehaviour
 
     public Player player;
 
-    public void spawnItems(short itemID, Vector2 pos, ushort eachAmount, byte itemGroupAmount)
+    public void spawnItems(Vector2 pos, ItemStack itemStack, byte itemGroupAmount)
     {
         for(int i = 0; i < itemGroupAmount; i++)
         {
-            spawnItem(itemID, pos, eachAmount);
+            spawnItem(pos, itemStack);
         }
     }
 
-    public void spawnItem(short itemID, Vector2 pos, ushort amount)
+    public void spawnItem(Vector2 pos, ItemStack itemStack)
     {
-        print($"itemID: {itemID}");
+        print($"itemID: {itemStack.itemID}");
         int relativeID = main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.Count;
-        main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.Add(new DroppedItemData(itemID, amount));
+        main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.Add(new DroppedItemData(itemStack.itemID, itemStack.amount));
         int entityID = main.world.planet[0].map.entitySystem.visibleEntities.Count;
         main.world.planet[0].map.entitySystem.visibleEntities.Add(new EntityData(pos, EntityType.DroppedItem, relativeID));
         GameObject gameObject = Instantiate(itemPrefab, pos, Quaternion.identity);
         gameObject.transform.SetParent(item.transform);
-        gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[itemID].image;
+        gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[itemStack.itemID].image;
         DroppedItemInstance droppedItemInstance = gameObject.AddComponent<DroppedItemInstance>();
         droppedItemInstance.entityID = entityID;
         droppedItemInstance.droppedItemDataID = relativeID;
-        droppedItemInstance.itemID = itemID;
-        droppedItemInstance.amount = amount;
+        droppedItemInstance.itemStack = itemStack;
         droppedItemInstance.collectTickLeft = -1;
         droppedItemInstance.isBeingCollected = false;
         droppedItemInstance.player = player;
@@ -49,12 +48,12 @@ public class ItemManager : MonoBehaviour
         DroppedItemData droppedItemData = main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[entityData.relatedID];
         GameObject gameObject = Instantiate(itemPrefab, entityData.position, Quaternion.identity);
         gameObject.transform.SetParent(item.transform);
-        gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[droppedItemData.itemID].image;
+        gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[droppedItemData.itemStack.itemID].image;
         DroppedItemInstance droppedItemInstance = gameObject.AddComponent<DroppedItemInstance>();
         droppedItemInstance.entityID = entityID;
         droppedItemInstance.droppedItemDataID = entityData.relatedID;
-        droppedItemInstance.itemID = droppedItemData.itemID;
-        droppedItemInstance.amount = droppedItemData.amount;
+        droppedItemInstance.itemStack.itemID = droppedItemData.itemStack.itemID;
+        droppedItemInstance.itemStack.amount = droppedItemData.itemStack.amount;
         droppedItemInstance.collectTickLeft = -1;
         droppedItemInstance.isBeingCollected = false;
         droppedItemInstance.player = player;

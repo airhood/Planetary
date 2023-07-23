@@ -67,6 +67,8 @@ public class Backpack : MonoBehaviour
     public Text requiredItems1;
     public Text requiredItems2;
 
+    public short currentRecipeID;
+
     void Start()
     {
         ui_raycaster = canvas.GetComponent<GraphicRaycaster>();
@@ -299,7 +301,7 @@ public class Backpack : MonoBehaviour
         }
     }
 
-    public void AddItemToBackpack(ItemStack itemStack)
+    public ItemStack AddItemToBackpack(ItemStack itemStack)
     {
         byte maxStackAmount = Main.itemList[itemStack.itemID].maxStackAmount;
         short amountLeft = (short)itemStack.amount;
@@ -312,7 +314,7 @@ public class Backpack : MonoBehaviour
                     slots[i].amount += amountLeft;
                     UpdateHotBarUI();
                     UpdateInventoryUI();
-                    return;
+                    return new ItemStack(0, 0);
                 }
                 else
                 {
@@ -329,7 +331,7 @@ public class Backpack : MonoBehaviour
                     slots[i].amount = amountLeft;
                     UpdateHotBarUI();
                     UpdateInventoryUI();
-                    return;
+                    return new ItemStack(0, 0);
                 }
                 else
                 {
@@ -340,6 +342,7 @@ public class Backpack : MonoBehaviour
         }
         UpdateHotBarUI();
         UpdateInventoryUI();
+        return new ItemStack(itemStack.itemID, amountLeft);
     }
 
     public void RemoveItem(byte index, byte amount)
@@ -437,5 +440,10 @@ public class Backpack : MonoBehaviour
                 requiredItems2.text += "\n" + Main.itemList[recipe.requiredItems[i].itemID].name + " x " + recipe.requiredItems[i].amount;
             }
         }
+    }
+
+    public void ClickCraftButton()
+    {
+        print("ClickCraftButton");
     }
 }

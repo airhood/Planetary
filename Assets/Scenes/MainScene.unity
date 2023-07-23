@@ -10760,7 +10760,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1174712875}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1998346814}
+        m_TargetAssemblyTypeName: Backpack, Assembly-CSharp
+        m_MethodName: ClickCraftButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1174712875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17131,6 +17143,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3468241435639570284, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
   m_PrefabInstance: {fileID: 3468241435502268106}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1998346814 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+  m_PrefabInstance: {fileID: 3468241435502268106}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998346811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cac155634c6ebd4a955de81db9172de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1998346817 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3468241435639570285, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
@@ -18636,9 +18659,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1576564361}
     - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: description
+      value: 
+      objectReference: {fileID: 1751388885}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: hotBarFrame
       value: 
       objectReference: {fileID: 492490344}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: requiredItems1
+      value: 
+      objectReference: {fileID: 1064974505}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: requiredItems2
+      value: 
+      objectReference: {fileID: 1237490548}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: resultItemName
+      value: 
+      objectReference: {fileID: 188414156}
+    - target: {fileID: 1998346820, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
+      propertyPath: resultItemImage
+      value: 
+      objectReference: {fileID: 906421190}
     - target: {fileID: 3468241435639570273, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -18681,10 +18724,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570273, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3468241435639570278, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3468241435639570284, guid: b3968c7560a11204fbae5bade9dbc9b9, type: 3}

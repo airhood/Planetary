@@ -108,6 +108,7 @@ public class TerrainGeneration : MonoBehaviour
 
     public async Task GenerateTerrain()
     {
+        if (caveNoiseTexture == null) return;
         for (int x = 0; x < caveNoiseTexture.width; x++)
         {
             float height = (Mathf.PerlinNoise((x + seed) * terrainFreq, seed * terrainFreq) * heightMultiplier) + heightAddition;
