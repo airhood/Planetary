@@ -548,6 +548,8 @@ public class Player : MonoBehaviour
             main.world.planet[0].map.entitySystem.spawnedEntityGameObject.RemoveAt(droppedItemInstance.spawnedItemGameObjectID);
             main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData.RemoveAt(droppedItemInstance.droppedItemDataID);
             Destroy(itemObject);
+            itemManager.updateEntityRelatedID();
+            itemManager.updateDroppedItemInstance(entityID);
         }
         else
         {
@@ -556,13 +558,14 @@ public class Player : MonoBehaviour
                 if (main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[
                     main.world.planet[0].map.entitySystem.visibleEntities[entityID].relatedID].itemStack.amount - result.amount > 0)
                 {
+                    print("go");
                     main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[
                     main.world.planet[0].map.entitySystem.visibleEntities[entityID].relatedID].itemStack.amount -= result.amount;
+                    droppedItemInstance.itemStack.amount -= result.amount;
                 }
             }
+            droppedItemInstance.isBeingCollected = false;
         }
-        itemManager.updateEntityRelatedID();
-        itemManager.updateDroppedItemInstance(entityID);
     }
 
     public void doOxygenTick()

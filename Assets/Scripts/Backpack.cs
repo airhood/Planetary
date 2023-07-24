@@ -393,7 +393,6 @@ public class Backpack : MonoBehaviour
         Item item = Main.itemList[slots[index].itemID];
         if (!item.isUsable)
         {
-            Log.LogError("Backpack.UseItem: cannot use nonUsable item");
             return;
         }
 
