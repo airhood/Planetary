@@ -369,7 +369,7 @@ TextureImporter:
       213: 3530654086945373200
     second: Block_121
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -386,10 +386,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -428,6 +430,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -439,6 +443,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -451,6 +456,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -463,6 +469,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -3056,9 +3076,131 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Block_0: 2537882373423050008
+      Block_1: 2189487477073400709
+      Block_10: 6647634888170179482
+      Block_100: -2965203409971452471
+      Block_101: -7659403944508758480
+      Block_102: 565262849801385690
+      Block_103: 1806597961360589023
+      Block_104: -2558346222062011265
+      Block_105: -2125447715018224773
+      Block_106: -958916767790893614
+      Block_107: -4862490425765781114
+      Block_108: 7753911091063924415
+      Block_109: -8274341672330031276
+      Block_11: -1690307041045538254
+      Block_110: 1354619817251324441
+      Block_111: -2539118443965708885
+      Block_112: 4938184006993148614
+      Block_113: -5038291085470558314
+      Block_114: -3778909042478226907
+      Block_115: 3841318847277646018
+      Block_116: 8280066005832920565
+      Block_117: -770779772521926272
+      Block_118: 2921280993035867137
+      Block_119: 3957098436242995690
+      Block_12: 4788068275014570934
+      Block_120: 2088929917624489354
+      Block_121: 3530654086945373200
+      Block_13: 4433367833999045949
+      Block_14: 7250384020669092712
+      Block_15: -2713020016822012797
+      Block_16: -3735790790943538119
+      Block_17: -3842228352247542731
+      Block_18: -1664661077733633749
+      Block_19: 5627444879141953052
+      Block_2: -1470946536411257380
+      Block_20: -4069139679071828091
+      Block_21: 1478413704413900369
+      Block_22: 4934943054798812778
+      Block_23: 8960388396766028576
+      Block_24: -2291203910195355986
+      Block_25: 8607242792907936930
+      Block_26: 7604358046927484587
+      Block_27: -7871395915234048931
+      Block_28: 8615114317453977480
+      Block_29: -3477545037723819218
+      Block_3: 8508771087518894038
+      Block_30: -5225836611133609
+      Block_31: 4030940535638027931
+      Block_32: 5581817716253822321
+      Block_33: 882636855717933842
+      Block_34: 1891311214706835061
+      Block_35: 2548838909865913100
+      Block_36: -6253641283973427117
+      Block_37: 1382751260628400855
+      Block_38: 4466955225836369759
+      Block_39: 8672790708662853261
+      Block_4: -736939436940944266
+      Block_40: -5826817104747305690
+      Block_41: 4797342439730341097
+      Block_42: 4192544481528975633
+      Block_43: 9198033892893061913
+      Block_44: 572223681981822764
+      Block_45: -7528910621963158022
+      Block_46: 1163560383336733943
+      Block_47: -6556306711549324367
+      Block_48: -7163910991544382547
+      Block_49: 3353235578536765379
+      Block_5: 5329394835269229790
+      Block_50: -3754267706508155665
+      Block_51: -2989677716460706365
+      Block_52: -5578269994524019118
+      Block_53: 8199451881306213530
+      Block_54: 7302982952225231223
+      Block_55: 8431487612266393803
+      Block_56: -4828132115407689653
+      Block_57: -4424638749827973393
+      Block_58: -8986549478789979393
+      Block_59: 5064155209228992554
+      Block_6: -2443691465303571093
+      Block_60: 6806369692757365241
+      Block_61: -6990651456143291641
+      Block_62: 2895790365127767649
+      Block_63: 7521394425489010785
+      Block_64: -6212912972022354129
+      Block_65: -3024951712549065563
+      Block_66: -3512837057524919351
+      Block_67: 5255270273086517224
+      Block_68: 7627904531062406068
+      Block_69: -267739325522424059
+      Block_7: 3474850141435987797
+      Block_70: -7664360684447419481
+      Block_71: 4221171838574449920
+      Block_72: -505383746986998101
+      Block_73: -2512992093881204533
+      Block_74: -6444904271850487230
+      Block_75: 6693662840926219809
+      Block_76: -3711976583080305762
+      Block_77: 4212688822663418424
+      Block_78: -3797012975590129698
+      Block_79: 5949446476235126964
+      Block_8: 3908135224122826234
+      Block_80: 4062947975964340834
+      Block_81: 7276591750289092404
+      Block_82: 412015788826377630
+      Block_83: 5371188446980296059
+      Block_84: -1170745771753733234
+      Block_85: -931610930290513619
+      Block_86: -3715856439513967398
+      Block_87: -5764682321569715298
+      Block_88: -787889439772197750
+      Block_89: 3434171010128261539
+      Block_9: -1052756662118228945
+      Block_90: 4045461204446183378
+      Block_91: -1608629744431121140
+      Block_92: -1890381858125150927
+      Block_93: 4882305758389818775
+      Block_94: -3384455585838616756
+      Block_95: -8844884018526954056
+      Block_96: 9056984369934086716
+      Block_97: 539210129839354476
+      Block_98: 214921688388036631
+      Block_99: -8194944854652746957
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
