@@ -14,7 +14,7 @@ public class BlockModify : MonoBehaviour
 
     public bool CheckSetBlockAvailable(Vector2Int position, short blockID, Rotation rotation)
     {
-        Block block = Main.blockList[blockID];
+        Block block = Main.data.blockList[blockID];
 
         BuildingState buildingState = block.building[block.defaultStateCode];
 
@@ -61,7 +61,7 @@ public class BlockModify : MonoBehaviour
 
     public bool SetBlock(Vector2Int position, short blockID, Rotation rotation)
     {
-        Block block = Main.blockList[blockID];
+        Block block = Main.data.blockList[blockID];
 
         if (block.type == BlockType.Tile)
         {
@@ -136,7 +136,7 @@ public class BlockModify : MonoBehaviour
         sbyte type = -1;
         if (blockID > 0)
         {
-            block = Main.blockList[blockID];
+            block = Main.data.blockList[blockID];
 
             if (block.type == BlockType.Tile) type = 0;
             else if (block.type == BlockType.Building) type = 1;
@@ -144,7 +144,7 @@ public class BlockModify : MonoBehaviour
 
         if (type == 0)
         {
-            block = Main.blockList[blockID];
+            block = Main.data.blockList[blockID];
 
             if (block.type == BlockType.Tile)
             {
@@ -226,10 +226,10 @@ public class BlockModify : MonoBehaviour
             Log.LogError($"BlockModify.deleteBlockParts: Cannot extract blockState from block main position ({position.x},{position.y}). Error code: {ex}");
             return false;
         }
-        Block block = Main.blockList[main.world.planet[0].map.map[position.x, position.y]];
+        Block block = Main.data.blockList[main.world.planet[0].map.map[position.x, position.y]];
         BuildingState buildingState = block.building[blockState];
 
-        IBlockInstance? blockInstance = blockInstanceManager.GetBlockInstance(position);
+        BlockInstance blockInstance = blockInstanceManager.GetBlockInstance(position);
         if (blockInstance == null)
         {
             Log.LogError($"BlockModify.deleteBlockParts: BlockInstance not found. Position: {position}");
@@ -295,10 +295,10 @@ public class BlockModify : MonoBehaviour
             main.world.planet[0].map.map[position.x, position.y] = 0;
             collidableBlock.SetTile((Vector3Int)position, null);
         }
-        else if (Main.matterList[matterCode].matterType == MatterType.Solid)
+        else if (Main.data.matterList[matterCode].matterType == MatterType.Solid)
         {
             main.world.planet[0].map.map[position.x, position.y] = matterCode;
-            collidableBlock.SetTile((Vector3Int)position, Main.matterList[matterCode].tile);
+            collidableBlock.SetTile((Vector3Int)position, Main.data.matterList[matterCode].tile);
         }
     }
 
@@ -309,7 +309,7 @@ public class BlockModify : MonoBehaviour
             Log.LogError("BlockModify.GetTerrainTileHardness: this position is not a matter");
             return -1;
         }
-        return Main.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].hardness;
+        return Main.data.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].hardness;
     }
 
     public short GetBlockHardness(Vector2Int position)
@@ -319,6 +319,6 @@ public class BlockModify : MonoBehaviour
             Log.LogError("BlockModify.GetBlockHardness: this position is not a block");
             return -1;
         }
-        return Main.blockList[main.world.planet[0].map.map[position.x, position.y]].destructionTime;
+        return Main.data.blockList[main.world.planet[0].map.map[position.x, position.y]].destructionTime;
     }
 }

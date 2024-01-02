@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Ladder
   m_EditorClassIdentifier: 
   id: 5
-  name: "\uC0AC\uB2E4\uB9AC"
+  display_name: "\uC0AC\uB2E4\uB9AC"
+  name: ladder
   description: 
   image: {fileID: -6212912972022354129, guid: 5f1d191885bf0ce4c84183d3c4f91e57, type: 3}
   type: 2

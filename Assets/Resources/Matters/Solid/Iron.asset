@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   matterType: 0
   hardness: 10
-  tile: {fileID: 11400000, guid: bde0d09c2f0117a418e7a6440f02aa8e, type: 2}
+  tile: {fileID: 11400000, guid: ee2f6c8608f7845489d2d8eceeef1529, type: 2}
   canBePlacedAsBlock: 1
   canBeConvertedToItem: 1
   itemID: 8

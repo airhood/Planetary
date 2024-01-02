@@ -12,18 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8456f010458e474885159e14449876e, type: 3}
   m_Name: Small Bed
   m_EditorClassIdentifier: 
-  name: Small Bed
+  id: 0
+  display_name: "\uC18C\uD615 \uCE68\uB300"
+  name: small_bed
   description: 
   type: 0
+  destructionTime: 0
+  itemID: 0
+  tile: {fileID: 0}
+  isCollidable: 0
+  isLadder: 0
   BuildPoint: {x: 0, y: 0}
-  rotation: 0
+  buildOnAirAvailable: 0
+  hasInstance: 0
+  isInteractive: 0
+  isUIDisplayable: 0
+  defaultStateCode: 0
   building:
   - stateName: Default
-    buildingParts:
-    - pos: {x: 0, y: 0}
-      tile: {fileID: 11400000, guid: 3871221f21ff7a04aa6bccba3678130f, type: 2}
-      isCollidable: 0
-    - pos: {x: 1, y: 0}
-      tile: {fileID: 11400000, guid: 03f3a3588813013448f6d415e11d5eba, type: 2}
-      isCollidable: 0
+    defaultRotation: 0
+    buildingRotations: []
+  requiredFloor: []
   ports: []

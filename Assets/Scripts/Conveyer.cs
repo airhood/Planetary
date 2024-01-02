@@ -98,10 +98,10 @@ public class Conveyer : MonoBehaviour
     {
 
         GameObject obj = Instantiate(conveyerCart, (Vector3Int)position, Quaternion.identity);
-        obj.AddComponent<Image>().sprite = Main.itemList[itemID].image;
+        obj.AddComponent<Image>().sprite = Main.data.itemList[itemID].image;
         obj.tag = "conveyer_solid_item";
         obj.transform.parent = solid;
-        main.world.planet[0].map.conveyerSystem.movingItemMemory.Add(new MovingItem(obj, Direction.Null, Main.matterList[itemID]));
+        main.world.planet[0].map.conveyerSystem.movingItemMemory.Add(new MovingItem(obj, Direction.Null, Main.data.matterList[itemID]));
 
         for (int i = 0; i < amount; i++)
         {

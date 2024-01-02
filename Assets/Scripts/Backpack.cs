@@ -132,7 +132,7 @@ public class Backpack : MonoBehaviour
                         drag_element_itemDragUI.itemID = (byte)slots[slot].itemID;
                         drag_element_itemDragUI.amount = (byte)slots[slot].amount;
                         drag_element_itemDragUI.updateUI();
-                        drag_element.transform.GetChild(0).GetComponent<Image>().sprite = Main.itemList[slots[slot].itemID].image;
+                        drag_element.transform.GetChild(0).GetComponent<Image>().sprite = Main.data.itemList[slots[slot].itemID].image;
                         slots[slot].itemID = 0;
                         slots[slot].amount = 0;
                         UpdateHotBarUI();
@@ -259,7 +259,7 @@ public class Backpack : MonoBehaviour
             var hotBarSlot = hotBar.transform.GetChild(i);
             if (slots[i].amount != 0)
             {
-                hotBarSlot.GetChild(0).GetComponent<Image>().sprite = Main.itemList[slots[i].itemID].image;
+                hotBarSlot.GetChild(0).GetComponent<Image>().sprite = Main.data.itemList[slots[i].itemID].image;
                 hotBarSlot.GetChild(1).gameObject.SetActive(true);
                 hotBarSlot.GetChild(1).GetComponent<Text>().text = slots[i].amount.ToString();
             }
@@ -289,7 +289,7 @@ public class Backpack : MonoBehaviour
             var inventorySlot = inventory.transform.GetChild(i - 10);
             if (slots[i].amount != 0)
             {
-                inventorySlot.GetChild(0).GetComponent<Image>().sprite = Main.itemList[slots[i].itemID].image;
+                inventorySlot.GetChild(0).GetComponent<Image>().sprite = Main.data.itemList[slots[i].itemID].image;
                 inventorySlot.GetChild(1).gameObject.SetActive(true);
                 inventorySlot.GetChild(1).GetComponent<Text>().text = slots[i].amount.ToString();
             }
@@ -303,7 +303,7 @@ public class Backpack : MonoBehaviour
 
     public ItemStack AddItemToBackpack(ItemStack itemStack)
     {
-        byte maxStackAmount = Main.itemList[itemStack.itemID].maxStackAmount;
+        byte maxStackAmount = Main.data.itemList[itemStack.itemID].maxStackAmount;
         short amountLeft = (short)itemStack.amount;
         for(int i = 0; i < slots.Count; i++)
         {
@@ -390,14 +390,14 @@ public class Backpack : MonoBehaviour
 
     public void UseItem()
     {
-        Item item = Main.itemList[slots[index].itemID];
+        Item item = Main.data.itemList[slots[index].itemID];
         if (!item.isUsable)
         {
             return;
         }
 
         if (item.isRemoveOnUse) slots[index].amount--;
-        ItemFunctionManager.InvoketemFunc(index, item.name, "use", null);
+        ItemFunctionManager.InvokeItemFunc(index, "use", null);
     }
 
     public bool CheckItemExist(ItemStack itemStack)
@@ -416,10 +416,10 @@ public class Backpack : MonoBehaviour
 
     public void DisplayRecipe(short id)
     {
-        Recipe recipe = Main.recipeList[id];
-        resultItemImage.sprite = Main.itemList[recipe.resultItem.itemID].image;
-        resultItemName.text = Main.itemList[recipe.resultItem.itemID].name;
-        description.text = Main.itemList[recipe.resultItem.itemID].description;
+        Recipe recipe = Main.data.recipeList[id];
+        resultItemImage.sprite = Main.data.itemList[recipe.resultItem.itemID].image;
+        resultItemName.text = Main.data.itemList[recipe.resultItem.itemID].name;
+        description.text = Main.data.itemList[recipe.resultItem.itemID].description;
         for(int i = 0; i < recipe.requiredItems.Count; i++)
         {
             if (i < 3)
@@ -428,7 +428,7 @@ public class Backpack : MonoBehaviour
                 {
                     requiredItems1.text += "\n";
                 }
-                requiredItems1.text += Main.itemList[recipe.requiredItems[i].itemID].name + " x " + recipe.requiredItems[i].amount;
+                requiredItems1.text += Main.data.itemList[recipe.requiredItems[i].itemID].name + " x " + recipe.requiredItems[i].amount;
             }
             else
             {
@@ -436,7 +436,7 @@ public class Backpack : MonoBehaviour
                 {
                     requiredItems2.text += "\n";
                 }
-                requiredItems2.text += "\n" + Main.itemList[recipe.requiredItems[i].itemID].name + " x " + recipe.requiredItems[i].amount;
+                requiredItems2.text += "\n" + Main.data.itemList[recipe.requiredItems[i].itemID].name + " x " + recipe.requiredItems[i].amount;
             }
         }
     }

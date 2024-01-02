@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   id: 9
-  name: "\uAE08"
+  display_name: "\uAE08"
+  name: gold
   description: 
   image: {fileID: 21300000, guid: 5644f8cd044d1f543bc23a89e8076312, type: 3}
   type: 1

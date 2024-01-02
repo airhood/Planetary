@@ -11,4 +11,5 @@ public class PlayerInfo
     public short health;
     public short maxOxygen;
     public short oxygen;
+    public short calories;
 }

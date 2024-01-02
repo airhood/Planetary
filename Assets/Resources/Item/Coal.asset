@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Coal
   m_EditorClassIdentifier: 
   id: 6
-  name: "\uC11D\uD0C4"
+  display_name: "\uC11D\uD0C4"
+  name: coal
   description: 
   image: {fileID: 21300000, guid: 95c4f27f1fe5f1f4d92988f385fb047f, type: 3}
   type: 1

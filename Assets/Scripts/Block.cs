@@ -66,7 +66,8 @@ public class Block : ScriptableObject
 {
     [Header("Info")]
     public short id;
-    public string name;
+    public string display_name;
+    public new string name;
     public string description;
     public BlockType type;
 

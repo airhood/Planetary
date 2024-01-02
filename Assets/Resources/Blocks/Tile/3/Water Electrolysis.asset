@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8456f010458e474885159e14449876e, type: 3}
-  m_Name: Water Electrolysis Machine
+  m_Name: Water Electrolysis
   m_EditorClassIdentifier: 
   id: 2
-  name: "\uBB3C \uC804\uAE30\uBD84\uD574\uAE30"
+  display_name: "\uBB3C \uC804\uAE30\uBD84\uD574\uAE30"
+  name: water_electrolysis
   description: "\uC804\uAE30\uB97C \uC774\uC6A9\uD574 \uBB3C\uC744 \uC218\uC18C\uC640
     \uC0B0\uC18C\uB85C 2:1\uC758 \uBE44\uC728\uB85C \uBD84\uD574\uD569\uB2C8\uB2E4."
   type: 1
   destructionTime: 3
   itemID: 4
   tile: {fileID: 0}
+  isCollidable: 0
+  isLadder: 0
   BuildPoint: {x: 0, y: 0}
   buildOnAirAvailable: 0
   hasInstance: 1
@@ -28,6 +31,7 @@ MonoBehaviour:
   defaultStateCode: 0
   building:
   - stateName: WatarFull
+    defaultRotation: 0
     buildingRotations:
     - rotation: 0
       buildingParts:
@@ -44,6 +48,7 @@ MonoBehaviour:
         tile: {fileID: 11400000, guid: 890ec1ebd6e6f834a8f237e20823fca1, type: 2}
         isCollidable: 0
   - stateName: NoWater
+    defaultRotation: 0
     buildingRotations:
     - rotation: 0
       buildingParts:

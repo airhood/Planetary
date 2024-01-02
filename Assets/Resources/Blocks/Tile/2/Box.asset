@@ -10,20 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8456f010458e474885159e14449876e, type: 3}
-  m_Name: Chest
+  m_Name: Box
   m_EditorClassIdentifier: 
-  name: Chest
+  id: 0
+  display_name: "\uC0C1\uC790"
+  name: box
   description: 
   type: 1
+  destructionTime: 0
+  itemID: 0
+  tile: {fileID: 0}
+  isCollidable: 0
+  isLadder: 0
   BuildPoint: {x: 0, y: 0}
-  rotation: 0
+  buildOnAirAvailable: 0
+  hasInstance: 0
+  isInteractive: 0
+  isUIDisplayable: 0
+  defaultStateCode: 0
   building:
   - stateName: Default
-    buildingParts:
-    - pos: {x: 0, y: 0}
-      tile: {fileID: 11400000, guid: c04602273a3d9bd48b037792991bad58, type: 2}
-      isCollidable: 0
-    - pos: {x: 1, y: 0}
-      tile: {fileID: 11400000, guid: d1760077ee94fc348a5c90d457c18a92, type: 2}
-      isCollidable: 0
+    defaultRotation: 0
+    buildingRotations: []
+  requiredFloor: []
   ports: []

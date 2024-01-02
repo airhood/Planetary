@@ -17,7 +17,8 @@ public class Item : ScriptableObject
 {
     [Header("Info")]
     public short id;
-    public string name;
+    public string display_name;
+    public new string name;
     public string description;
     public Sprite image;
     public ItemType type;
@@ -32,6 +33,10 @@ public class Item : ScriptableObject
 
     [Header("Item<Food>")]
     public byte calorieAddAmount;
+
+    [Header("Item<Weapon>")]
+    public float attackDamage;
+    public float attackRange;
 
     [Header("Block/Matter")]
     public short placeableID;

@@ -12,7 +12,7 @@ public class ItemDragUI : MonoBehaviour
     {
         if (itemID == 0) return;
         if (amount == 0) return;
-        transform.GetChild(0).GetComponent<Image>().sprite = Main.itemList[itemID].image;
+        transform.GetChild(0).GetComponent<Image>().sprite = Main.data.itemList[itemID].image;
         transform.GetChild(1).GetComponent<Text>().text = amount.ToString();
     }
 }

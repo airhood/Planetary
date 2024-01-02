@@ -12,27 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8456f010458e474885159e14449876e, type: 3}
   m_Name: WoodenDoor
   m_EditorClassIdentifier: 
-  name: Wooden Door
+  id: 0
+  display_name: "\uB098\uBB34 \uBB38"
+  name: wooden_door
   description: 
   type: 1
+  destructionTime: 0
+  itemID: 0
+  tile: {fileID: 0}
+  isCollidable: 0
+  isLadder: 0
   BuildPoint: {x: 0, y: 0}
-  rotation: 3
   buildOnAirAvailable: 1
+  hasInstance: 0
+  isInteractive: 0
+  isUIDisplayable: 0
+  defaultStateCode: 0
   building:
   - stateName: Opened
-    buildingParts:
-    - pos: {x: 0, y: 0}
-      tile: {fileID: 11400000, guid: a1ba8097115e8134bbd91ec7c81d1761, type: 2}
-      isCollidable: 0
-    - pos: {x: 0, y: 1}
-      tile: {fileID: 11400000, guid: 84e7c949c5319114b905ff21dff62873, type: 2}
-      isCollidable: 0
+    defaultRotation: 0
+    buildingRotations: []
   - stateName: Closed
-    buildingParts:
-    - pos: {x: 0, y: 0}
-      tile: {fileID: 11400000, guid: 0390e5dcab280dc4aab669db8d522c72, type: 2}
-      isCollidable: 1
-    - pos: {x: 0, y: 1}
-      tile: {fileID: 11400000, guid: 69bd807e81d2f9a4f8aaa9747e09f476, type: 2}
-      isCollidable: 1
+    defaultRotation: 0
+    buildingRotations: []
+  requiredFloor: []
   ports: []

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Water Electrolysis
   m_EditorClassIdentifier: 
   id: 4
-  name: "\uBB3C \uC804\uAE30\uBD84\uD574 \uC7A5\uCE58"
+  display_name: "\uBB3C \uC804\uAE30\uBD84\uD574 \uC7A5\uCE58"
+  name: water_electrolysis
   description: 
   image: {fileID: 21300000, guid: 74363dad2b9cd7543a0f940ec463af5e, type: 3}
   type: 2

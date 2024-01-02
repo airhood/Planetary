@@ -150,15 +150,9 @@ public class Main : MonoBehaviour
 
     [SerializeField] Conveyer conveyer;
 
-    public static List<Block> blockList = new List<Block>();
-    public static List<Matter> matterList = new List<Matter>();
-    public static List<Item> itemList = new List<Item>();
-    public static List<Recipe> recipeList = new List<Recipe>();
+    public static Data data;
 
-    public List<Block> _blockList = new List<Block>();
-    public List<Matter> _matterList = new List<Matter>();
-    public List<Item> _itemList = new List<Item>();
-    public List<Recipe> _recipeList = new List<Recipe>();
+    public Data _data;
 
     public Player player;
     public EntityHandler entityHandler;
@@ -169,9 +163,7 @@ public class Main : MonoBehaviour
     void Awake()
     {
         Application.targetFrameRate = 120;
-        blockList = _blockList;
-        matterList = _matterList;
-        itemList = _itemList;
+        data = _data;
         world = new World();
         world.planet[0] = new Planet();
     }

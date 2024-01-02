@@ -68,11 +68,11 @@ public class TerrainGeneration : MonoBehaviour
 
         GenerateNoiseTexture(seed, caveFreq, surfaceValue, caveNoiseTexture);
 
-        GenerateNoiseTexture(seed + (100f * (int)Matters.Coal), Main.matterList[(int)Matters.Coal].rarity, Main.matterList[(int)Matters.Coal].size, coalSpread);
-        GenerateNoiseTexture(seed + (100f * (int)Matters.Copper), Main.matterList[(int)Matters.Copper].rarity, Main.matterList[(int)Matters.Copper].size, copperSpread);
-        GenerateNoiseTexture(seed + (100f * (int)Matters.Iron), Main.matterList[(int)Matters.Iron].rarity, Main.matterList[(int)Matters.Iron].size, ironSpread);
-        GenerateNoiseTexture(seed + (100f * (int)Matters.Gold), Main.matterList[(int)Matters.Gold].rarity, Main.matterList[(int)Matters.Gold].size, goldSpread);
-        GenerateNoiseTexture(seed + (100f * (int)Matters.Diamond), Main.matterList[(int)Matters.Diamond].rarity, Main.matterList[(int)Matters.Diamond].size, diamondSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Coal), Main.data.matterList[(int)Matters.Coal].rarity, Main.data.matterList[(int)Matters.Coal].size, coalSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Copper), Main.data.matterList[(int)Matters.Copper].rarity, Main.data.matterList[(int)Matters.Copper].size, copperSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Iron), Main.data.matterList[(int)Matters.Iron].rarity, Main.data.matterList[(int)Matters.Iron].size, ironSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Gold), Main.data.matterList[(int)Matters.Gold].rarity, Main.data.matterList[(int)Matters.Gold].size, goldSpread);
+        GenerateNoiseTexture(seed + (100f * (int)Matters.Diamond), Main.data.matterList[(int)Matters.Diamond].rarity, Main.data.matterList[(int)Matters.Diamond].size, diamondSpread);
 
         await Task.Delay(100);
 
@@ -141,7 +141,7 @@ public class TerrainGeneration : MonoBehaviour
 
                 if (caveNoiseTexture.GetPixel(x, y).r > 0.5f)
                 {
-                    collidableBlock.SetTile(new Vector3Int(x, y, 0), Main.matterList[(int)tile].tile);
+                    collidableBlock.SetTile(new Vector3Int(x, y, 0), Main.data.matterList[(int)tile].tile);
                     main.world.planet[0].map.map[x, y] = (short)((short)tile * (-1));
                 }
             }

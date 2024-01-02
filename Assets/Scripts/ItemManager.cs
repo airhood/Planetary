@@ -28,7 +28,7 @@ public class ItemManager : MonoBehaviour
         main.world.planet[0].map.entitySystem.visibleEntities.Add(new EntityData(pos, EntityType.DroppedItem, relativeID));
         GameObject gameObject = Instantiate(itemPrefab, pos, Quaternion.identity);
         gameObject.transform.SetParent(item.transform);
-        gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[itemStack.itemID].image;
+        gameObject.GetComponent<SpriteRenderer>().sprite = Main.data.itemList[itemStack.itemID].image;
         DroppedItemInstance droppedItemInstance = gameObject.AddComponent<DroppedItemInstance>();
         droppedItemInstance.entityID = entityID;
         droppedItemInstance.droppedItemDataID = relativeID;
@@ -48,7 +48,7 @@ public class ItemManager : MonoBehaviour
         DroppedItemData droppedItemData = main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[entityData.relatedID];
         GameObject gameObject = Instantiate(itemPrefab, entityData.position, Quaternion.identity);
         gameObject.transform.SetParent(item.transform);
-        gameObject.GetComponent<SpriteRenderer>().sprite = Main.itemList[droppedItemData.itemStack.itemID].image;
+        gameObject.GetComponent<SpriteRenderer>().sprite = Main.data.itemList[droppedItemData.itemStack.itemID].image;
         DroppedItemInstance droppedItemInstance = gameObject.AddComponent<DroppedItemInstance>();
         droppedItemInstance.entityID = entityID;
         droppedItemInstance.droppedItemDataID = entityData.relatedID;

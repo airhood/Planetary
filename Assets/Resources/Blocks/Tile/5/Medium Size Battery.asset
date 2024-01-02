@@ -12,26 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8456f010458e474885159e14449876e, type: 3}
   m_Name: Medium Size Battery
   m_EditorClassIdentifier: 
-  name: Medium Size Battery
+  id: 0
+  display_name: "\uC911\uD615 \uBC30\uD130\uB9AC"
+  name: medium_size_battery
   description: 
   type: 1
+  destructionTime: 0
+  itemID: 0
+  tile: {fileID: 0}
+  isCollidable: 0
+  isLadder: 0
   BuildPoint: {x: 0, y: 0}
-  rotation: 0
+  buildOnAirAvailable: 0
+  hasInstance: 0
+  isInteractive: 0
+  isUIDisplayable: 0
+  defaultStateCode: 0
   building:
   - stateName: Default
-    buildingParts:
-    - pos: {x: 0, y: 0}
-      tile: {fileID: 11400000, guid: f9ed54b8d48443d4881fec5462a330f5, type: 2}
-      isCollidable: 0
-    - pos: {x: 0, y: 1}
-      tile: {fileID: 11400000, guid: fecf014a7ca4b674cbf47bec0f39ce7e, type: 2}
-      isCollidable: 0
-    - pos: {x: 1, y: 0}
-      tile: {fileID: 11400000, guid: 4c0960a3e4babfc4587f267dcda67917, type: 2}
-      isCollidable: 0
-    - pos: {x: 1, y: 1}
-      tile: {fileID: 11400000, guid: 295a332de0eb5224b9a1e900ba8479eb, type: 2}
-      isCollidable: 0
+    defaultRotation: 0
+    buildingRotations: []
+  requiredFloor: []
   ports:
   - portName: Default_E
     type: 0

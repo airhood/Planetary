@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Diamond
   m_EditorClassIdentifier: 
   id: 10
-  name: "\uB2E4\uC774\uC544\uBAAC\uB4DC"
+  display_name: "\uB2E4\uC774\uC544\uBAAC\uB4DC"
+  name: diamond
   description: 
   image: {fileID: 21300000, guid: a7814f33bdd2e5a44814506a4ed60292, type: 3}
   type: 0

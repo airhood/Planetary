@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Dirt
   m_EditorClassIdentifier: 
   id: 3
-  name: "\uD759"
+  display_name: "\uD759"
+  name: dirt
   description: 
   image: {fileID: 21300000, guid: 3982a11f3b4b92b43a9aa2d0d1037bde, type: 3}
   type: 0

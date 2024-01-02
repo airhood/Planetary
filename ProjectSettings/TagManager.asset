@@ -9,11 +9,12 @@ TagManager:
   - gasPipe_gas
   - dropped_item
   - ItemIconUI
+  - mob
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Ground
@@ -21,10 +22,10 @@ TagManager:
   - Dropped Item
   - 
   - Entity
-  - 
+  - Mob
   - Sytem
-  - 
-  - 
+  - Bullet
+  - PostProcess
   - 
   - 
   - 

@@ -87,7 +87,9 @@ public class Node
     public bool hasNodeBracket;
     public List<NodeParameter> parameters;
     public DataType returnType;
+#nullable enable
     public List<NodeBracket>? nodeBrackets;
+#nullable disable
 
     public Node(NodeType type, List<NodeParameter> parameters, DataType returnType)
     {

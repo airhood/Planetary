@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class ItemFunction : MonoBehaviour
 {
-    public static void EatFood(short itemID)
+    #region SpecialFunctions
+    public static void EatFood(Player player, short itemID)
     {
-        ItemFunctionManager.player.calories += Main.itemList[itemID].calorieAddAmount;
+        player.playerInfo.calories += Main.data.itemList[itemID].calorieAddAmount;
     }
+
+    public static void Attack(Player player, short itemID)
+    {
+        player.Attack(Main.data.itemList[itemID].attackDamage, Main.data.itemList[itemID].attackRange);
+    }
+    #endregion
 }

@@ -98,7 +98,6 @@ public class Player : MonoBehaviour
     public GameObject oxygenGage;
     int cureTickAmount;
     public GameObject damgeText;
-    public short calories;
 
     [Header("UI")]
     public TextMesh nameDisplay;
@@ -206,6 +205,12 @@ public class Player : MonoBehaviour
         }
 
         gizmosList.Clear();
+
+        if (a)
+        {
+            Gizmos.DrawRay(lastRay);
+            //Gizmos.DrawLine(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        }
     }
 
     private void CheckInput()
@@ -253,11 +258,11 @@ public class Player : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (checkSetBlockAvailable(pos, Main.itemList[backpack.slots[backpack.index].itemID].placeableID))
+                    if (checkSetBlockAvailable(pos, Main.data.itemList[backpack.slots[backpack.index].itemID].placeableID))
                     {
                         if (backpack.slots[backpack.index].itemID != 0)
                         {
-                            if (Main.itemList[backpack.slots[backpack.index].itemID].type == ItemType.Block)
+                            if (Main.data.itemList[backpack.slots[backpack.index].itemID].type == ItemType.Block)
                             {
                                 if (backpack.slots[backpack.index].amount > 0)
                                 {
@@ -276,7 +281,7 @@ public class Player : MonoBehaviour
                         short blockID = main.world.planet[0].map.map[pos.x, pos.y];
                         if (blockID > 0)
                         {
-                            if (Main.blockList[blockID].type == BlockType.Building)
+                            if (Main.data.blockList[blockID].type == BlockType.Building)
                             {
                                 blockInstanceManager.InteractBlock(pos);
                                 didInteract = true;
@@ -293,7 +298,8 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            backpack.UseItem();
+            Attack(45f, 4f);
+            //backpack.UseItem();
         }
         else
         {
@@ -467,7 +473,7 @@ public class Player : MonoBehaviour
                 if (modifyTerrainTileTickRemain <= 0)
                 {
                     //backpack.addItemToBackpack(Main.matterList[main.world.planet[0].map.map[position.x, position.y]].itemID, 1);
-                    itemManager.spawnItem((Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), new ItemStack(Main.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].itemID, 32));
+                    itemManager.spawnItem((Vector2)collidableBlock.CellToWorld((Vector3Int)position) + new Vector2(0.5f, 0.2f), new ItemStack(Main.data.matterList[main.world.planet[0].map.map[position.x, position.y] * (-1)].itemID, 32));
                     blockModify.ModifyTerrain(position, 0);
                     modifyTerrainTileTickRemain = 0;
                     currentModifyTerrainTileOriginalTick = 0;
@@ -646,7 +652,7 @@ public class Player : MonoBehaviour
 
     private void setBlock(Vector2Int position, Rotation rotation)
     {
-        bool result = blockModify.SetBlock(position, Main.itemList[backpack.slots[backpack.index].itemID].placeableID, rotation);
+        bool result = blockModify.SetBlock(position, Main.data.itemList[backpack.slots[backpack.index].itemID].placeableID, rotation);
         if (result)
         {
             backpack.RemoveItem(backpack.index, 1);
@@ -657,7 +663,7 @@ public class Player : MonoBehaviour
     {
         if (main.world.planet[0].map.map[position.x, position.y] != 0) return false;
 
-        Block block = Main.blockList[blockID];
+        Block block = Main.data.blockList[blockID];
 
         if (block.isLadder) return true;
         if (block.type == BlockType.Tile && !block.isCollidable) return true;
@@ -696,7 +702,7 @@ public class Player : MonoBehaviour
                 if (destructBlockTickRemain <= 0)
                 {
                     (short, Vector2Int?) result = blockModify.DeleteBlock(position);
-                    itemManager.spawnItem((Vector2)collidableBlock.CellToWorld((Vector3Int)result.Item2) + new Vector2(0.5f, 0.2f), new ItemStack(Main.blockList[result.Item1].itemID, 1));
+                    itemManager.spawnItem((Vector2)collidableBlock.CellToWorld((Vector3Int)result.Item2) + new Vector2(0.5f, 0.2f), new ItemStack(Main.data.blockList[result.Item1].itemID, 1));
                     isDestructingBlock = false;
                     destructBlockTickRemain = 0;
                     currentDestructingBlockOriginalTick = 0;
@@ -769,6 +775,7 @@ public class Player : MonoBehaviour
         inLadder = false;
     }
 
+    /*
     private bool checkGround()
     {
         LayerMask layerMask = 1 << 6;
@@ -782,5 +789,47 @@ public class Player : MonoBehaviour
         }
 
         return true;
+    }
+    */
+
+    //public float attackDamage = 45f;
+    //public float attackRange = 4f;
+
+    private bool a = false;
+    private Ray lastRay;
+
+    public GameObject laserBullet;
+
+    public void Attack(float attackDamage, float attackRange)
+    {
+        a = true;
+        print("attack");
+        Vector2 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - (transform.position + new Vector3(0, 1f))).normalized;
+        //LayerMask layerMask = 1 << 11;
+        //Ray ray = new Ray(transform.position + new Vector3(0, 1f), direction);
+        //lastRay = ray;
+        //RaycastHit2D[] raycastHit2D = Physics2D.CircleCastAll(transform.position + new Vector3(0, 1f), 0.5f, direction, attackRange, layerMask);
+
+        //for (int i = 0; i < raycastHit2D.Length; i++)
+        //{
+        //    float f_damage = Mathf.Lerp(attackDamage, 0, Vector2.Distance(transform.position + new Vector3(0, 1f), raycastHit2D[i].point) / (attackRange + 0.5f));
+        //    if (f_damage < 1f)
+        //    {
+        //        f_damage = 1f;
+        //    }
+        //    int damage = Mathf.FloorToInt(f_damage);
+        //    print($"damage:{damage}");
+        //    raycastHit2D[i].collider.gameObject.GetComponent<Mob>().health -= damage;
+        //}
+
+        GameObject bullet = Instantiate(laserBullet);
+        bullet.transform.position = transform.position + new Vector3(0, 1f);
+        bullet.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+        bullet.transform.Rotate(new Vector3(0, 0, -90));
+        Bullet bullet_c = bullet.AddComponent<Bullet>();
+        bullet_c.attackDamage = attackDamage;
+        bullet_c.attackRange = attackRange;
+        bullet_c.origin = transform.position + new Vector3(0, 1f);
+        bullet.GetComponent<Rigidbody2D>().velocity = direction * 30f;
     }
 }

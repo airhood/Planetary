@@ -12,12 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8456f010458e474885159e14449876e, type: 3}
   m_Name: WoodenTile
   m_EditorClassIdentifier: 
-  name: Wooden Tile
+  id: 0
+  display_name: "\uB098\uBB34 \uBCBD"
+  name: wooden_tile
   description: 
   type: 0
+  destructionTime: 0
+  itemID: 0
   tile: {fileID: 11400000, guid: aafb6d5a6ce16c4419b62f04b4b20314, type: 2}
+  isCollidable: 0
+  isLadder: 0
   BuildPoint: {x: 0, y: 0}
-  rotation: 0
   buildOnAirAvailable: 0
+  hasInstance: 0
+  isInteractive: 0
+  isUIDisplayable: 0
+  defaultStateCode: 0
   building: []
+  requiredFloor: []
   ports: []

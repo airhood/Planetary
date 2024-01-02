@@ -4,16 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IBlockInstance
-{
-    Vector2Int position { get; set; }
-    Rotation rotation { get; set; }
-    byte state { get; set; }
-    List<StorageContent> storageContents { get; set; }
-    void InstanceTick();
-    void Interaction();
-}
-
 public enum StorageContentType
 {
     matter, item
@@ -25,25 +15,19 @@ public struct StorageContent
     public object content;
 }
 
-public class WaterElectrolysis : IBlockInstance
+public class BlockInstance
 {
+    public string block_name { get; private set; }
+    public short blockID { get; private set; }
     public Vector2Int position { get; set; }
     public Rotation rotation { get; set; }
     public byte state { get; set; }
     public List<StorageContent> storageContents { get; set; }
 
-    public void InstanceTick()
+    public BlockInstance(short blockID, Vector2Int position, Rotation rotation, byte state)
     {
-        
-    }
-
-    public void Interaction()
-    {
-        Debug.Log("Interaction");
-    }
-
-    public WaterElectrolysis(Vector2Int position, Rotation rotation, byte state)
-    {
+        this.block_name = Main.data.blockList[blockID].name;
+        this.blockID = blockID;
         this.position = position;
         this.rotation = rotation;
         this.state = state;
@@ -59,7 +43,7 @@ public class MatterStore
 public class BlockInstanceManager : MonoBehaviour
 {
     public List<Vector2Int> positions = new List<Vector2Int>();
-    public List<IBlockInstance> blockInstances = new List<IBlockInstance>();
+    public List<BlockInstance> blockInstances = new List<BlockInstance>();
 
     int tick;
     public int blockInstanceTickRate;
@@ -76,20 +60,20 @@ public class BlockInstanceManager : MonoBehaviour
 
     public void AddBlockInstance(Vector2Int position, short blockID, Rotation rotation)
     {
-        object instance;
+        BlockInstance instance;
         switch(blockID)
         {
             case 2:
-                instance = new WaterElectrolysis(position, rotation, 0);
+                instance = new BlockInstance(blockID, position, rotation, 0);
                 break;
             default:
                 return;
         }
         positions.Add(position);
-        blockInstances.Add((IBlockInstance)instance);
+        blockInstances.Add(instance);
     }
 
-    public IBlockInstance? GetBlockInstance(Vector2Int position)
+    public BlockInstance GetBlockInstance(Vector2Int position)
     {
         try
         {
@@ -99,7 +83,7 @@ public class BlockInstanceManager : MonoBehaviour
         {
             Log.LogError($"BlockInstanceManager.GetBlockInstance: Cannot get block instance. Position: {position}. Error Code: {ex}");
         }
-
+        
         return null;
     }
 
@@ -115,12 +99,36 @@ public class BlockInstanceManager : MonoBehaviour
         int count = blockInstances.Count;
         for(int i = 0; i < count; i++)
         {
-            blockInstances[i].InstanceTick();
+            InvokeBlockFunc(blockInstances[i], "tick", null);
         }
     }
 
     public void InteractBlock(Vector2Int position)
     {
-        blockInstances[positions.IndexOf(position)].Interaction();
+        InvokeBlockFunc(blockInstances[positions.IndexOf(position)], "interact", null);
+    }
+
+    public static void InvokeBlockFunc(BlockInstance blockInstance, string functionTag, object[] parameters)
+    {
+        string methodName = blockInstance.block_name + "__" + functionTag;
+        if (!typeof(BlockInstanceFunction).GetMethod(methodName).IsStatic)
+        {
+            Log.LogError("BlockInstanceManager.InvokeBlockFunc: BlockInstanceFunction isn't static");
+            return;
+        }
+        object[] _parameters = new object[parameters.Length + 1];
+        _parameters[0] = blockInstance;
+        try
+        {
+            for(int i = 1; i < _parameters.Length; i++)
+            {
+                _parameters[i] = parameters[i - 1];
+            }
+        } catch (Exception ex)
+        {
+            Log.LogError($"BlockInstanceManager.InvokeBlockFunc: Error grouping function parameters. Error code: {ex}");
+            return;
+        }
+        typeof(BlockInstanceFunction).GetMethod(methodName).Invoke(null, _parameters);
     }
 }
