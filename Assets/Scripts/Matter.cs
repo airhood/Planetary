@@ -18,18 +18,16 @@ public class Matter : ScriptableObject
 {
     [Header("Info")]
     public short id;
-    public string display_name;
     public new string name;
     public string description;
-
+    
     public MatterType matterType;
-
+    
+    [Header("Solid")]
     public short hardness;
-
     public TileBase tile;
 
     public bool canBePlacedAsBlock;
-
     public bool canBeConvertedToItem;
     public short itemID;
 

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a42572f0f8f33b54189d85195ff4b5cf, type: 3}
-  m_Name: Vacuum
+  m_Name: "\uB3CC"
   m_EditorClassIdentifier: 
-  id: 0
-  name: 
+  id: 1
+  name: "\uB3CC"
   description: 
   matterType: 0
-  hardness: 5
-  tile: {fileID: 0}
+  hardness: 4
+  tile: {fileID: 11400000, guid: da40dc1aba0e5d54295ec75845c71121, type: 2}
   canBePlacedAsBlock: 1
-  canBeConvertedToItem: 0
-  itemID: 0
+  canBeConvertedToItem: 1
+  itemID: 1
   rarity: 0
   size: 0

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a42572f0f8f33b54189d85195ff4b5cf, type: 3}
-  m_Name: Vacuum
+  m_Name: "\uAD6C\uB9AC\uAD11\uC11D"
   m_EditorClassIdentifier: 
-  id: 0
-  name: 
+  id: 4
+  name: "\uAD6C\uB9AC"
   description: 
   matterType: 0
-  hardness: 5
-  tile: {fileID: 0}
+  hardness: 9
+  tile: {fileID: 11400000, guid: 6bd931d5ea308ed4aa62221fceb38ab5, type: 2}
   canBePlacedAsBlock: 1
-  canBeConvertedToItem: 0
-  itemID: 0
-  rarity: 0
-  size: 0
+  canBeConvertedToItem: 1
+  itemID: 7
+  rarity: 0.11
+  size: 0.8

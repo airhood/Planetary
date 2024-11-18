@@ -88,15 +88,15 @@ public class Player : MonoBehaviour
     [Header("Gizmos")]
     public List<short> gizmosList = new List<short>();
 
-    Vector3 worldPosition;
-    Vector2Int pos;
+    private Vector3 worldPosition;
+    private Vector2Int pos;
 
     [Header("Player Property")]
     public PlayerInfo playerInfo = new PlayerInfo();
-    int oxygenTick;
+    private int oxygenTick;
     public GameObject healthGage;
     public GameObject oxygenGage;
-    int cureTickAmount;
+    private int cureTickAmount;
     public GameObject damgeText;
 
     [Header("UI")]
@@ -256,41 +256,44 @@ public class Player : MonoBehaviour
                         destructBlock(pos);
                     }
                 }
-                else if (Input.GetKey(KeyCode.LeftShift))
+                else
                 {
-                    if (checkSetBlockAvailable(pos, Main.data.itemList[backpack.slots[backpack.index].itemID].placeableID))
+                    if (main.world.planet[0].map.map[pos.x, pos.y] == 0)
                     {
-                        if (backpack.slots[backpack.index].itemID != 0)
+                        if (checkSetBlockAvailable(pos, Main.data.itemList[backpack.slots[backpack.index].itemID].placeableID))
                         {
-                            if (Main.data.itemList[backpack.slots[backpack.index].itemID].type == ItemType.Block)
+                            if (backpack.slots[backpack.index].itemID != 0)
                             {
-                                if (backpack.slots[backpack.index].amount > 0)
+                                if (Main.data.itemList[backpack.slots[backpack.index].itemID].type == ItemType.Block)
                                 {
-                                    // TODO: custom rotation
-                                    setBlock(pos, Rotation.None);
+                                    if (backpack.slots[backpack.index].amount > 0)
+                                    {
+                                        // TODO: custom rotation
+                                        setBlock(pos, Rotation.R0);
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                else
-                {
-                    // Block Interaction
-                    if (!didInteract)
+                    else
                     {
-                        short blockID = main.world.planet[0].map.map[pos.x, pos.y];
-                        if (blockID > 0)
+                        // Block Interaction
+                        if (!didInteract)
                         {
-                            if (Main.data.blockList[blockID].type == BlockType.Building)
+                            short blockID = main.world.planet[0].map.map[pos.x, pos.y];
+                            if (blockID > 0)
                             {
-                                blockInstanceManager.InteractBlock(pos);
+                                if (Main.data.blockList[blockID].type == BlockType.Building)
+                                {
+                                    blockInstanceManager.InteractBlock(pos);
+                                    didInteract = true;
+                                }
+                            }
+                            else if (blockID <= -20000)
+                            {
+                                blockInstanceManager.InteractBlock((Vector2Int)blockModify.BlockRelativePosToBlockMainPos(pos));
                                 didInteract = true;
                             }
-                        }
-                        else if (blockID <= -20000)
-                        {
-                            blockInstanceManager.InteractBlock((Vector2Int)blockModify.BlockRelativePosToBlockMainPos(pos));
-                            didInteract = true;
                         }
                     }
                 }
@@ -564,7 +567,6 @@ public class Player : MonoBehaviour
                 if (main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[
                     main.world.planet[0].map.entitySystem.visibleEntities[entityID].relatedID].itemStack.amount - result.amount > 0)
                 {
-                    print("go");
                     main.world.planet[0].map.entitySystem.droppedItemSystem.droppedItemData[
                     main.world.planet[0].map.entitySystem.visibleEntities[entityID].relatedID].itemStack.amount -= result.amount;
                     droppedItemInstance.itemStack.amount -= result.amount;

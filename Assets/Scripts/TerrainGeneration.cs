@@ -1,8 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+
+[System.Serializable]
+public class BlockDistribution
+{
+    public Matter matter;
+    public float rarity;
+    public float size;
+}
+
+public enum SpawnType
+{
+    Specify, Random
+}
+
+[System.Serializable]
+public class Spawn
+{
+    public SpawnType positionType;
+    public List<Vector2Int> positions;
+    public int minAmount, maxAmount;
+}
 
 public class TerrainGeneration : MonoBehaviour
 {
@@ -18,14 +40,16 @@ public class TerrainGeneration : MonoBehaviour
     public float surfaceValue = 0.25f;
     public float heightMultiplier = 4f;
     public int heightAddition = 25;
-
-    [Header("Noise Settings")]
     public float terrainFreq = 0.05f;
     public float caveFreq = 0.05f;
     public float seed;
     public Texture2D caveNoiseTexture;
 
-    [Header("Ore")]
+    public List<BlockDistribution> blockDistributions;
+    public List<Spawn> spawns;
+
+    [Header("Spread")] public List<Texture2D> spreads;
+    
     public Texture2D coalSpread;
     public Texture2D copperSpread;
     public Texture2D ironSpread;
@@ -59,6 +83,7 @@ public class TerrainGeneration : MonoBehaviour
         if (caveNoiseTexture == null)
         {
             caveNoiseTexture = new Texture2D(worldSize, worldSize);
+            
             coalSpread = new Texture2D(worldSize, worldSize);
             copperSpread = new Texture2D(worldSize, worldSize);
             ironSpread = new Texture2D(worldSize, worldSize);
@@ -74,6 +99,18 @@ public class TerrainGeneration : MonoBehaviour
         GenerateNoiseTexture(seed + (100f * (int)Matters.Gold), Main.data.matterList[(int)Matters.Gold].rarity, Main.data.matterList[(int)Matters.Gold].size, goldSpread);
         GenerateNoiseTexture(seed + (100f * (int)Matters.Diamond), Main.data.matterList[(int)Matters.Diamond].rarity, Main.data.matterList[(int)Matters.Diamond].size, diamondSpread);
 
+        int k = blockDistributions.Count - spreads.Count;
+
+        for (int i = k; i > 0; i--)
+        {
+            spreads.Add(new Texture2D(worldSize, worldSize));
+        }
+        
+        for (int i = 0; i < blockDistributions.Count; i++)
+        {
+            GenerateNoiseTexture(seed + (100f * (int)blockDistributions[i].matter.matterType), blockDistributions[i].rarity, blockDistributions[i].size, spreads[i]);
+        }
+        
         await Task.Delay(100);
 
         await GenerateTerrain();
